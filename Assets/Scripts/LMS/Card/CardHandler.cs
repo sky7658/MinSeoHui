@@ -14,29 +14,11 @@ namespace LMS.Cards
         // 카드 UI를 관리
         private CardUI cardUI;
 
-        public Transform parent;
-
         public CardHandler()
         {
-            cards = new List<Card>();
+            Initialized();
         }
 
-<<<<<<< Updated upstream
-        void Update()
-        {
-            // 연습 코드
-            if(Input.GetKeyDown(KeyCode.A))
-            {
-                PushCard();
-            }
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-                UseCard(0);
-            }
-        }
-
-        public void PushCard()
-=======
         private void Initialized()
         {
             cards = new List<Card>();
@@ -88,7 +70,6 @@ namespace LMS.Cards
         /// Card List에 카드를 추가합니다.
         /// </summary>
         public void PushCard(int index, CardProperty property)
->>>>>>> Stashed changes
         {
             if(cards.Count >= CardBase.maxCardCount)
             {
@@ -96,7 +77,6 @@ namespace LMS.Cards
                 return;
             }
 
-<<<<<<< Updated upstream
             // test 코드
             var pref = Manager.GameManager.Instance.ResourceLoadObj(CardBase.cardPrefName);
             if (pref == null)
@@ -105,26 +85,17 @@ namespace LMS.Cards
                 return;
             }
 
-            var newCard = Instantiate(pref.GetComponent<Card>());
-            newCard.Initicalize(CardBase.cardImgNames[7]);
-            newCard.transform.parent = parent;
-=======
             var newCard = ObjectPool.Instance.GetObject<Card>(CardBase.cardPrefName);
             newCard.Initialized(CardBase.cardImgNames[index], property);
->>>>>>> Stashed changes
             cards.Add(newCard);
             cardUI.CardAligment(cards);
         }
 
-<<<<<<< Updated upstream
-        public void PopCard(int index)
-=======
         /// <summary>
         /// Card List에 저장된 특정 카드를 삭제합니다.
         /// </summary>
         /// <param name="index"></param>
         public void PopCard(Text text)
->>>>>>> Stashed changes
         {
             // 인덱스가 리스트 범위를 벗어나는 경우
             if (cards.Count < selectCardNum + 1 || selectCardNum == -1)
@@ -140,17 +111,13 @@ namespace LMS.Cards
             selectCardNum = -1;
         }
 
-<<<<<<< Updated upstream
-        public void UseCard(int index)
-=======
         /// <summary>
         /// 선택 된 카드를 사용합니다.
         /// </summary>
         public void UseCard(GameObject obj, Vector3 direction, Text text)
->>>>>>> Stashed changes
         {
             // 인덱스가 리스트 범위를 벗어나는 경우
-            if (cards.Count < index + 1)
+            if (cards.Count < selectCardNum + 1 || selectCardNum == -1)
             {
                 Debug.Log("그런 카드는 존재하지 않음");
                 return;
@@ -160,27 +127,23 @@ namespace LMS.Cards
             // ex) if(player.state != PlayerState.IDLE) return;
 
             // 카드 스킬의 쿨타임일 경우
-            if (cards[index].delayEnabled)
+            if (cards[selectCardNum].delayEnabled)
             {
                 Debug.Log("카드 쿨타임 입니다.");
                 return;
             }
 
             // 카드의 스킬을 실행
-            cards[index].ExecuteSkill(this.gameObject);
+            cards[selectCardNum].ExecuteSkill(obj, direction);
 
             // 횟수 제한이 있는 카드만 횟수를 차감
-            if (cards[index].cardInfo.count > 0)
+            if (cards[selectCardNum].cardInfo.count > 0)
             {
                 // 모두 사용시 카드 삭제
-                if(--cards[index].cardInfo.count == 0)
+                if(--cards[selectCardNum].cardInfo.count == 0)
                 {
-<<<<<<< Updated upstream
-                    PopCard(index);
-=======
                     PopCard(text);
                     return;
->>>>>>> Stashed changes
                 }
                 cardUI.UpdateInfo(text, cards[selectCardNum].cardInfo);
             }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1942531947893503340}
   - component: {fileID: 4726462383710226288}
   - component: {fileID: 5708449813208411340}
-  - component: {fileID: -304251179569136710}
+  - component: {fileID: 2380570833342533661}
   m_Layer: 0
   m_Name: LionRoar
   m_TagString: Untagged
@@ -4887,7 +4887,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 12
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-304251179569136710
+--- !u!114 &2380570833342533661
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4896,7 +4896,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2455266245362194253}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4803f9717209b4f4990a54947f2d6452, type: 3}
+  m_Script: {fileID: 11500000, guid: 4a35fa7501cd9414fb3334c244aa5e41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6995664480932234696

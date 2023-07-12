@@ -13,14 +13,11 @@ namespace LMS.Cards
         public Image cardMask { get; set; }
 
         // 카드 스킬
-<<<<<<< Updated upstream
-        public delegate IEnumerator ActionDelegate(GameObject obj, float executeTime);
-        public ActionDelegate skill { get; set; }
         public bool delayEnabled { get; set; }
-=======
+        public bool isHighlight { get; set; }
         public delegate IEnumerator ActionDelegate(GameObject obj, Vector3 direction, CardInfo info);
-        protected ActionDelegate skill { get; set; }
->>>>>>> Stashed changes
+        private ActionDelegate skill { get; set; }
+
 
 
         private void Awake()
@@ -29,11 +26,6 @@ namespace LMS.Cards
             cardMask = transform.GetChild(0).GetComponent<Image>();
         }
 
-<<<<<<< Updated upstream
-        public virtual void Initicalize(string imgName)
-        {
-            delayEnabled = false;
-=======
         public void Initialized(string imgName, CardProperty property = CardProperty.NONE)
         {
             delayEnabled = false;
@@ -44,7 +36,6 @@ namespace LMS.Cards
 
             cardMask.gameObject.SetActive(false);
 
->>>>>>> Stashed changes
             SetCardImg(imgName);
             cardInfo = new CardInfo(1f, 2, Grade.EPIC, CardBase.skillTypes[imgName], property);
             SetCardSkill();
@@ -54,23 +45,13 @@ namespace LMS.Cards
         {
             switch (cardInfo.type)
             {
-                case SkillType.SINGLE:
-                    skill = CardSkill.SingleFire;
+                case SkillType.LIONROAR:
+                    skill = CardSkill.LinoRoar;
                     break;
-                case SkillType.MULTIPLE:
-                    skill = CardSkill.MultipleFire;
+                case SkillType.METEORS:
+                    skill = CardSkill.Meteors;
                     break;
-                case SkillType.SPRAY:
-                    skill = CardSkill.SprayFire;
-                    break;
-                case SkillType.FLOOR:
-                    skill = CardSkill.FloorFire;
-                    break;
-                case SkillType.EXPLOSION:
-                    skill = CardSkill.Explosion;
-                    break;
-                case SkillType.SPECIAL:
-                    skill = CardSkill.Special;
+                case SkillType.SLASHES:
                     break;
                 case SkillType.HEAL:
                     skill = CardSkill.HpHeal;
@@ -88,11 +69,18 @@ namespace LMS.Cards
             }
         }
 
+        public void HighlightTrigger()
+        {
+            Manager.GameManager.Instance.ExecuteCoroutine(CardAction.SelectAction(this, isHighlight));
+            if (isHighlight) isHighlight = false;
+            else isHighlight = true;
+        }
+
         /// <summary>
         /// 카드의 스킬을 실행해주는 함수
         /// </summary>
         /// <param name="obj"> 스킬을 쓰는 대상</param>
-        public void ExecuteSkill(GameObject obj)
+        public void ExecuteSkill(GameObject obj, Vector3 direction)
         {
             delayEnabled = true;
             if(cardInfo.count - 1 != 0) // 카드를 사용했을 때 갯수가 남아있다면 실행
@@ -100,11 +88,7 @@ namespace LMS.Cards
                 cardMask.gameObject.SetActive(true);
                 Manager.GameManager.Instance.ExecuteCoroutine(CardAction.DelayAction(this));
             }
-<<<<<<< Updated upstream
-            Manager.GameManager.Instance.ExecuteCoroutine(skill(obj, cardInfo.executeTime));
-=======
             Manager.GameManager.Instance.ExecuteCoroutine(skill(obj, direction, cardInfo));
->>>>>>> Stashed changes
         }
 
         /// <summary>

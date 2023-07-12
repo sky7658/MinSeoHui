@@ -2,10 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-<<<<<<< Updated upstream:Assets/Scripts/LMS/Card/CardUI.cs
-=======
 using LMS.Cards;
->>>>>>> Stashed changes:Assets/Scripts/LMS/UI/CardUI.cs
 
 namespace LMS.UI
 {
@@ -48,20 +45,20 @@ namespace LMS.UI
 
             for (int i = 0; i < cards.Count; i++)
             {
-                var targetPos = Vector3.Lerp(leftLocalPos, rightLocalPos, objLerps[i]);
-                var targetRot = Quaternion.identity;
+                var _targetPos = Vector3.Lerp(leftLocalPos, rightLocalPos, objLerps[i]);
+                var _targetRot = Quaternion.identity;
                 if (cards.Count > 2)
                 {
                     float curve = Mathf.Sqrt(Mathf.Pow(1, 2) - Mathf.Pow(objLerps[i] - 0.5f, 2));
-                    targetPos.y += curve;
-                    targetRot = Quaternion.Slerp(Quaternion.Euler(leftLocalRot), Quaternion.Euler(rightLocalRot), objLerps[i]);
+                    _targetPos.y += curve;
+                    _targetRot = Quaternion.Slerp(Quaternion.Euler(leftLocalRot), Quaternion.Euler(rightLocalRot), objLerps[i]);
                 }
-                cards[i].MoveTo(targetPos, targetRot, 0.2f);
+                cards[i].MoveTo(_targetPos, _targetRot, 0.2f);
             }
         }
 
         private string infoDefaultText;
-        public void UpdateInfo(Text text, Cards.CardInfo info = null)
+        public void UpdateInfo(Text text, CardInfo info = null)
         {
             if (text == null)
             {
@@ -73,29 +70,24 @@ namespace LMS.UI
                 text.text = string.Format(infoDefaultText, "", "", "", "", "");
                 return;
             }
-            text.text = string.Format(infoDefaultText, info.grade, info.spendMP, info.count, info.property, "¤¾¤·");
+            text.text = string.Format(infoDefaultText, info.grade, info.spendMP, info.count, info.property, info.name);
         }
     }
+
     public class CardAction
     {
         public static IEnumerator MoveToAction(GameObject obj, Vector3 targetPos, Quaternion targetRot, float duration)
         {
-            Vector3 startPos = obj.transform.localPosition;
-            Quaternion startRot = obj.transform.localRotation;
+            Vector3 _startPos = obj.transform.localPosition;
+            Quaternion _startRot = obj.transform.localRotation;
 
-            float elapsed = 0.0f;
-            while (elapsed < duration)
+            float _elapsed = 0.0f;
+            while (_elapsed < duration)
             {
-<<<<<<< Updated upstream:Assets/Scripts/LMS/Card/CardUI.cs
-                elapsed += Time.smoothDeltaTime;
-                obj.transform.localPosition = Vector3.Lerp(startPos, targetPos, elapsed / duration);
-                obj.transform.localRotation = Quaternion.Slerp(startRot, targetRot, elapsed / duration);
-=======
                 if (obj == null) yield break;
                 _elapsed += Time.smoothDeltaTime;
                 obj.transform.localPosition = Vector3.Lerp(_startPos, targetPos, _elapsed / duration);
                 obj.transform.localRotation = Quaternion.Slerp(_startRot, targetRot, _elapsed / duration);
->>>>>>> Stashed changes:Assets/Scripts/LMS/UI/CardUI.cs
                 yield return null;
             }
 
@@ -109,18 +101,12 @@ namespace LMS.UI
 
         public static IEnumerator DelayAction(Card card)
         {
-            float t = 0f;
+            float _t = 0f;
 
-            while(t < card.cardInfo.delayTime)
+            while(_t < card.cardInfo.delayTime)
             {
-<<<<<<< Updated upstream:Assets/Scripts/LMS/Card/CardUI.cs
-                card.cardMask.transform.localScale = new Vector3(1f, (card.cardInfo.delayTime - t) / card.cardInfo.delayTime, 1f);
-                t += Time.smoothDeltaTime;
-=======
-                if (card == null) yield break;
                 card.cardMask.transform.localScale = new Vector3(1f, (card.cardInfo.delayTime - _t) / card.cardInfo.delayTime, 1f);
                 _t += Time.smoothDeltaTime;
->>>>>>> Stashed changes:Assets/Scripts/LMS/UI/CardUI.cs
                 yield return null;
             }
 
@@ -132,9 +118,6 @@ namespace LMS.UI
 
             yield break;
         }
-<<<<<<< Updated upstream:Assets/Scripts/LMS/Card/CardUI.cs
-=======
-
         public static IEnumerator SelectAction(Card card, bool isSelect = false)
         {
             float _t = 0f;
@@ -168,6 +151,5 @@ namespace LMS.UI
 
             yield break;
         }
->>>>>>> Stashed changes:Assets/Scripts/LMS/UI/CardUI.cs
     }
 }

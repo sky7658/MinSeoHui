@@ -57,14 +57,14 @@ namespace LMS.Cards
             yield break;
         }
 
-        public static IEnumerator Explosion(GameObject obj, Vector3 direction, CardInfo info)
+        public static IEnumerator LinoRoar(GameObject obj, Vector3 direction, CardInfo info)
         {
             var _spell = ObjectPool.Instance.GetObject<LionRoar>("LionRoar");
             _spell.Initialized(obj.transform.position);
             yield break;
         }
 
-        public static IEnumerator Special(GameObject obj, Vector3 direction, CardInfo info)
+        public static IEnumerator Meteors(GameObject obj, Vector3 direction, CardInfo info)
         {
             var _spell = ObjectPool.Instance.GetObject<Meteors>("Meteors");
             _spell.Initialized(obj, obj.transform.position);
