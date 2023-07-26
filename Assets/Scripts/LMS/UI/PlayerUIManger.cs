@@ -26,22 +26,22 @@ namespace LMS.UI
             }
         }
         /// <summary>
-        /// Card List¿¡ Ä«µå¸¦ Ãß°¡ÇÕ´Ï´Ù.
+        /// Card Listì— ì¹´ë“œë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
         /// </summary>
         public void PushCard(int index, CardProperty property = CardProperty.NONE) => cHandler.PushCard(index, property);
         /// <summary>
-        /// Card List¿¡ ÀúÀåµÈ Æ¯Á¤ Ä«µå¸¦ »èÁ¦ÇÕ´Ï´Ù.
+        /// Card Listì— ì €ì¥ëœ íŠ¹ì • ì¹´ë“œë¥¼ ì‚­ì œí•©ë‹ˆë‹¤.
         /// </summary>
         /// <param name="index"></param>
         public void PopCard() => cHandler.PopCard(infoText);
         /// <summary>
-        /// ¼±ÅÃ µÈ Ä«µå¸¦ »ç¿ëÇÕ´Ï´Ù.
+        /// ì„ íƒ ëœ ì¹´ë“œë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤.
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="direction"></param>
         public void UseCard(GameObject obj, Vector3 direction) => cHandler.UseCard(obj, direction, infoText);
         /// <summary>
-        /// Card List¿¡ ÀÖ´Â Æ¯Á¤ Ä«µå¸¦ ¼±ÅÃÇÕ´Ï´Ù.
+        /// Card Listì— ìˆëŠ” íŠ¹ì • ì¹´ë“œë¥¼ ì„ íƒí•©ë‹ˆë‹¤.
         /// </summary>
         /// <param name="index"></param>
         public void SelectCard(int index) => cHandler.SelectCard(infoText, index);

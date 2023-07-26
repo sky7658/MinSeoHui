@@ -9,9 +9,9 @@ namespace LMS.Cards
 {
     public class CardHandler
     {
-        // CardHandler Å¬·¡½ºµµ »ı¼ºÀÚ·Î È£ÃâÇÒ ¿¹Á¤ -> Update¸¦ »ç¿ëÇÏÁö ¾ÊÀ½
+        // CardHandler í´ë˜ìŠ¤ë„ ìƒì„±ìë¡œ í˜¸ì¶œí•  ì˜ˆì • -> Updateë¥¼ ì‚¬ìš©í•˜ì§€ ì•ŠìŒ
         private List<Card> cards;
-        // Ä«µå UI¸¦ °ü¸®
+        // ì¹´ë“œ UIë¥¼ ê´€ë¦¬
         private CardUI cardUI;
 
         public CardHandler()
@@ -28,7 +28,7 @@ namespace LMS.Cards
 
         private int selectCardNum;
         /// <summary>
-        /// Card List¿¡ ÀÖ´Â Æ¯Á¤ Ä«µå¸¦ ¼±ÅÃÇÕ´Ï´Ù.
+        /// Card Listì— ìˆëŠ” íŠ¹ì • ì¹´ë“œë¥¼ ì„ íƒí•©ë‹ˆë‹¤.
         /// </summary>
         /// <param name="text"></param>
         /// <param name="selectNum"></param>
@@ -36,52 +36,52 @@ namespace LMS.Cards
         {
             if(cards.Count < selectNum + 1)
             {
-                Debug.Log("±×·± Ä«µå´Â Á¸ÀçÇÏÁö ¾ÊÀ½");
+                Debug.Log("ê·¸ëŸ° ì¹´ë“œëŠ” ì¡´ì¬í•˜ì§€ ì•ŠìŒ");
                 return;
             }
-            if(selectCardNum == -1) // ÇöÀç ¼±ÅÃµÈ Ä«µå°¡ ¾øÀ» ¶§
+            if(selectCardNum == -1) // í˜„ì¬ ì„ íƒëœ ì¹´ë“œê°€ ì—†ì„ ë•Œ
             {
                 selectCardNum = selectNum;
             }
-            else // ÇöÀç ¼±ÅÃµÈ Ä«µå°¡ ÀÖÀ» ¶§
+            else // í˜„ì¬ ì„ íƒëœ ì¹´ë“œê°€ ìˆì„ ë•Œ
             {
-                if (selectCardNum == selectNum) // °°Àº Ä«µå ¹øÈ£¸¦ µÎ¹ø ¼±ÅÃÇÏ¸é ºñ È°¼ºÈ­
+                if (selectCardNum == selectNum) // ê°™ì€ ì¹´ë“œ ë²ˆí˜¸ë¥¼ ë‘ë²ˆ ì„ íƒí•˜ë©´ ë¹„ í™œì„±í™”
                 {
                     cards[selectCardNum].HighlightTrigger();
-                    Debug.Log(selectCardNum + "¹ø Ä«µå ºñÈ°¼ºÈ­");
+                    Debug.Log(selectCardNum + "ë²ˆ ì¹´ë“œ ë¹„í™œì„±í™”");
                     selectCardNum = -1;
                     cardUI.UpdateInfo(text);
                     return;
                 }
-                else // ´Ù¸¥ Ä«µå ¹øÈ£¸¦ ¼±ÅÃ ½Ã ÀÌÀü Ä«µå´Â ºñÈ°¼ºÈ­ ÇÏ°í ÇöÀç Ä«µå ¹øÈ£¸¦ È°¼ºÈ­
+                else // ë‹¤ë¥¸ ì¹´ë“œ ë²ˆí˜¸ë¥¼ ì„ íƒ ì‹œ ì´ì „ ì¹´ë“œëŠ” ë¹„í™œì„±í™” í•˜ê³  í˜„ì¬ ì¹´ë“œ ë²ˆí˜¸ë¥¼ í™œì„±í™”
                 {
                     cards[selectCardNum].HighlightTrigger();
-                    Debug.Log(selectCardNum + "¹ø Ä«µå ºñÈ°¼ºÈ­");
+                    Debug.Log(selectCardNum + "ë²ˆ ì¹´ë“œ ë¹„í™œì„±í™”");
                     selectCardNum = selectNum;
                 }
             }
 
             cardUI.UpdateInfo(text, cards[selectCardNum].cardInfo);
             cards[selectCardNum].HighlightTrigger();
-            Debug.Log(selectCardNum + "¹ø Ä«µå È°¼ºÈ­");
+            Debug.Log(selectCardNum + "ë²ˆ ì¹´ë“œ í™œì„±í™”");
         }
 
         /// <summary>
-        /// Card List¿¡ Ä«µå¸¦ Ãß°¡ÇÕ´Ï´Ù.
+        /// Card Listì— ì¹´ë“œë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
         /// </summary>
         public void PushCard(int index, CardProperty property)
         {
             if(cards.Count >= CardBase.maxCardCount)
             {
-                Debug.Log("ÃÖ´ë Ä«µå °¹¼ö ÃÊ°ú");
+                Debug.Log("ìµœëŒ€ ì¹´ë“œ ê°¯ìˆ˜ ì´ˆê³¼");
                 return;
             }
 
-            // test ÄÚµå
+            // test ì½”ë“œ
             var pref = Manager.GameManager.Instance.ResourceLoadObj(CardBase.cardPrefName);
             if (pref == null)
             {
-                Debug.Log("ÇÁ¸®ÆÕÀ» ºÒ·¯¿Ã ¼ö ¾ø½À´Ï´Ù.");
+                Debug.Log("í”„ë¦¬íŒ¹ì„ ë¶ˆëŸ¬ì˜¬ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
                 return;
             }
 
@@ -92,15 +92,15 @@ namespace LMS.Cards
         }
 
         /// <summary>
-        /// Card List¿¡ ÀúÀåµÈ Æ¯Á¤ Ä«µå¸¦ »èÁ¦ÇÕ´Ï´Ù.
+        /// Card Listì— ì €ì¥ëœ íŠ¹ì • ì¹´ë“œë¥¼ ì‚­ì œí•©ë‹ˆë‹¤.
         /// </summary>
         /// <param name="index"></param>
         public void PopCard(Text text)
         {
-            // ÀÎµ¦½º°¡ ¸®½ºÆ® ¹üÀ§¸¦ ¹ş¾î³ª´Â °æ¿ì
+            // ì¸ë±ìŠ¤ê°€ ë¦¬ìŠ¤íŠ¸ ë²”ìœ„ë¥¼ ë²—ì–´ë‚˜ëŠ” ê²½ìš°
             if (cards.Count < selectCardNum + 1 || selectCardNum == -1)
             {
-                Debug.Log("±×·± Ä«µå´Â Á¸ÀçÇÏÁö ¾ÊÀ½");
+                Debug.Log("ê·¸ëŸ° ì¹´ë“œëŠ” ì¡´ì¬í•˜ì§€ ì•ŠìŒ");
                 return;
             }
 
@@ -112,34 +112,34 @@ namespace LMS.Cards
         }
 
         /// <summary>
-        /// ¼±ÅÃ µÈ Ä«µå¸¦ »ç¿ëÇÕ´Ï´Ù.
+        /// ì„ íƒ ëœ ì¹´ë“œë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤.
         /// </summary>
         public void UseCard(GameObject obj, Vector3 direction, Text text)
         {
-            // ÀÎµ¦½º°¡ ¸®½ºÆ® ¹üÀ§¸¦ ¹ş¾î³ª´Â °æ¿ì
+            // ì¸ë±ìŠ¤ê°€ ë¦¬ìŠ¤íŠ¸ ë²”ìœ„ë¥¼ ë²—ì–´ë‚˜ëŠ” ê²½ìš°
             if (cards.Count < selectCardNum + 1 || selectCardNum == -1)
             {
-                Debug.Log("±×·± Ä«µå´Â Á¸ÀçÇÏÁö ¾ÊÀ½");
+                Debug.Log("ê·¸ëŸ° ì¹´ë“œëŠ” ì¡´ì¬í•˜ì§€ ì•ŠìŒ");
                 return;
             }
 
-            // Ä«µå¸¦ »ç¿ëÇÒ ¼ö ¾ø´Â »óÅÂÀÏ °æ¿ì
+            // ì¹´ë“œë¥¼ ì‚¬ìš©í•  ìˆ˜ ì—†ëŠ” ìƒíƒœì¼ ê²½ìš°
             // ex) if(player.state != PlayerState.IDLE) return;
 
-            // Ä«µå ½ºÅ³ÀÇ ÄğÅ¸ÀÓÀÏ °æ¿ì
+            // ì¹´ë“œ ìŠ¤í‚¬ì˜ ì¿¨íƒ€ì„ì¼ ê²½ìš°
             if (cards[selectCardNum].delayEnabled)
             {
-                Debug.Log("Ä«µå ÄğÅ¸ÀÓ ÀÔ´Ï´Ù.");
+                Debug.Log("ì¹´ë“œ ì¿¨íƒ€ì„ ì…ë‹ˆë‹¤.");
                 return;
             }
 
-            // Ä«µåÀÇ ½ºÅ³À» ½ÇÇà
+            // ì¹´ë“œì˜ ìŠ¤í‚¬ì„ ì‹¤í–‰
             cards[selectCardNum].ExecuteSkill(obj, direction);
 
-            // È½¼ö Á¦ÇÑÀÌ ÀÖ´Â Ä«µå¸¸ È½¼ö¸¦ Â÷°¨
+            // íšŸìˆ˜ ì œí•œì´ ìˆëŠ” ì¹´ë“œë§Œ íšŸìˆ˜ë¥¼ ì°¨ê°
             if (cards[selectCardNum].cardInfo.count > 0)
             {
-                // ¸ğµÎ »ç¿ë½Ã Ä«µå »èÁ¦
+                // ëª¨ë‘ ì‚¬ìš©ì‹œ ì¹´ë“œ ì‚­ì œ
                 if(--cards[selectCardNum].cardInfo.count == 0)
                 {
                     PopCard(text);
