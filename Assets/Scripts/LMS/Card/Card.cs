@@ -12,7 +12,7 @@ namespace LMS.Cards
         public RawImage cardImg { get; set; }
         public Image cardMask { get; set; }
 
-        // Ä«µå ½ºÅ³
+        // ì¹´ë“œ ìŠ¤í‚¬
         public bool delayEnabled { get; set; }
         public bool isHighlight { get; set; }
         public delegate IEnumerator ActionDelegate(GameObject obj, Vector3 direction, CardInfo info);
@@ -64,7 +64,7 @@ namespace LMS.Cards
             cardImg.texture = Manager.GameManager.Instance.ResourceLoadImg(name);
             if(cardImg.texture == null)
             {
-                Debug.Log("ÀÌ¹ÌÁö°¡ ¾ø½À´Ï´Ù.");
+                Debug.Log("ì´ë¯¸ì§€ê°€ ì—†ìŠµë‹ˆë‹¤.");
                 return;
             }
         }
@@ -77,13 +77,13 @@ namespace LMS.Cards
         }
 
         /// <summary>
-        /// Ä«µåÀÇ ½ºÅ³À» ½ÇÇàÇØÁÖ´Â ÇÔ¼ö
+        /// ì¹´ë“œì˜ ìŠ¤í‚¬ì„ ì‹¤í–‰í•´ì£¼ëŠ” í•¨ìˆ˜
         /// </summary>
-        /// <param name="obj"> ½ºÅ³À» ¾²´Â ´ë»ó</param>
+        /// <param name="obj"> ìŠ¤í‚¬ì„ ì“°ëŠ” ëŒ€ìƒ</param>
         public void ExecuteSkill(GameObject obj, Vector3 direction)
         {
             delayEnabled = true;
-            if(cardInfo.count - 1 != 0) // Ä«µå¸¦ »ç¿ëÇßÀ» ¶§ °¹¼ö°¡ ³²¾ÆÀÖ´Ù¸é ½ÇÇà
+            if(cardInfo.count - 1 != 0) // ì¹´ë“œë¥¼ ì‚¬ìš©í–ˆì„ ë•Œ ê°¯ìˆ˜ê°€ ë‚¨ì•„ìˆë‹¤ë©´ ì‹¤í–‰
             {
                 cardMask.gameObject.SetActive(true);
                 Manager.GameManager.Instance.ExecuteCoroutine(CardAction.DelayAction(this));
@@ -92,11 +92,11 @@ namespace LMS.Cards
         }
 
         /// <summary>
-        /// Ä«µåÀÇ À§Ä¡¸¦ ÀÌµ¿ÇØÁÖ´Â ÇÔ¼ö
+        /// ì¹´ë“œì˜ ìœ„ì¹˜ë¥¼ ì´ë™í•´ì£¼ëŠ” í•¨ìˆ˜
         /// </summary>
         /// <param name="targetPos"> </param>
         /// <param name="targetRot"> </param>
-        /// <param name="duration"> ½ÇÇà ½Ã°£</param>
+        /// <param name="duration"> ì‹¤í–‰ ì‹œê°„</param>
         public void MoveTo(Vector3 targetPos, Quaternion targetRot, float duration)
         {
             Manager.GameManager.Instance.ExecuteCoroutine(CardAction.MoveToAction(gameObject, targetPos, targetRot, duration));
