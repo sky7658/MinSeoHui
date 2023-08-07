@@ -6,70 +6,73 @@ using UnityEngine;
 public interface State
 {
     public StateName stateName { get; }
-    public void Enter(Player _player);
-    void Action(Player _player);
-    void Exit(Player _player);
+    public void Enter(Player player);
+    void Action(Player player);
+    void Exit(Player player);
 }
 
 public class Move : State
 {
     public StateName stateName { get; } = StateName.MOVE;
-    public void Enter(Player _player)
+    public void Enter(Player player)
     {
-        _player.anim.SetBool("isWalk", true);
-        _player.applySpeed = _player.walkSpeed;
+        player.anim.SetBool("isWalk", true);
+        player.applySpeed = player.walkSpeed;
     }
 
-    public void Action(Player _player) // 오버라이딩
+    public void Action(Player player) // 오버라이딩
     {
-        _player.TryMove();
-        _player.TryJump();
-        _player.transform.Translate(Vector3.forward * _player.applySpeed * Time.deltaTime);
+        player.Roll();
+        player.TryMove();
+        player.TryJump();
+        player.transform.Translate(Vector3.forward * player.applySpeed * Time.deltaTime);
     }
 
-    public void Exit(Player _player)
+    public void Exit(Player player)
     {
-        _player.anim.SetBool("isWalk", false);
+        player.anim.SetBool("isWalk", false);
     }
 }
 
 public class Sprint : State
 {
     public StateName stateName { get; } = StateName.SPRINT;
-    public void Enter(Player _player)
+    public void Enter(Player player)
     {
-        _player.anim.SetBool("isWalk", true);
-        _player.anim.SetBool("isSprint", true);
-        _player.applySpeed = _player.runSpeed;
+        player.anim.SetBool("isWalk", true);
+        player.anim.SetBool("isSprint", true);
+        player.applySpeed = player.runSpeed;
     }
-    public void Action(Player _player)  // 오버라이딩
+    public void Action(Player player)  // 오버라이딩
     {
-        _player.TryMove();
-        _player.TryJump();
-        _player.transform.Translate(Vector3.forward * _player.applySpeed * Time.deltaTime);
+        player.Roll();
+        player.TryMove();
+        player.TryJump();
+        player.transform.Translate(Vector3.forward * player.applySpeed * Time.deltaTime);
     }
 
-    public void Exit(Player _player)
+    public void Exit(Player player)
     {
-        _player.anim.SetBool("isSprint", false);
-        _player.anim.SetBool("isWalk", false);
+        player.anim.SetBool("isSprint", false);
+        player.anim.SetBool("isWalk", false);
     }
 }
 
 public class Idle : State
 {
     public StateName stateName { get; } = StateName.IDLE;
-    public void Enter(Player _player)
+    public void Enter(Player player)
     {
     }
     
-    public void Action(Player _player)  // 오버라이딩
+    public void Action(Player player)  // 오버라이딩
     {
-        _player.TryMove();
-        _player.TryJump();
+        player.Roll();
+        player.TryMove();
+        player.TryJump();
     }
 
-    public void Exit(Player _player)
+    public void Exit(Player player)
     {
     }
 }
@@ -78,75 +81,160 @@ public class Jump : State
 {
     public StateName stateName { get; } = StateName.JUMP;
 
-    public void Enter(Player _player)
+    public void Enter(Player player)
     {
-        _player.anim.SetBool("isJump", true);
-        _player.anim.SetTrigger("doJump");
-        _player.transform.position += Vector3.up * 0.1f;
-        _player.isGround = false;
-        _player.rb.velocity = new Vector3(_player.rb.velocity.x, _player.jumpForce, _player.rb.velocity.z);
+        player.anim.SetBool("isJump", true);
+        player.anim.SetTrigger("doJump");
+        player.transform.position += Vector3.up * 0.1f;
+        player.isGround = false;
+        player.rb.velocity = new Vector3(player.rb.velocity.x, player.jumpForce, player.rb.velocity.z);
     }
 
-    public void Action(Player _player) // 오버라이딩
+    public void Action(Player player) // 오버라이딩
     {
         if (Input.GetKey(KeyCode.W))
+            player.transform.Translate(Vector3.forward * player.applySpeed * Time.deltaTime);
+        
+        player.Roll();
+        
+        if (player.rb.velocity.y < 0)
         {
-            _player.transform.Translate(Vector3.forward * _player.applySpeed * Time.deltaTime);
-        }
-
-        if (_player.rb.velocity.y < 0)
-        {
-            _player.isGround =
-                Physics.Raycast(_player.transform.position, Vector3.down, _player.capsulCol.bounds.extents.y / 2 + 0.1f);
-            if (_player.isGround)
+            player.isGround =
+                Physics.Raycast(player.transform.position, Vector3.down, player.capsulCol.bounds.extents.y / 2 + 0.1f);
+            if (player.isGround)
             {
-                _player._stateMachine.ChangeState(StateName.IDLE);
+                player._stateMachine.ChangeState(StateName.IDLE);
             }
         }
     }
 
-    public void Exit(Player _player)
+    public void Exit(Player player)
     {
-        _player.anim.SetBool("isJump", false);
+        player.anim.SetBool("isJump", false);
     }
 }
 
 public class Hit : State
 {
     public StateName stateName { get; } = StateName.HIT;
-    public void Enter(Player _player)
+    public void Enter(Player player)
     {
-        _player.anim.SetTrigger("doHit");
-        _player._stateMachine.ChangeState(StateName.IDLE);
+        player.anim.SetTrigger("doHit");
+        player._stateMachine.ChangeState(StateName.IDLE);
     }
 
-    public void Action(Player _player)
+    public void Action(Player player)
     {
     }
 
-    public void Exit(Player _player)
+    public void Exit(Player player)
     {
+    }
+}
+
+public class Attack : State
+{
+    public StateName stateName { get; } = StateName.ATTACK;
+    public void Enter(Player player)
+    {
+        player.anim.SetBool("isAtk1",true);
+        player._stateMachine.ChangeState(StateName.IDLE);
+    }
+
+    public void Action(Player player)
+    {
+    }
+
+    public void Exit(Player player)
+    {
+        player.anim.SetBool("isAtk1",false);
     }
 }
 
 public class BackMove : State
 {
     public StateName stateName { get; } = StateName.BACK;
-    public void Enter(Player _player)
+    public void Enter(Player player)
     {
-        _player.anim.SetBool("isBackWalk", true);
-        _player.applySpeed = _player.walkSpeed;
+        player.anim.SetBool("isBackWalk", true);
+        player.applySpeed = player.walkSpeed;
     }
 
-    public void Action(Player _player)
+    public void Action(Player player)
     {
-        _player.transform.Translate(Vector3.back * _player.applySpeed * Time.deltaTime);
-        _player.TryMove();
-        _player.TryJump();
+        player.Roll();
+        player.transform.Translate(Vector3.back * player.applySpeed * Time.deltaTime);
+        player.TryMove();
+        player.TryJump();
     }
 
-    public void Exit(Player _player)
+    public void Exit(Player player)
     {
-        _player.anim.SetBool("isBackWalk", false);
+        player.anim.SetBool("isBackWalk", false);
+    }
+}
+
+public class Dead : State
+{
+    public StateName stateName { get; } = StateName.DEAD;
+    public void Enter(Player player)
+    {
+        player.anim.SetTrigger("doDead");
+    }
+
+    public void Action(Player player)
+    {
+    }
+
+    public void Exit(Player player)
+    {
+    }
+}
+
+public class Fall : State
+{
+    public StateName stateName { get; } = StateName.DEAD;
+
+    public void Enter(Player player)
+    {
+        player.anim.SetTrigger("doFall");
+        player.anim.SetBool("isJump", true);
+    }
+
+    public void Action(Player player)
+    {
+        if (Input.GetKey(KeyCode.W))
+            player.transform.Translate(Vector3.forward * player.applySpeed * Time.deltaTime);
+
+        player.isGround =
+            Physics.Raycast(player.transform.position, Vector3.down, player.capsulCol.bounds.extents.y / 2 + 0.1f);
+        if (player.isGround)
+            player._stateMachine.ChangeState(StateName.IDLE);
+    }
+
+    public void Exit(Player player)
+    {
+        player.anim.SetBool("isJump", false);
+    }
+}
+
+public class Roll : State
+{
+    public StateName stateName { get; } = StateName.ROLL;
+
+    public void Enter(Player player)
+    {
+        player.anim.SetBool("isRoll", true);
+        Debug.Log(player.anim.GetBool("isRoll"));
+        player.transform.Translate(Vector3.forward * 2f * Time.deltaTime);
+    }
+
+    public void Action(Player player)
+    {
+    }
+
+    public void Exit(Player player)
+    {
+        player.anim.SetBool("isRoll", false);
     }
 }

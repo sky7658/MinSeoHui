@@ -10,6 +10,10 @@ public enum StateName
     JUMP,
     HIT,
     BACK,
+    DEAD,
+    FALL,
+    ROLL,
+    ATTACK
 }
 
 public class StateMachine
