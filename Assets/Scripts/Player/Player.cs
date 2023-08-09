@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamageable
 {
     State _state;
     [SerializeField] Camera _camera;
@@ -34,10 +34,12 @@ public class Player : MonoBehaviour
     public StateName stateName;
     
     public Rigidbody rb;
-
     public Animator anim;
     
-    
+    public float hp = 100f;
+    public float maxHp = 100f;
+
+
     void Awake()
     {
         anim = GetComponent<Animator>();
@@ -54,6 +56,9 @@ public class Player : MonoBehaviour
         _stateMachine.AddState(StateName.JUMP, new Jump());
         _stateMachine.AddState(StateName.HIT, new Hit());
         _stateMachine.AddState(StateName.BACK, new BackMove());
+        _stateMachine.AddState(StateName.DEAD, new Dead());
+        _stateMachine.AddState(StateName.FALL, new Fall());
+        _stateMachine.AddState(StateName.ROLL, new Roll());
     }
 
     // Update is called once per frame
@@ -72,6 +77,16 @@ public class Player : MonoBehaviour
         Vector3 _characterRotationY = new Vector3(0f, _yRotation, 0f) * lookSensitivity;
 
         transform.eulerAngles += _characterRotationY;
+    }
+
+    public void Roll()
+    {
+        //컨트롤키 누르면 구르기
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            _stateMachine.ChangeState(StateName.ROLL);
+        }
+        
     }
 
     public void TryMove()
@@ -122,8 +137,13 @@ public class Player : MonoBehaviour
     {
         if (other.gameObject.tag == "Attack")
         {
-            print("맞음");
-            _stateMachine.ChangeState(StateName.HIT);
+            IDamageable damageableObject = other.GetComponent<IDamageable>();
+
+            if (damageableObject == null)
+                damageableObject = other.GetComponentInParent<IDamageable>();
+
+            if (damageableObject != null)
+                TakeDamage(damageableObject.GetDamage(), Vector3.zero);
         }
     }
     
@@ -131,5 +151,19 @@ public class Player : MonoBehaviour
     {
         print("ToIdle");
         _stateMachine.ChangeState(StateName.IDLE);
+    }
+    
+    public void TakeDamage(int damage, Vector3 reactVec)
+    {
+        hp -= damage;
+        if (hp <= 0)
+            _stateMachine.ChangeState(StateName.DEAD);
+        else
+            _stateMachine.ChangeState(StateName.HIT);
+    }
+    
+    public int GetDamage()
+    {
+        return 0;
     }
 }

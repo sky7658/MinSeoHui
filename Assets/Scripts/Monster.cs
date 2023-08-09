@@ -4,20 +4,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Monster : MonoBehaviour
+public class Monster : MonoBehaviour, IDamageable
 {
     public int maxHealth;
     public int curHealth;
+    public int damage;
     public Transform target;
     public bool isChase;
     public bool isAttack;
     public BoxCollider meleeArea;
+    public MonType monsterType;
+    [SerializeField] float targetRadius = 10f;
 
     private Rigidbody rb;
     private BoxCollider boxCollider;
     private Material mat;
     private NavMeshAgent nav;
-    private Animator anim;
+    protected Animator anim;
 
     private void Awake()
     {
@@ -26,10 +29,25 @@ public class Monster : MonoBehaviour
         //mat = GetComponentInChildren<MeshRenderer>().material;
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
+    }
+
+    public void Init()
+    {
         
+    }
+
+    private void OnEnable()
+    {
         Invoke("ChaseStart",2);
     }
-    
+
+    private void OnDisable()
+    {
+        //인보크 종료
+        CancelInvoke();
+        StopAllCoroutines();
+    }
+
     void ChaseStart()
     {
         isChase = true;
@@ -42,43 +60,28 @@ public class Monster : MonoBehaviour
         rb.angularVelocity = Vector3.zero;
     }
 
-    private void FixedUpdate()
+    protected void FixedUpdate()
     {
-        Targerting();
         if(!isChase)
             FreezeVelocity();
     }
 
-    void Targerting()
+    protected bool Targerting()
     {
-        float targetRadius = 1.5f;
-        float targetRange = 0.2f;
-        
         RaycastHit[] rayHits =
-            Physics.SphereCastAll(transform.position, targetRadius, transform.forward, targetRange, LayerMask.GetMask("Player"));
-        
-        if(rayHits.Length > 0.7f && !isAttack)
-        {
-            transform.LookAt(target);
-            
-            StartCoroutine(Attack());
-        }
-    }
+            Physics.SphereCastAll(transform.position, targetRadius, Vector3.up, 0f, LayerMask.GetMask("Player"));
+        //디버그 레이
+        Debug.DrawRay(transform.position, Vector3.up, Color.red, targetRadius);
 
-    IEnumerator Attack()
-    {
-        isChase = false;
-        isAttack = true;
-        anim.SetTrigger("Attack 01");
-        yield return new WaitForSeconds(0.2f);
-        meleeArea.enabled = true;
-        
-        yield return new WaitForSeconds(1f);
-        meleeArea.enabled = false;
-        
-        isChase = true;
-        isAttack = false;
-        anim.SetTrigger("Attack 01");
+        Vector3 targetDirection = (target.position - transform.position).normalized;
+        Quaternion targetRotation = Quaternion.LookRotation(new Vector3(targetDirection.x, 0f, targetDirection.z));
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+        if (rayHits.Length > 0 && !isAttack)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     private void Update()
@@ -112,5 +115,15 @@ public class Monster : MonoBehaviour
             
             Destroy(gameObject, 4);
         }
+    }
+
+    public void TakeDamage(int damage, Vector3 reactVect)
+    {
+        StartCoroutine("OnDamage", reactVect);
+    }
+    
+    public int GetDamage()
+    {
+        return damage;
     }
 }
