@@ -15,19 +15,19 @@ namespace LMS.Cards
         {
             if (other.tag == "Finish") // ¼öÁ¤
             {
-                Release();
+                Release(this);
                 //var newFloor = Instantiate(Manager.GameManager.Instance.ResourceLoadObj("Floor")).GetComponent<Floor>();
                 //newFloor.Initialized(Vector3.zero, new Vector3(transform.position.x, other.transform.position.y, transform.position.z), 1f, info, "Floor");
             }
         }
 
-        protected override void Release()
+        protected override void Release<T>(T obj)
         {
-            base.Release();
+            base.Release(this);
             gravity = 0f;
             var _newFloor = Instantiate(Manager.GameManager.Instance.ResourceLoadObj("Floor")).GetComponent<Floor>();
             var _newPos = transform.position + new Vector3(0, 0.3f, 0);
-            _newFloor.Initialized(Vector3.zero, _newPos, 1f, info, "Floor");
+            _newFloor.Initialized(Vector3.zero, _newPos, 1f, "Floor", info);
         }
     }
 }

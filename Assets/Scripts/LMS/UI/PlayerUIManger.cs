@@ -45,6 +45,12 @@ namespace LMS.UI
         /// </summary>
         /// <param name="index"></param>
         public void SelectCard(int index) => cHandler.SelectCard(infoText, index);
+        /// <summary>
+        /// Hand에 있는 Card List를 보이게 하거나 숨기게 해줍니다.
+        /// </summary>
+        public void SetHand() => cHandler.SetHand();
+
+        public void ComboAttacks(GameObject obj) => cHandler.ComboAttacks(obj);
     }
 }
 

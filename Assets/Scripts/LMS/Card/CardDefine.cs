@@ -8,6 +8,11 @@ namespace LMS.Cards
     {
         // 카드 최대치
         public static int maxCardCount = 5;
+        public static Vector3 handDistance = new Vector3(0f, 100f, 0f);
+        public static Vector3 InitCardPos = new Vector3(-577f, -210f, 0f);
+
+        public static float basicAtkDelay = 0.5f;
+        public static float comboTimeThreshold = 0.7f;
 
         public static string cardPrefName = "RawImage";
 
@@ -34,28 +39,6 @@ namespace LMS.Cards
             {SkillType.LIONROAR, 0.2f}, {SkillType.METEORS, 0.2f}, {SkillType.SLASHES, 1f},
             {SkillType.HEAL, 0.2f}
         };
-
-        // 기존 코드들
-        /*public static Dictionary<string, SkillType> skillTypes = new Dictionary<string, SkillType>()
-        {
-            {cardImgNames[0], SkillType.SINGLE}, {cardImgNames[1], SkillType.MULTIPLE}, {cardImgNames[2], SkillType.SPRAY},
-            {cardImgNames[3], SkillType.FLOOR}, {cardImgNames[4], SkillType.EXPLOSION}, {cardImgNames[5], SkillType.SPECIAL},
-            {cardImgNames[6], SkillType.HEAL}, {cardImgNames[7], SkillType.TELEPORT}, {cardImgNames[8], SkillType.DARKSIGHT}, {cardImgNames[9], SkillType.CRITICAL}
-        };
-
-        public static Dictionary<SkillType, float> delayTimes = new Dictionary<SkillType, float>()
-        {
-            {SkillType.SINGLE, 0.2f}, {SkillType.MULTIPLE, 0.2f}, {SkillType.SPRAY, 1f},
-            {SkillType.FLOOR, 1f}, {SkillType.EXPLOSION, 1f}, {SkillType.SPECIAL, 1f},
-            {SkillType.HEAL, 0.2f}, {SkillType.TELEPORT, 2f}, {SkillType.DARKSIGHT, 0.2f}, {SkillType.CRITICAL, 0.2f}
-        };
-
-        public static Dictionary<SkillType, float> executeTimes = new Dictionary<SkillType, float>()
-        {
-            {SkillType.SINGLE, 0.2f}, {SkillType.MULTIPLE, 0.2f}, {SkillType.SPRAY, 1f},
-            {SkillType.FLOOR, 0.2f}, {SkillType.EXPLOSION, 0.2f}, {SkillType.SPECIAL, 0.2f},
-            {SkillType.HEAL, 0.2f}, {SkillType.TELEPORT, 2f}, {SkillType.DARKSIGHT, 0.2f}, {SkillType.CRITICAL, 0.2f}
-        };*/
     }
     public class CardInfo
     {

@@ -34,6 +34,8 @@ namespace LMS.Cards
             cardImg.transform.localScale = new Vector3(1f, 1f, 1f);
             cardMask.transform.localScale = new Vector3(1f, 1f, 1f);
 
+            transform.localPosition = CardBase.InitCardPos;
+
             cardMask.gameObject.SetActive(false);
 
             SetCardImg(imgName);
@@ -52,6 +54,7 @@ namespace LMS.Cards
                     skill = CardSkill.Meteors;
                     break;
                 case SkillType.SLASHES:
+                    skill = CardSkill.SprayFire;
                     break;
                 case SkillType.HEAL:
                     skill = CardSkill.HpHeal;

@@ -7,6 +7,7 @@ namespace LMS.Cards
 {
     public class SkillEffect : MonoBehaviour
     {
+        protected string name;
         protected CardInfo info;
 
         protected List<ParticleSystem> particleSystems = new List<ParticleSystem>();
@@ -19,14 +20,23 @@ namespace LMS.Cards
             }
         }
 
-        public virtual void Initialized(Vector3 arrow, Vector3 pos, float speed, CardInfo info, string prefName)
+        public virtual void Initialized(Vector3 arrow, Vector3 pos, float speed, string prefName, CardInfo info = null)
         {
-            this.info = info;
-            ParticleUtil.InitParticleColor(particleSystems, prefName, this.info.property);
+            if (info != null)
+            {
+                this.info = info;
+                ParticleUtil.InitParticleColor(particleSystems, prefName, this.info.property);
+            }
+            else
+            {
+                ParticleUtil.InitParticleColor(particleSystems, prefName);
+            }
+            
         }
-        protected IEnumerator DisableObject()
+        protected IEnumerator DisableObject<T>(T obj)
         {
             int _particleCounts = 77; // 임의의 숫자 초기화
+
             while (_particleCounts > 0)
             {
                 _particleCounts = 0;
@@ -35,7 +45,8 @@ namespace LMS.Cards
             }
 
             // 게임 오브젝트 비활성화 (수정)
-            Destroy(gameObject);
+            ObjectPool.Instance.ReturnObject(obj, name);
+            UtilFunction.TurnOnOff(ObjectPool.Instance.objectInfos[4], gameObject);
             yield break;
         }
     }

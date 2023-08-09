@@ -16,10 +16,18 @@ public class TestScript : MonoBehaviour
         // 연습 코드
         if (Input.GetKeyDown(KeyCode.A))
         {
-            int rand = Random.Range(0, 2);
+            int rand = Random.Range(0, 3);
             //int rand2 = Random.Range(1, 4);
             //playerUI.PushCard(rand, (LMS.Cards.CardProperty)rand2);
-            playerUI.PushCard(rand, (LMS.Cards.CardProperty)0);
+            playerUI.PushCard(rand, (LMS.Cards.CardProperty)3);
+        }
+        if(Input.GetKeyDown(KeyCode.S))
+        {
+            playerUI.SetHand();
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            playerUI.ComboAttacks(gameObject);
         }
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {

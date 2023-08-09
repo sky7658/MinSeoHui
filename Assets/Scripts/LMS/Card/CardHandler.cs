@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using LMS.UI;
 using LMS.Utility;
+using LMS.Manager;
 
 namespace LMS.Cards
 {
@@ -24,6 +25,11 @@ namespace LMS.Cards
             cards = new List<Card>();
             cardUI = new CardUI();
             selectCardNum = -1;
+
+            handType = true;
+
+            comboCount = 0;
+            activeAtk = false;
         }
 
         private int selectCardNum;
@@ -86,9 +92,11 @@ namespace LMS.Cards
             }
 
             var newCard = ObjectPool.Instance.GetObject<Card>(CardBase.cardPrefName);
+            UtilFunction.TurnOnOff(ObjectPool.Instance.objectInfos[0], newCard.gameObject, true);
+
             newCard.Initialized(CardBase.cardImgNames[index], property);
             cards.Add(newCard);
-            cardUI.CardAligment(cards);
+            cardUI.CardAligment(cards, handType);
         }
 
         /// <summary>
@@ -105,9 +113,12 @@ namespace LMS.Cards
             }
 
             cardUI.UpdateInfo(text);
-            ObjectPool.Instance.ReturnObject(cards[selectCardNum].gameObject, CardBase.cardPrefName);
+
+            ObjectPool.Instance.ReturnObject(cards[selectCardNum], CardBase.cardPrefName);
+            UtilFunction.TurnOnOff(ObjectPool.Instance.objectInfos[0], cards[selectCardNum].gameObject);
+
             cards.RemoveAt(selectCardNum);
-            cardUI.CardAligment(cards);
+            cardUI.CardAligment(cards, handType);
             selectCardNum = -1;
         }
 
@@ -147,6 +158,55 @@ namespace LMS.Cards
                 }
                 cardUI.UpdateInfo(text, cards[selectCardNum].cardInfo);
             }
+        }
+
+        private bool handType;
+        /// <summary>
+        /// Hand에 있는 Card List를 보이게 하거나 숨기게 해줍니다.
+        /// </summary>
+        public void SetHand()
+        {
+            if (handType)
+            {
+                handType = false;
+            }
+            else
+            {
+                handType = true;
+            }
+
+            cardUI.CardAligment(cards, handType);
+        }
+
+        private int comboCount;
+        private Coroutine coroutine;
+        private bool activeAtk;
+        public void ComboAttacks(GameObject obj)
+        {
+            if (activeAtk == true) return; // 공격 딜레이 중이라면 return
+
+            comboCount++;
+            activeAtk = true;
+            Debug.Log(comboCount);
+
+            if (coroutine != null)
+            {
+                GameManager.Instance.StopCoroutine(coroutine);
+                coroutine = null;
+            }
+
+            if(comboCount < 3)
+            {
+                GameManager.Instance.ExecuteCoroutine(CardSkill.SingleFire(obj, obj.transform.forward));
+                coroutine = GameManager.Instance.ExecuteCoroutine(SkillAction.RetentionTime(CardBase.comboTimeThreshold, () => comboCount = 0));
+            }
+            else
+            {
+                GameManager.Instance.ExecuteCoroutine(CardSkill.MultipleFire(obj, obj.transform.forward));
+                comboCount = 0;
+            }
+
+            GameManager.Instance.ExecuteCoroutine(SkillAction.RetentionTime(CardBase.basicAtkDelay, () => activeAtk = false));
         }
     }
 
