@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using LMS.UI;
 using LMS.Utility;
 using LMS.Manager;
+using System;
 
 namespace LMS.Cards
 {
@@ -181,13 +182,15 @@ namespace LMS.Cards
         private int comboCount;
         private Coroutine coroutine;
         private bool activeAtk;
-        public void ComboAttacks(GameObject obj)
+        public void ComboAttacks(GameObject obj, Action del)
         {
             if (activeAtk == true) return; // 공격 딜레이 중이라면 return
 
             comboCount++;
             activeAtk = true;
             Debug.Log(comboCount);
+
+            del();
 
             if (coroutine != null)
             {

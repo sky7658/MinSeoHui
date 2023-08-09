@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using LMS.Cards;
+using System;
 
 namespace LMS.UI
 {
@@ -50,7 +51,7 @@ namespace LMS.UI
         /// </summary>
         public void SetHand() => cHandler.SetHand();
 
-        public void ComboAttacks(GameObject obj) => cHandler.ComboAttacks(obj);
+        public void ComboAttacks(GameObject obj, Action del) => cHandler.ComboAttacks(obj, del);
     }
 }
 

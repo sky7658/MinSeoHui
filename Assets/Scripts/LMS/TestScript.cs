@@ -27,7 +27,7 @@ public class TestScript : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            playerUI.ComboAttacks(gameObject);
+            playerUI.ComboAttacks(gameObject, null);
         }
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
