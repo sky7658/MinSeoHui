@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 
 namespace LMS.Manager
@@ -47,9 +46,14 @@ namespace LMS.Manager
         /// 코루틴을 실행해주는 함수
         /// </summary>
         /// <param name="coroutine"> 실행하고 싶은 IEnumerator</param>
-        public void ExecuteCoroutine(IEnumerator coroutine)
+        public Coroutine ExecuteCoroutine(IEnumerator coroutine)
         {
-            StartCoroutine(coroutine);
+            return StartCoroutine(coroutine);
+        }
+
+        public void QuitCoroutine(Coroutine coroutine)
+        {
+            StopCoroutine(coroutine);
         }
 
         private Dictionary<string, Texture> dicImgs = new Dictionary<string, Texture>();

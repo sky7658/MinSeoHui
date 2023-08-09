@@ -21,9 +21,20 @@ namespace LMS.UI
 
             infoDefaultText = "Grade : {0}\nSpend Mp : {1}\nCount : {2}\nProperty : {3}\nInfo : {4}";
         }
-        public void CardAligment(List<Card> cards)
+        /// <summary>
+        /// 핸드에 있는 카드의 위치를 정리하고 그 위치로 이동해줍니다.
+        /// </summary>
+        /// <param name="cards"></param>
+        /// <param name="handType"></param>
+        public void CardAligment(List<Card> cards, bool handType)
         {
+            if (cards.Count < 1) return; // 카드가 없을 경우 실행하지 않음
+
             float[] objLerps = new float[cards.Count];
+            Vector3 _dis;
+
+            if (handType) _dis = Vector3.zero;
+            else _dis = -CardBase.handDistance;
 
             // 위치 리턴
             switch (cards.Count)
@@ -53,7 +64,7 @@ namespace LMS.UI
                     _targetPos.y += curve;
                     _targetRot = Quaternion.Slerp(Quaternion.Euler(leftLocalRot), Quaternion.Euler(rightLocalRot), objLerps[i]);
                 }
-                cards[i].MoveTo(_targetPos, _targetRot, 0.2f);
+                cards[i].MoveTo(_targetPos + _dis, _targetRot, 0.2f);
             }
         }
 

@@ -28,7 +28,7 @@ namespace LMS.Utility
             _mainM.loop = active;
         }
 
-        public static void InitParticleColor(List<ParticleSystem> particleSystems, string particleName, Cards.CardProperty property)
+        public static void InitParticleColor(List<ParticleSystem> particleSystems, string particleName, Cards.CardProperty property = Cards.CardProperty.FIRE)
         {
             if(property == Cards.CardProperty.NONE)
             {

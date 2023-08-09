@@ -8,9 +8,9 @@ namespace LMS.Cards
     {
         private Vector3 initialScale;
 
-        public override void Initialized(Vector3 arrow, Vector3 pos, float executeTime, CardInfo info, string prefName)
+        public override void Initialized(Vector3 arrow, Vector3 pos, float executeTime, string prefName, CardInfo info)
         {
-            base.Initialized(arrow, pos, executeTime, info, prefName);
+            base.Initialized(arrow, pos, executeTime, prefName, info);
             transform.position = pos;
             initialScale = transform.localScale;
 
@@ -21,7 +21,7 @@ namespace LMS.Cards
         void Release()
         {
             foreach(var particle in particleSystems) { Utility.ParticleUtil.SetParticleLoop(particle, false); }
-            Manager.GameManager.Instance.ExecuteCoroutine(DisableObject());
+            Manager.GameManager.Instance.ExecuteCoroutine(DisableObject(this));
         }
     }
 

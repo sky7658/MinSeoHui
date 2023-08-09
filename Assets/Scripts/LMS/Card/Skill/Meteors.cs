@@ -20,6 +20,8 @@ namespace LMS.Cards
         private void TeleportEffect(Vector3 pos)
         {
             var _newEffect = Utility.ObjectPool.Instance.GetObject<ParticleSystem>("Teleport");
+            Utility.UtilFunction.TurnOnOff(Utility.ObjectPool.Instance.objectInfos[3], _newEffect.gameObject, true);
+            //var _newEffect = Utility.ObjectPool<ParticleSystem>.Instance.GetObject("Teleport");
             _newEffect.transform.position = pos;
         }
     }
