@@ -137,8 +137,7 @@ public class Attack : State
     public StateName stateName { get; } = StateName.ATTACK;
     public void Enter(Player player)
     {
-        player.anim.SetBool("isAtk1",true);
-        player._stateMachine.ChangeState(StateName.IDLE);
+        player.anim.SetBool("isAtk2",true);
     }
 
     public void Action(Player player)
@@ -147,7 +146,7 @@ public class Attack : State
 
     public void Exit(Player player)
     {
-        player.anim.SetBool("isAtk1",false);
+        player.anim.SetBool("isAtk2",false);
     }
 }
 

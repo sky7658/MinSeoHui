@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.ComTypes;
+using LMS.UI;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -38,13 +39,15 @@ public class Player : MonoBehaviour, IDamageable
     
     public float hp = 100f;
     public float maxHp = 100f;
-
-
+    
+    public PlayerUIManger playerUIManger;
+    
     void Awake()
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         capsulCol = GetComponent<CapsuleCollider>();
+        playerUIManger = new PlayerUIManger();
     }
     void Start()
     {
@@ -59,6 +62,9 @@ public class Player : MonoBehaviour, IDamageable
         _stateMachine.AddState(StateName.DEAD, new Dead());
         _stateMachine.AddState(StateName.FALL, new Fall());
         _stateMachine.AddState(StateName.ROLL, new Roll());
+        _stateMachine.AddState(StateName.ATTACK, new Attack());
+
+        playerUIManger.CreateInfoText();
     }
 
     // Update is called once per frame
@@ -69,6 +75,55 @@ public class Player : MonoBehaviour, IDamageable
         float scroollWheel = Input.GetAxis("Mouse ScrollWheel");
         
         _camera.transform.position += Vector3.forward * Time.deltaTime * scroollWheel * scrollSpeed;
+        
+        //마우스 왼쪽 클릭시 콤보어택
+        if (Input.GetMouseButtonDown(0))
+        {
+            _stateMachine.ChangeState(StateName.ATTACK);
+            playerUIManger.ComboAttacks(gameObject);
+        }
+        
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            int rand = UnityEngine.Random.Range(0, 3);
+            //int rand2 = Random.Range(1, 4);
+            //playerUI.PushCard(rand, (LMS.Cards.CardProperty)rand2);
+            playerUIManger.PushCard(rand, (LMS.Cards.CardProperty)3);
+        }
+        
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            playerUIManger.SelectCard(0);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            playerUIManger.SelectCard(1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            playerUIManger.SelectCard(2);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            playerUIManger.SelectCard(3);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            playerUIManger.SelectCard(4);
+        }
+        if(Input.GetKeyDown(KeyCode.V))
+        {
+            playerUIManger.SetHand();
+        }
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            playerUIManger.PopCard();
+        }
+        
+        if(Input.GetMouseButtonDown(1))
+        {
+            playerUIManger.UseCard(gameObject, transform.forward);
+        }
     }
 
     private void CharacterRotation()
