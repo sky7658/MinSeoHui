@@ -6,7 +6,7 @@ namespace LMS.Cards
 {
     public class CardBase
     {
-        // Ä«µå ÃÖ´ëÄ¡
+        // ì¹´ë“œ ìµœëŒ€ì¹˜
         public static int maxCardCount = 5;
         public static Vector3 handDistance = new Vector3(0f, 100f, 0f);
         public static Vector3 InitCardPos = new Vector3(-577f, -210f, 0f);
@@ -19,21 +19,21 @@ namespace LMS.Cards
         public static string[] cardImgNames = new string[] { "LionRoar", "Meteors", "Slashes", "Heal" };
 
 
-        // Ä«µå Img¿¡ µû¸¥ Type °áÁ¤
+        // ì¹´ë“œ Imgì— ë”°ë¥¸ Type ê²°ì •
         public static Dictionary<string, SkillType> skillTypes = new Dictionary<string, SkillType>()
         {
             {cardImgNames[0], SkillType.LIONROAR}, {cardImgNames[1], SkillType.METEORS}, {cardImgNames[2], SkillType.SLASHES},
             {cardImgNames[3], SkillType.HEAL}
         };
 
-        // Delay Time °ü¸®
+        // Delay Time ê´€ë¦¬
         public static Dictionary<SkillType, float> delayTimes = new Dictionary<SkillType, float>()
         {
             {SkillType.LIONROAR, 0.2f}, {SkillType.METEORS, 0.2f}, {SkillType.SLASHES, 1f},
             {SkillType.HEAL, 0.2f}
         };
 
-        // Execute Time °ü¸®
+        // Execute Time ê´€ë¦¬
         public static Dictionary<SkillType, float> executeTimes = new Dictionary<SkillType, float>()
         {
             {SkillType.LIONROAR, 0.2f}, {SkillType.METEORS, 0.2f}, {SkillType.SLASHES, 1f},
@@ -51,7 +51,7 @@ namespace LMS.Cards
         public SkillType type { get; set; }
         public CardProperty property { get; set; }
 
-        // CardÀÇ ±âº» Á¤º¸ ¼ÂÆÃ
+        // Cardì˜ ê¸°ë³¸ ì •ë³´ ì…‹íŒ…
         public CardInfo(float spendMP, int count, Grade grade, SkillType type, CardProperty property = CardProperty.NONE)
         {
             name = CardBase.cardImgNames[(int)type];
@@ -65,15 +65,15 @@ namespace LMS.Cards
         }
     }
 
-    // ·¹¾îµµ ¹× ¾ÆÀÌÅÛ °³¼ö
+    // ë ˆì–´ë„ ë° ì•„ì´í…œ ê°œìˆ˜
     public enum Grade { NORMAL = 3, RARE = 2, EPIC = 1 }
-    // Ä«µå ½ºÅ³ Å¸ÀÔ
-    public enum SkillType { LIONROAR, METEORS, SLASHES, HEAL} // ÀÌ°Ô ÂğÀÓ
+    // ì¹´ë“œ ìŠ¤í‚¬ íƒ€ì…
+    public enum SkillType { LIONROAR, METEORS, SLASHES, HEAL} // ì´ê²Œ ì°ì„
     /*public enum SkillType
     {
         SPRAY, SINGLE, MULTIPLE, FLOOR, EXPLOSION, SPECIAL,
         HEAL, TELEPORT, DARKSIGHT, CRITICAL
     }*/
-    // Ä«µå ¼Ó¼º
-    public enum CardProperty { NONE, FIRE, ICE, POISON } // ºÒ ¾óÀ½ µ¶
+    // ì¹´ë“œ ì†ì„±
+    public enum CardProperty { NONE, FIRE, ICE, POISON } // ë¶ˆ ì–¼ìŒ ë…
 }
