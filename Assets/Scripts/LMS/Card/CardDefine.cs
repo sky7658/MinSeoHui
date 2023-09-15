@@ -1,42 +1,55 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace LMS.Cards
 {
     public class CardBase
     {
-        // ì¹´ë“œ ìµœëŒ€ì¹˜
+        // Ä«µå ÃÖ´ëÄ¡
         public static int maxCardCount = 5;
-        public static Vector3 handDistance = new Vector3(0f, 100f, 0f);
-        public static Vector3 InitCardPos = new Vector3(-577f, -210f, 0f);
 
-        public static float basicAtkDelay = 0.5f;
-        public static float comboTimeThreshold = 0.7f;
+        public static Vector3 handDistance = new Vector3(0f, 100f, 0f);     // ÇÚµå ¼û°ÜÁö´Â °Å¸®
+        public static Vector3 InitCardPos = new Vector3(-577f, -210f, 0f);  // Ä«µå »ı¼º À§Ä¡
+        public static Vector3 characterHeight = new Vector3(0f, 1.5f, 0f);  // Ä³¸¯ÅÍ ³ôÀÌ
+        public static Vector3 characterSkillHeight = new Vector3(0f, -0.416365f, 0f);
 
-        public static string cardPrefName = "RawImage";
+        public static float basicAtkDelay = 0.5f;       // ±âº» °ø°İ µô·¹ÀÌ
+        public static float comboTimeThreshold = 0.7f;  // ÄŞº¸ ½Ã À¯ÁöµÇ´Â ½Ã°£
 
-        public static string[] cardImgNames = new string[] { "LionRoar", "Meteors", "Slashes", "Heal" };
+        public static string cardPrefName = "RawImage"; // Ä«µå ÇÁ¸®ÆÕ ÀÌ¸§
+
+        public static string[] cardImgNames = new string[] { "LionRoar", "Meteors", "Slashes", "Spray", "Heal" };  // Ä«µå ÀÌ¹ÌÁö ÀÌ¸§
+        public static float[] cardLevelMaxExp = new float[] { 100f, 200f, 300f, 400f }; // Max Level 5 (¼öÁ¤ °¡´É)
 
 
-        // ì¹´ë“œ Imgì— ë”°ë¥¸ Type ê²°ì •
-        public static Dictionary<string, SkillType> skillTypes = new Dictionary<string, SkillType>()
+        public static Dictionary<SkillType, float[]> cardLevelDamage = new Dictionary<SkillType, float[]>()
         {
-            {cardImgNames[0], SkillType.LIONROAR}, {cardImgNames[1], SkillType.METEORS}, {cardImgNames[2], SkillType.SLASHES},
-            {cardImgNames[3], SkillType.HEAL}
+            { SkillType.LIONROAR, new float[] { 5f, 10f, 15f, 20f, 25f } },
+            { SkillType.METEORS, new float[] { 2f, 3f, 4f, 5f, 6f } },
+            { SkillType.SLASHES, new float[] { 5f, 10f, 15f, 20f, 25f } },
+            { SkillType.SPRAY, new float[] { 1f, 1.5f, 2f, 2.5f, 3f } }
         };
 
-        // Delay Time ê´€ë¦¬
+        // Ä«µå Img¿¡ µû¸¥ Type °áÁ¤
+        public static Dictionary<string, SkillType> skillTypes = new Dictionary<string, SkillType>()
+        {
+            {cardImgNames[0], SkillType.LIONROAR}, {cardImgNames[1], SkillType.METEORS}, {cardImgNames[2], SkillType.SLASHES}, {cardImgNames[3], SkillType.SPRAY},
+            {cardImgNames[4], SkillType.HEAL}
+        };
+
+        // Delay Time °ü¸®
         public static Dictionary<SkillType, float> delayTimes = new Dictionary<SkillType, float>()
         {
-            {SkillType.LIONROAR, 0.2f}, {SkillType.METEORS, 0.2f}, {SkillType.SLASHES, 1f},
+            {SkillType.LIONROAR, 0.2f}, {SkillType.METEORS, 0.2f}, {SkillType.SLASHES, 1f}, {SkillType.SPRAY, 1f},
             {SkillType.HEAL, 0.2f}
         };
 
-        // Execute Time ê´€ë¦¬
+        // Execute Time °ü¸®
         public static Dictionary<SkillType, float> executeTimes = new Dictionary<SkillType, float>()
         {
-            {SkillType.LIONROAR, 0.2f}, {SkillType.METEORS, 0.2f}, {SkillType.SLASHES, 1f},
+            {SkillType.LIONROAR, 0.2f}, {SkillType.METEORS, 0.2f}, {SkillType.SLASHES, 1f}, {SkillType.SPRAY, 1f},
             {SkillType.HEAL, 0.2f}
         };
     }
@@ -51,7 +64,7 @@ namespace LMS.Cards
         public SkillType type { get; set; }
         public CardProperty property { get; set; }
 
-        // Cardì˜ ê¸°ë³¸ ì •ë³´ ì…‹íŒ…
+        // CardÀÇ ±âº» Á¤º¸ ¼ÂÆÃ
         public CardInfo(float spendMP, int count, Grade grade, SkillType type, CardProperty property = CardProperty.NONE)
         {
             name = CardBase.cardImgNames[(int)type];
@@ -65,15 +78,10 @@ namespace LMS.Cards
         }
     }
 
-    // ë ˆì–´ë„ ë° ì•„ì´í…œ ê°œìˆ˜
+    // ·¹¾îµµ ¹× ¾ÆÀÌÅÛ °³¼ö
     public enum Grade { NORMAL = 3, RARE = 2, EPIC = 1 }
-    // ì¹´ë“œ ìŠ¤í‚¬ íƒ€ì…
-    public enum SkillType { LIONROAR, METEORS, SLASHES, HEAL} // ì´ê²Œ ì°ì„
-    /*public enum SkillType
-    {
-        SPRAY, SINGLE, MULTIPLE, FLOOR, EXPLOSION, SPECIAL,
-        HEAL, TELEPORT, DARKSIGHT, CRITICAL
-    }*/
-    // ì¹´ë“œ ì†ì„±
-    public enum CardProperty { NONE, FIRE, ICE, POISON } // ë¶ˆ ì–¼ìŒ ë…
+    // Ä«µå ½ºÅ³ Å¸ÀÔ
+    public enum SkillType { LIONROAR, METEORS, SLASHES, SPRAY, HEAL} // ÀÌ°Ô ÂğÀÓ
+    // Ä«µå ¼Ó¼º
+    public enum CardProperty { NONE, FIRE, ICE, POISON } // ºÒ ¾óÀ½ µ¶
 }

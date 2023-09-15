@@ -65,10 +65,11 @@ namespace LMS.Cards
             yield break;
         }
 
-        public static IEnumerator Teleport(GameObject obj, Vector3 pos, float executeTime, Action startEffect = null, Action EndEffect = null)
+        public static IEnumerator Teleport(GameObject obj, Vector3 pos, float executeTime, bool rigd, Action startEffect = null, Action EndEffect = null)
         {
             float _elapsed = 0f;
-            obj.transform.localScale = Vector3.zero;
+            Rigidbody _rb = obj.GetComponent<Rigidbody>();
+            _rb.useGravity = rigd;
 
             if(startEffect != null) startEffect(); // Effect를 사용
 
@@ -77,10 +78,10 @@ namespace LMS.Cards
                 _elapsed += Time.smoothDeltaTime;
                 yield return null;
             }
-            obj.transform.localScale = Vector3.one;
+
             obj.transform.position = pos;
 
-            if(EndEffect != null) EndEffect(); // Effect를 사용
+            if (EndEffect != null) EndEffect(); // Effect를 사용
 
             yield break;
         }

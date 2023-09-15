@@ -27,7 +27,7 @@ namespace LMS.Cards
             gravity = 0f;
             var _newFloor = Instantiate(Manager.GameManager.Instance.ResourceLoadObj("Floor")).GetComponent<Floor>();
             var _newPos = transform.position + new Vector3(0, 0.3f, 0);
-            _newFloor.Initialized(Vector3.zero, _newPos, 1f, "Floor", info);
+            //_newFloor.Initialized(Vector3.zero, _newPos, 1f, "Floor", info);
         }
     }
 }

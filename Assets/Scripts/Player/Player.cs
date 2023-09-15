@@ -79,8 +79,7 @@ public class Player : MonoBehaviour, IDamageable
         //마우스 왼쪽 클릭시 콤보어택
         if (Input.GetMouseButtonDown(0))
         {
-            _stateMachine.ChangeState(StateName.ATTACK);
-            playerUIManger.ComboAttacks(gameObject);
+            playerUIManger.ComboAttacks(gameObject, () => _stateMachine.ChangeState(StateName.ATTACK));
         }
         
         if (Input.GetKeyDown(KeyCode.A))

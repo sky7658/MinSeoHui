@@ -10,24 +10,24 @@ public class TestScript : MonoBehaviour
     {
         playerUI.CreateInfoText();
     }
-
+        
     void Update()
     {
         // 연습 코드
         if (Input.GetKeyDown(KeyCode.A))
         {
-            int rand = Random.Range(0, 3);
+            int rand = Random.Range(0, 4);
             //int rand2 = Random.Range(1, 4);
             //playerUI.PushCard(rand, (LMS.Cards.CardProperty)rand2);
-            playerUI.PushCard(rand, (LMS.Cards.CardProperty)3);
+            playerUI.PushCard(3, (LMS.Cards.CardProperty)3);
         }
-        if(Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.S))
         {
             playerUI.SetHand();
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            playerUI.ComboAttacks(gameObject);
+            playerUI.ComboAttacks(gameObject, null);
         }
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -54,7 +54,7 @@ public class TestScript : MonoBehaviour
         {
             playerUI.UseCard(gameObject, transform.forward);
         }
-        if(Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1))
         {
             playerUI.PopCard();
         }

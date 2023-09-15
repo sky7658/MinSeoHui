@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using LMS.Cards;
+using System;
 
 namespace LMS.UI
 {
@@ -25,6 +26,7 @@ namespace LMS.UI
                 infoText = newText;
             }
         }
+        public int GetCardCount() => cHandler.GetCardCount();
         /// <summary>
         /// Card List에 카드를 추가합니다.
         /// </summary>
@@ -50,7 +52,7 @@ namespace LMS.UI
         /// </summary>
         public void SetHand() => cHandler.SetHand();
 
-        public void ComboAttacks(GameObject obj) => cHandler.ComboAttacks(obj);
+        public void ComboAttacks(GameObject obj, Action del) => cHandler.ComboAttacks(obj, del);
     }
 }
 

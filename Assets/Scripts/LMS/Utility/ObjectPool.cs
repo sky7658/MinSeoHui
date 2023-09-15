@@ -81,7 +81,7 @@ namespace LMS.Utility
         {
             var newObj = GameObject.Instantiate(Manager.GameManager.Instance.ResourceLoadObj(info.name));
 
-            UtilFunction.TurnOnOff(info, newObj);
+            UtilFunction.TurnOnOff(info, newObj, false);
 
             //newObj.SetActive(false);
             //if(info.disableParent != null) newObj.transform.SetParent(info.disableParent);

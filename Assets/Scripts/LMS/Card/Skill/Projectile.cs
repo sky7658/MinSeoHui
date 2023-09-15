@@ -10,14 +10,16 @@ namespace LMS.Cards
         
         protected Rigidbody rigidBody;
         protected Collider col;
-        public override void Initialized(Vector3 arrow, Vector3 pos, float speed, string prefName, CardInfo info = null)
+        public override void Initialized(Vector3 arrow, Vector3 pos, float speed, string prefName, float damage, CardInfo info = null)
         {
-            base.Initialized(arrow, pos, speed, prefName, info);
+            base.Initialized(arrow, pos, speed, prefName, damage, info);
             name = "Effect";
             transform.position = pos; // 시작점
             rigidBody.velocity = arrow * speed; // 나아가는 방향
             col.enabled = true;
             transform.rotation = Quaternion.LookRotation(arrow); // 바라보는 방향
+
+            this.damage = damage;
         }
         protected override void Awake()
         {

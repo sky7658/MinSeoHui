@@ -8,9 +8,9 @@ namespace LMS.Cards
     {
         private Vector3 initialScale;
 
-        public override void Initialized(Vector3 arrow, Vector3 pos, float executeTime, string prefName, CardInfo info)
+        public override void Initialized(Vector3 arrow, Vector3 pos, float executeTime, string prefName, float damage, CardInfo info)
         {
-            base.Initialized(arrow, pos, executeTime, prefName, info);
+            base.Initialized(arrow, pos, executeTime, prefName, damage, info);
             transform.position = pos;
             initialScale = transform.localScale;
 

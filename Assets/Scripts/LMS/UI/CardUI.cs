@@ -87,6 +87,14 @@ namespace LMS.UI
 
     public class CardAction
     {
+        /// <summary>
+        /// 오브젝트의 위치와 스케일을 시간에 따라 변경시킵니다.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="targetPos"></param>
+        /// <param name="targetRot"></param>
+        /// <param name="duration"></param>
+        /// <returns></returns>
         public static IEnumerator MoveToAction(GameObject obj, Vector3 targetPos, Quaternion targetRot, float duration)
         {
             Vector3 _startPos = obj.transform.localPosition;
@@ -110,6 +118,11 @@ namespace LMS.UI
             yield break;
         }
 
+        /// <summary>
+        /// 시간에 따른 카드 마스크의 스케일을 조절합니다.
+        /// </summary>
+        /// <param name="card"></param>
+        /// <returns></returns>
         public static IEnumerator DelayAction(Card card)
         {
             float _t = 0f;
@@ -129,6 +142,12 @@ namespace LMS.UI
 
             yield break;
         }
+        /// <summary>
+        /// 카드를 선택/미선택 시 스케일을 조절합니다.
+        /// </summary>
+        /// <param name="card"></param>
+        /// <param name="isSelect"></param>
+        /// <returns></returns>
         public static IEnumerator SelectAction(Card card, bool isSelect = false)
         {
             float _t = 0f;
