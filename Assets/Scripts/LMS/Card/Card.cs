@@ -15,15 +15,16 @@ namespace LMS.Cards
         // 카드 스킬
         public bool delayEnabled { get; set; }
         public bool isHighlight { get; set; }
-        public delegate IEnumerator ActionDelegate(GameObject obj, Vector3 direction, CardInfo info);
+        public delegate IEnumerator ActionDelegate(GameObject obj, Vector3 direction, CardInfo info, float damage);
         private ActionDelegate skill { get; set; }
 
-
+        private float damage;
 
         private void Awake()
         {
             cardImg = GetComponent<RawImage>();
             cardMask = transform.GetChild(0).GetComponent<Image>();
+            expBarUI = transform.GetChild(1).GetComponent<ExpBarUI>();
         }
 
         public void Initialized(string imgName, CardProperty property = CardProperty.NONE)
@@ -36,11 +37,48 @@ namespace LMS.Cards
 
             transform.localPosition = CardBase.InitCardPos;
 
-            cardMask.gameObject.SetActive(false);
-
             SetCardImg(imgName);
-            cardInfo = new CardInfo(1f, 2, Grade.EPIC, CardBase.skillTypes[imgName], property);
+            cardInfo = new CardInfo(1f, -1, Grade.EPIC, CardBase.skillTypes[imgName], property);
             SetCardSkill();
+
+            cardLevel = 0;
+            currentExp = 0f;
+            maxExp = CardBase.cardLevelMaxExp[cardLevel];
+            damage = CardBase.cardLevelDamage[cardInfo.type][cardLevel];
+
+            cardMask.gameObject.SetActive(false);
+        }
+
+        private ExpBarUI expBarUI;
+        private int cardLevel;
+        private float currentExp;
+        private float maxExp;
+        /// <summary>
+        /// Card의 경험치를 업데이트 해줍니다.
+        /// </summary>
+        /// <param name="value"></param>
+        public void ExpUpdate(float value)
+        {
+            if (cardLevel == 4) return;
+
+            currentExp += value;
+            if(currentExp >= maxExp)
+            {
+                cardLevel++;
+                currentExp -= maxExp;
+
+                if (cardLevel == 4) 
+                {
+                    currentExp = maxExp;
+                }
+                else
+                {
+                    maxExp = CardBase.cardLevelMaxExp[cardLevel];
+                    damage = CardBase.cardLevelDamage[cardInfo.type][cardLevel];
+                }
+            }
+
+            expBarUI.UpdateExpBar(currentExp / maxExp);
         }
 
         private void SetCardSkill()
@@ -54,6 +92,9 @@ namespace LMS.Cards
                     skill = CardSkill.Meteors;
                     break;
                 case SkillType.SLASHES:
+                    skill = CardSkill.Slash;
+                    break;
+                case SkillType.SPRAY:
                     skill = CardSkill.SprayFire;
                     break;
                 case SkillType.HEAL:
@@ -91,7 +132,7 @@ namespace LMS.Cards
                 cardMask.gameObject.SetActive(true);
                 Manager.GameManager.Instance.ExecuteCoroutine(CardAction.DelayAction(this));
             }
-            Manager.GameManager.Instance.ExecuteCoroutine(skill(obj, direction, cardInfo));
+            Manager.GameManager.Instance.ExecuteCoroutine(skill(obj, direction, cardInfo, damage));
         }
 
         /// <summary>

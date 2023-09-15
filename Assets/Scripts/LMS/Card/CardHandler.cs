@@ -33,6 +33,8 @@ namespace LMS.Cards
             activeAtk = false;
         }
 
+        public int GetCardCount() => cards.Count; // 현재 카드 갯수
+
         private int selectCardNum;
         /// <summary>
         /// Card List에 있는 특정 카드를 선택합니다.
@@ -85,11 +87,21 @@ namespace LMS.Cards
             }
 
             // test 코드
-            var pref = Manager.GameManager.Instance.ResourceLoadObj(CardBase.cardPrefName);
+            var pref = GameManager.Instance.ResourceLoadObj(CardBase.cardPrefName);
             if (pref == null)
             {
                 Debug.Log("프리팹을 불러올 수 없습니다.");
                 return;
+            }
+
+            // 같은 카드가 드로우 될 경우 경험치 Up
+            foreach(var card in cards)
+            {
+                if(card.cardInfo.name == CardBase.cardImgNames[index])
+                {
+                    card.ExpUpdate(20f);
+                    return;
+                }
             }
 
             var newCard = ObjectPool.Instance.GetObject<Card>(CardBase.cardPrefName);
@@ -188,7 +200,6 @@ namespace LMS.Cards
 
             comboCount++;
             activeAtk = true;
-            Debug.Log(comboCount);
 
             del();
 

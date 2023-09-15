@@ -20,7 +20,7 @@ namespace LMS.Cards
             }
         }
 
-        public virtual void Initialized(Vector3 arrow, Vector3 pos, float speed, string prefName, CardInfo info = null)
+        public virtual void Initialized(Vector3 arrow, Vector3 pos, float speed, string prefName, float damage, CardInfo info = null)
         {
             if (info != null)
             {

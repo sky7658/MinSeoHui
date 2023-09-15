@@ -26,6 +26,7 @@ namespace LMS.UI
                 infoText = newText;
             }
         }
+        public int GetCardCount() => cHandler.GetCardCount();
         /// <summary>
         /// Card List에 카드를 추가합니다.
         /// </summary>
