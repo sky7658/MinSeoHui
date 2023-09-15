@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour, IDamageable
 {
+    [SerializeField] HpBarUI hpBarUI;
     State _state;
     [SerializeField] Camera _camera;
     public StateMachine _stateMachine;
@@ -210,6 +211,7 @@ public class Player : MonoBehaviour, IDamageable
     public void TakeDamage(int damage, Vector3 reactVec)
     {
         hp -= damage;
+        hpBarUI.UpdateHpBar(damage);
         if (hp <= 0)
             _stateMachine.ChangeState(StateName.DEAD);
         else

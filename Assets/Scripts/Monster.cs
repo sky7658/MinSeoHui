@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using LMS.UI;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,6 +17,7 @@ public class Monster : MonoBehaviour, IDamageable
     public BoxCollider meleeArea;
     public MonType monsterType;
     [SerializeField] float targetRadius = 10f;
+    HpBarUI hpBarUI;
 
     private Rigidbody rb;
     private BoxCollider boxCollider;
@@ -26,9 +29,10 @@ public class Monster : MonoBehaviour, IDamageable
     {
         rb = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
-        //mat = GetComponentInChildren<MeshRenderer>().material;
+        //mat = transform.GetChild(0).GetComponent<MeshRenderer>().material;
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
+        hpBarUI = transform.GetChild(0).GetChild(0).GetComponent<HpBarUI>();
     }
 
     public void Init()
@@ -96,29 +100,31 @@ public class Monster : MonoBehaviour, IDamageable
 
     IEnumerator OnDamage(Vector3 reactVec)
     {
-        mat.color = Color.red;
+        //mat.color = Color.red;
         yield return new WaitForSeconds(0.1f);
-        if(curHealth > 0)
-            mat.color = Color.white;
+        if (curHealth > 0)
+        { } //mat.color = Color.white;
         else
         {
-            mat.color = Color.gray;
+            //mat.color = Color.gray;
             //수정 : 레이어 변경 로직 추가
-            
+
             isChase = false;
             nav.enabled = false;
             anim.SetTrigger("Die");
-            
+
             reactVec = reactVec.normalized;
             reactVec += Vector3.up;
             rb.AddForce(reactVec * 5, ForceMode.Impulse);
-            
+
             Destroy(gameObject, 4);
         }
     }
 
     public void TakeDamage(int damage, Vector3 reactVect)
     {
+        curHealth -= damage;
+        hpBarUI.UpdateHpBar(damage);
         StartCoroutine("OnDamage", reactVect);
     }
     

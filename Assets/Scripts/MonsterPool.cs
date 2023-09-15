@@ -56,6 +56,7 @@ public class MonsterPool : MonoBehaviour
                 obj.transform.SetParent(null);
                 obj.gameObject.SetActive(true);
                 obj.Init();
+                Instance._poolingObjectList.Remove(obj);
                 return obj;
             }
         }

@@ -10,10 +10,11 @@ public class MonSpawner : MonoBehaviour {
     public MonType monType;
 
     // 몬스터 스폰
-    public void Spawn()
+    public void Spawn(Transform target)
     {
         Monster monster = MonsterPool.GetObject(monType);
         monster.transform.position = transform.position;
+        monster.target = target;
         
         monster.transform.SetParent(transform);
     }
@@ -23,14 +24,14 @@ public class MonSpawner : MonoBehaviour {
         isSpawned = false;
     }
     
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("MonCol"))
         {
             if (!isSpawned)
             {
                 isSpawned = true;
-                Spawn();
+                Spawn(other.transform);
             }
         }
     }

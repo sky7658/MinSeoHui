@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Attack
   - Monster
+  - MonCol
   layers:
   - Default
   - TransparentFX
