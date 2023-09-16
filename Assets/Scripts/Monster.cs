@@ -37,7 +37,7 @@ public class Monster : MonoBehaviour, IDamageable
 
     public void Init()
     {
-        
+        hpBarUI.Initialized(maxHealth, true);
     }
 
     private void OnEnable()
@@ -66,7 +66,7 @@ public class Monster : MonoBehaviour, IDamageable
 
     protected void FixedUpdate()
     {
-        if(!isChase)
+        if (!isChase)
             FreezeVelocity();
     }
 
@@ -108,7 +108,6 @@ public class Monster : MonoBehaviour, IDamageable
         {
             //mat.color = Color.gray;
             //수정 : 레이어 변경 로직 추가
-
             isChase = false;
             nav.enabled = false;
             anim.SetTrigger("Die");

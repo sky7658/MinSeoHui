@@ -125,5 +125,14 @@ namespace LMS.Utility
                 else obj.transform.SetParent(null);
             }
         }
+
+        public static void OffCoroutine(Coroutine coroutine)
+        {
+            if (coroutine != null)
+            {
+                Manager.GameManager.Instance.QuitCoroutine(coroutine);
+                coroutine = null;
+            }
+        }
     }
 }

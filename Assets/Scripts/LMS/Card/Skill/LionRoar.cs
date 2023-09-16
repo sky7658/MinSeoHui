@@ -24,9 +24,11 @@ namespace LMS.Cards
             {
                 var _dir = other.transform.position - transform.position; // 튕겨낼 방향 설정
                 var _dis = Vector3.Distance(transform.position + _dir.normalized * radius, other.transform.position); // 목표 위치까지 얼마나 더 가야하는지 계산
-                Manager.GameManager.Instance.ExecuteCoroutine(SkillAction.BounceOut(other.gameObject, _dir.normalized, _dis));
+                var _mon = other.GetComponent<Monster>();
 
-                other.GetComponent<IDamageable>().TakeDamage((int)damage, Vector3.zero); // 데미지 주기
+                _mon.TakeDamage((int)damage, Vector3.zero); // 데미지 주기
+
+                Manager.GameManager.Instance.ExecuteCoroutine(SkillAction.BounceOut(_mon, _dir.normalized, _dis));
             }
 
         }

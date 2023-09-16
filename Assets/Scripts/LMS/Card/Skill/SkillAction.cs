@@ -47,21 +47,27 @@ namespace LMS.Cards
             if (delegateFun != null) delegateFun();
             yield break;
         }
-        public static IEnumerator BounceOut(GameObject obj, Vector3 direction, float distance)
+        public static IEnumerator BounceOut(Monster obj, Vector3 direction, float distance)
         {
             var _oriPos = obj.transform.position;
-            var _body = obj.GetComponent<Rigidbody>();
+            var _mon = obj;
+            var _body = obj.GetComponent<UnityEngine.AI.NavMeshAgent>();
+
             if (_body == null)
             {
                 Debug.Log("RigidBody가 없습니다.");
                 yield break;
             }
-            while (Vector3.Distance(_oriPos, obj.transform.position) < distance)
+            while (_mon != null && Vector3.Distance(_oriPos, _mon.transform.position) < distance)
             {
+                if (_mon == null) yield break;
                 _body.velocity = direction * 50f;
                 yield return null;
             }
-            _body.velocity = Vector3.zero; // 수정
+
+            if (_mon == null) yield break;
+
+            _body.velocity = Vector3.zero;
             yield break;
         }
 

@@ -65,6 +65,8 @@ public class Player : MonoBehaviour, IDamageable
         _stateMachine.AddState(StateName.ROLL, new Roll());
         _stateMachine.AddState(StateName.ATTACK, new Attack());
 
+        hpBarUI.Initialized(maxHp, false);
+
         playerUIManger.CreateInfoText();
     }
 

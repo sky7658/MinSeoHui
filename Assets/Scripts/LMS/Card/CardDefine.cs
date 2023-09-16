@@ -26,7 +26,7 @@ namespace LMS.Cards
 
         public static Dictionary<SkillType, float[]> cardLevelDamage = new Dictionary<SkillType, float[]>()
         {
-            { SkillType.LIONROAR, new float[] { 5f, 10f, 15f, 20f, 25f } },
+            { SkillType.LIONROAR, new float[] { 50f, 10f, 15f, 20f, 25f } },
             { SkillType.METEORS, new float[] { 2f, 3f, 4f, 5f, 6f } },
             { SkillType.SLASHES, new float[] { 5f, 10f, 15f, 20f, 25f } },
             { SkillType.SPRAY, new float[] { 1f, 1.5f, 2f, 2.5f, 3f } }

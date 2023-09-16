@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using System;
 
 
-namespace LMS.Monster
+namespace LMS.Enemy
 {
     public class HitBox : MonoBehaviour
     {

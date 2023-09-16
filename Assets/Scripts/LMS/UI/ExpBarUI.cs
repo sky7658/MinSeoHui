@@ -10,13 +10,9 @@ namespace LMS.UI
     {
         private Image frontExpBar;
 
-        private float currentExp;
-        private float maxExp;
-
         public float frontBarSpeed;
 
         private Coroutine frontCoroutine;
-        private Coroutine expUICoroutine;
 
         private void Awake() // 처음 생성시에만
         {
@@ -26,30 +22,14 @@ namespace LMS.UI
 
         public void Initialized()
         {
-            currentExp = 0f;
-            maxExp = 100f;
-
             frontBarSpeed = 12f;
 
-            if (frontCoroutine != null)
-            {
-                GameManager.Instance.QuitCoroutine(frontCoroutine);
-                frontCoroutine = null;
-            }
-            if (expUICoroutine != null)
-            {
-                GameManager.Instance.QuitCoroutine(expUICoroutine);
-                expUICoroutine = null;
-            }
+            Utility.UtilFunction.OffCoroutine(frontCoroutine);
         }
 
         public void UpdateExpBar(float value)
         {
-            if (frontCoroutine != null)
-            {
-                GameManager.Instance.QuitCoroutine(frontCoroutine);
-                frontCoroutine = null;
-            }
+            Utility.UtilFunction.OffCoroutine(frontCoroutine);
 
             frontCoroutine = GameManager.Instance.ExecuteCoroutine(ExpUpdate(frontExpBar, frontBarSpeed, value));
         }
@@ -66,7 +46,7 @@ namespace LMS.UI
             }
             else
             {
-                while (value - expBar.fillAmount < 0.0001f)
+                while (value - expBar.fillAmount > 0.0001f)
                 {
                     expBar.fillAmount = Mathf.Lerp(expBar.fillAmount, value, speed * Time.deltaTime);
                     yield return null;

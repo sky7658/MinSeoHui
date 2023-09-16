@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace LMS.Monster
+namespace LMS.Enemy
 {
     public enum MonsterState { IDLE, MOVE, ATTACK, RUSH }
     public class MiddleBoss : MonoBehaviour

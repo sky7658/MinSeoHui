@@ -18,8 +18,6 @@ public class Test : MonoBehaviour, IDamageable
 
     public void TakeDamage(int damage, Vector3 reactVec)
     {
-        hpBar.UIActive();
-
         hpBar.UpdateHpBar(damage);
         maxHp -= damage;
     }
