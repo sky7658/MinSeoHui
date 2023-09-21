@@ -12,11 +12,11 @@ namespace LMS.Cards
         private float duration;
         private int takeCount;
 
-        public void Initialized(GameObject obj, Vector3 pos, float damage)
+        public void Initialized(GameObject obj, Vector3 pos, float damage, int takeCount)
         {
             this.damage = damage;
-            duration = 3f;
-            takeCount = 5;
+            duration = 3.5f;
+            this.takeCount = takeCount;
 
             transform.position = pos - CardBase.characterSkillHeight;
 
@@ -38,7 +38,7 @@ namespace LMS.Cards
         private IEnumerator DealDamage()
         {
             int _count = 0;
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.2f);
 
             while (_count < takeCount)
             {

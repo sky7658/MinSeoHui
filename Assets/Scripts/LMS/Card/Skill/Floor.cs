@@ -24,6 +24,5 @@ namespace LMS.Cards
             Manager.GameManager.Instance.ExecuteCoroutine(DisableObject(this));
         }
     }
-
 }
 

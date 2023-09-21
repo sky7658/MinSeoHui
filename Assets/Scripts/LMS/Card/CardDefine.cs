@@ -22,6 +22,7 @@ namespace LMS.Cards
 
         public static string[] cardImgNames = new string[] { "LionRoar", "Meteors", "Slashes", "Spray", "Heal" };  // 카드 이미지 이름
         public static float[] cardLevelMaxExp = new float[] { 100f, 200f, 300f, 400f }; // Max Level 5 (수정 가능)
+        public static int[] meteorsCount = new int[] { 5, 8, 10, 15, 20 };
 
 
         public static Dictionary<SkillType, float[]> cardLevelDamage = new Dictionary<SkillType, float[]>()
@@ -60,20 +61,30 @@ namespace LMS.Cards
         public float delayTime { get; set; }
         public float spendMP { get; set; }
         public int count { get; set; }
+        public int cardLevel { get; set; }
+        public float currentExp { get; set; }
+        public float maxExp { get; set; }
+        public float damage { get; set; }
         public Grade grade { get; set; }
         public SkillType type { get; set; }
         public CardProperty property { get; set; }
 
         // Card의 기본 정보 셋팅
-        public CardInfo(float spendMP, int count, Grade grade, SkillType type, CardProperty property = CardProperty.NONE)
+        public CardInfo(float spendMP, int count, Grade grade, SkillType type, int cardLevel, float currentExp, CardProperty property = CardProperty.NONE)
         {
             name = CardBase.cardImgNames[(int)type];
             executeTime = CardBase.executeTimes[type];
             delayTime = CardBase.delayTimes[type];
+            maxExp = CardBase.cardLevelMaxExp[cardLevel];
+            damage = CardBase.cardLevelDamage[type][cardLevel];
             this.spendMP = spendMP;
             this.count = count;
             this.grade = grade;
             this.type = type;
+            this.cardLevel = cardLevel;
+            this.currentExp = currentExp;
+            this.maxExp = maxExp;
+            this.damage = damage;
             this.property = property;
         }
     }
