@@ -26,6 +26,7 @@ namespace LMS.Utility
             pools.Add(objectInfos[2].name, new GenericObjectPool<Cards.Meteors>(objectInfos[2]));
             pools.Add(objectInfos[3].name, new GenericObjectPool<ParticleSystem>(objectInfos[3]));
             pools.Add(objectInfos[4].name, new GenericObjectPool<Cards.NormalProjectile>(objectInfos[4]));
+            pools.Add(objectInfos[5].name, new GenericObjectPool<Cards.Slash>(objectInfos[5]));
         }
 
         /// <summary>
@@ -80,12 +81,7 @@ namespace LMS.Utility
         private T CreateObject<T>()
         {
             var newObj = GameObject.Instantiate(Manager.GameManager.Instance.ResourceLoadObj(info.name));
-
             UtilFunction.TurnOnOff(info, newObj, false);
-
-            //newObj.SetActive(false);
-            //if(info.disableParent != null) newObj.transform.SetParent(info.disableParent);
-            //else newObj.transform.SetParent(null);
 
             return newObj.GetComponent<T>();
         }

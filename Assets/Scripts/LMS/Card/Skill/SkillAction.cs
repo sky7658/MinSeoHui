@@ -91,5 +91,26 @@ namespace LMS.Cards
 
             yield break;
         }
+
+        public static IEnumerator RushObject(GameObject obj, Vector3 dir, int takeCount)
+        {
+            var _elapsed = 0f;
+            var _body = obj.GetComponent<Rigidbody>();
+
+            if (_body == null)
+            {
+                Debug.Log("RigidBody가 없습니다.");
+                yield break;
+            }
+            while(_elapsed < takeCount * 0.1f)
+            {
+                _elapsed += Time.smoothDeltaTime;
+                _body.velocity = dir * 20f;
+                yield return null;
+            }
+
+            _body.velocity = Vector3.zero;
+            yield break;
+        }
     }
 }

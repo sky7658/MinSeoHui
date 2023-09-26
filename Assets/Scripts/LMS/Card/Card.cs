@@ -12,6 +12,8 @@ namespace LMS.Cards
         public CardInfo cardInfo;
         public RawImage cardImg { get; set; }
         public Image cardMask { get; set; }
+        public Text levelText { get; set; }
+        public Text nameText { get; set; }
 
         // 카드 스킬
         public bool delayEnabled { get; set; }
@@ -19,11 +21,15 @@ namespace LMS.Cards
         public delegate IEnumerator ActionDelegate(GameObject obj, Vector3 direction, CardInfo info);
         private ActionDelegate skill { get; set; }
 
+        private string textString = "{0}";
+
         private void Awake()
         {
             cardImg = GetComponent<RawImage>();
             cardMask = transform.GetChild(0).GetComponent<Image>();
             expBarUI = transform.GetChild(1).GetComponent<ExpBarUI>();
+            levelText = transform.GetChild(2).GetComponent<Text>();
+            nameText = transform.GetChild(3).GetComponent<Text>();
         }
 
         public void Initialized(string imgName, CardProperty property = CardProperty.NONE)
@@ -39,6 +45,9 @@ namespace LMS.Cards
             SetCardImg(imgName);
             cardInfo = new CardInfo(1f, -1, Grade.EPIC, CardBase.skillTypes[imgName], 0, 0f, property);
             SetCardSkill();
+
+            levelText.text = string.Format(textString, cardInfo.cardLevel + 1);
+            nameText.text = string.Format(textString, cardInfo.name);
 
             cardMask.gameObject.SetActive(false);
         }
@@ -57,6 +66,7 @@ namespace LMS.Cards
             {
                 cardInfo.cardLevel++;
                 cardInfo.currentExp -= cardInfo.maxExp;
+                levelText.text = string.Format(textString, cardInfo.cardLevel + 1); // Level Text Update
 
                 if (cardInfo.cardLevel == 4) 
                 {

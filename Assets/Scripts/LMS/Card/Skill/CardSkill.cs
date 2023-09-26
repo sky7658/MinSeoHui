@@ -64,19 +64,11 @@ namespace LMS.Cards
             yield break;
         }
 
-        public static IEnumerator FloorFire(GameObject obj, Vector3 direction, CardInfo info)
-        {
-            // 수정
-            var _spell = GameObject.Instantiate(Manager.GameManager.Instance.ResourceLoadObj("Effect")).GetComponent<Projectile>();
-            _spell.Initialized(direction, obj.transform.position, 30f, "Effect", info.damage, info);
-            yield break;
-        }
-
         public static IEnumerator LinoRoar(GameObject obj, Vector3 direction, CardInfo info)
         {
             var _spell = ObjectPool.Instance.GetObject<LionRoar>("LionRoar");
             UtilFunction.TurnOnOff(ObjectPool.Instance.objectInfos[1], _spell.gameObject, true);
-            _spell.Initialized(obj.transform.position, info.damage);
+            _spell.Initialized(obj.transform.position, info.damage, info.name);
             yield break;
         }
 
@@ -84,24 +76,25 @@ namespace LMS.Cards
         {
             var _spell = ObjectPool.Instance.GetObject<Meteors>("Meteors");
             UtilFunction.TurnOnOff(ObjectPool.Instance.objectInfos[2], _spell.gameObject, true);
-            _spell.Initialized(obj, obj.transform.position, info.damage, CardBase.meteorsCount[info.cardLevel]);
+            _spell.Initialized(obj, obj.transform.position, info.damage, CardBase.meteorsCount[info.cardLevel], info.name);
             yield break;
         }
 
         public static IEnumerator Slash(GameObject obj, Vector3 direction, CardInfo info)
         {
-            for (int i = 0; i < 10; i++)
+            Manager.GameManager.Instance.ExecuteCoroutine(SkillAction.RushObject(obj, direction, CardBase.slashesCount[info.cardLevel])); // 죽었을 때도 앞으로 나감;;
+
+            for (int i = 0; i < CardBase.slashesCount[info.cardLevel]; i++)
             {
-                var _newSkill = GameObject.Instantiate(Manager.GameManager.Instance.ResourceLoadObj("Slash"));
                 var _randY = Random.Range(0f, 360f);
                 var _randZ = Random.Range(0f, 360f);
 
-                _newSkill.transform.rotation = Quaternion.Euler(0f, _randY, _randZ);
-                _newSkill.transform.SetParent(obj.transform);
-                _newSkill.transform.position = obj.transform.position;
+                var _spell = ObjectPool.Instance.GetObject<Slash>("Slashes");
+                UtilFunction.TurnOnOff(ObjectPool.Instance.objectInfos[5], _spell.gameObject, true);
+                _spell.Initialized(obj.transform.position, _randY, _randZ, info.damage, info.name);
+
                 yield return new WaitForSeconds(0.1f);
             }
-
             yield break;
         }
     }

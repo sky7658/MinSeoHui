@@ -29,12 +29,12 @@ public class Bullet : MonoBehaviour, IDamageable
         BulletPool.ReturnObject(this);
     }
 
-    public void TakeDamage(int damage, Vector3 reactVec)
+    public void TakeDamage(float damage, Vector3 reactVec)
     {
         BulletPool.ReturnObject(this);
     }
     
-    public int GetDamage()
+    public float GetDamage()
     {
         return bulletDamage;
     }

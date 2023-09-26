@@ -8,9 +8,9 @@ using UnityEngine.AI;
 
 public class Monster : MonoBehaviour, IDamageable
 {
-    public int maxHealth;
-    public int curHealth;
-    public int damage;
+    public float maxHealth;
+    public float curHealth;
+    public float damage;
     public Transform target;
     public bool isChase;
     public bool isAttack;
@@ -120,14 +120,14 @@ public class Monster : MonoBehaviour, IDamageable
         }
     }
 
-    public void TakeDamage(int damage, Vector3 reactVect)
+    public void TakeDamage(float damage, Vector3 reactVect)
     {
         curHealth -= damage;
         hpBarUI.UpdateHpBar(damage);
         StartCoroutine("OnDamage", reactVect);
     }
     
-    public int GetDamage()
+    public float GetDamage()
     {
         return damage;
     }

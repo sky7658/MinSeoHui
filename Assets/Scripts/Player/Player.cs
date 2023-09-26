@@ -23,6 +23,7 @@ public class Player : MonoBehaviour, IDamageable
     
     //상태 변수
     public bool isGround = true;
+    public bool isHit = false;
     
     //땅 착지여부
     public CapsuleCollider capsulCol;
@@ -40,6 +41,7 @@ public class Player : MonoBehaviour, IDamageable
     
     public float hp = 100f;
     public float maxHp = 100f;
+    public float superArmorTime = 3f;
     
     public PlayerUIManger playerUIManger;
     
@@ -187,7 +189,6 @@ public class Player : MonoBehaviour, IDamageable
         // currentCameraRotationX = Mathf.Clamp(currentCameraRotationX, -cameraRotationLimit, cameraRotationLimit);
         //
         // playerCamera.transform.localEulerAngles = new Vector3(currentCameraRotationX, 0f, 0f);
-
     }
 
     private void OnTriggerEnter(Collider other)
@@ -209,18 +210,36 @@ public class Player : MonoBehaviour, IDamageable
         print("ToIdle");
         _stateMachine.ChangeState(StateName.IDLE);
     }
-    
-    public void TakeDamage(int damage, Vector3 reactVec)
+
+    Coroutine sex;
+    public void TakeDamage(float damage, Vector3 reactVec)
     {
+        if(isHit) return;
+
         hp -= damage;
         hpBarUI.UpdateHpBar(damage);
         if (hp <= 0)
             _stateMachine.ChangeState(StateName.DEAD);
         else
             _stateMachine.ChangeState(StateName.HIT);
+
+        if(sex != null)
+        {
+            StopCoroutine(sex);
+            sex = null;
+        }
+
+        sex = StartCoroutine(SuperArmor());
+    }
+
+    IEnumerator SuperArmor()
+    {
+        isHit = true;
+        yield return new WaitForSeconds(superArmorTime);
+        isHit = false;
     }
     
-    public int GetDamage()
+    public float GetDamage()
     {
         return 0;
     }

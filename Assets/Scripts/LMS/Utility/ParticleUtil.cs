@@ -42,6 +42,18 @@ namespace LMS.Utility
                 SetParticleColor(particleSystems[index], _list[0], _list[1]);
             }
         }
+
+        public static IEnumerator ReturnParticle<T>(ParticleSystem particleSystem, GameObject obj, ObjectInfo info, T returnObj, string name)
+        {
+            while(particleSystem.isPlaying)
+            {
+                yield return null;
+            }
+
+            ObjectPool.Instance.ReturnObject(returnObj, name);
+            UtilFunction.TurnOnOff(info, obj);
+            yield break;
+        }
     }
 
     public class ColorInfo

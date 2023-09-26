@@ -1,18 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using LMS.Manager;
+using LMS.Utility;
 
 namespace LMS.Cards
 {
     public class Meteors : MonoBehaviour
     {
+        private ParticleSystem ps;
+
         public float colliderSize = 9f;
         private float damage;
 
         private float duration;
         private int takeCount;
 
-        public void Initialized(GameObject obj, Vector3 pos, float damage, int takeCount)
+        private void Awake()
+        {
+            ps = GetComponent<ParticleSystem>();
+        }
+
+        public void Initialized(GameObject obj, Vector3 pos, float damage, int takeCount, string name)
         {
             this.damage = damage;
             duration = 3.5f;
@@ -22,34 +31,41 @@ namespace LMS.Cards
 
             var _targetPos = pos + new Vector3(0f, 3f, 0f);
 
-            Manager.GameManager.Instance.ExecuteCoroutine(SkillAction.Teleport(obj, _targetPos, 0.2f, false, null, () => TeleportEffect(_targetPos)));
-            Manager.GameManager.Instance.ExecuteCoroutine(SkillAction.RetentionTime(3f, () =>
-            Manager.GameManager.Instance.ExecuteCoroutine(SkillAction.Teleport(obj, pos, 0.2f, true, null, () => TeleportEffect(pos)))));
-            Manager.GameManager.Instance.ExecuteCoroutine(DealDamage());
+            GameManager.Instance.ExecuteCoroutine(SkillAction.Teleport(obj, _targetPos, 0.2f, false, null, () => TeleportEffect(_targetPos)));
+            GameManager.Instance.ExecuteCoroutine(SkillAction.RetentionTime(3f, () =>
+            GameManager.Instance.ExecuteCoroutine(SkillAction.Teleport(obj, pos, 0.2f, true, null, () => TeleportEffect(pos)))));
+            GameManager.Instance.ExecuteCoroutine(DealDamage(obj.transform.position));
+
+            GameManager.Instance.ExecuteCoroutine(ParticleUtil.ReturnParticle(ps, gameObject, ObjectPool.Instance.objectInfos[2], this, name)); // 파티클 자동 리턴
         }
 
         private void TeleportEffect(Vector3 pos)
         {
-            var _newEffect = Utility.ObjectPool.Instance.GetObject<ParticleSystem>("Teleport");
-            Utility.UtilFunction.TurnOnOff(Utility.ObjectPool.Instance.objectInfos[3], _newEffect.gameObject, true);
+            var _newEffect = ObjectPool.Instance.GetObject<ParticleSystem>("Teleport");
+            UtilFunction.TurnOnOff(ObjectPool.Instance.objectInfos[3], _newEffect.gameObject, true);
             _newEffect.transform.position = pos;
         }
 
-        private IEnumerator DealDamage()
+        RaycastHit[] hits;
+        private void Update()
+        {
+            hits = Physics.SphereCastAll(transform.position, colliderSize, Vector3.up, 0f, LayerMask.GetMask("Water"));
+            Debug.Log(hits.Length);
+        }
+
+        private IEnumerator DealDamage(Vector3 pos)
         {
             int _count = 0;
             yield return new WaitForSeconds(0.2f);
 
             while (_count < takeCount)
             {
-                var hits = Physics.SphereCastAll(transform.position, colliderSize, Vector3.up, 0f, LayerMask.GetMask("Water"));
-
-                Debug.Log(hits.Length);
-
-                foreach(var hit in hits)
+                var hits = Physics.SphereCastAll(pos, colliderSize, Vector3.up, 0f, LayerMask.GetMask("Water"));
+                foreach (var hit in hits)
                 {
-                    hit.transform.GetComponent<IDamageable>().TakeDamage((int)damage, Vector3.zero);
+                    if (hit.transform.TryGetComponent(out IDamageable damageable)) damageable.TakeDamage(damage, Vector3.zero);
                 }
+
                 _count++;
                 yield return new WaitForSeconds(duration / takeCount);
             }

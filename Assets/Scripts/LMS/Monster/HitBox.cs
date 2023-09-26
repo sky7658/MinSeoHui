@@ -16,8 +16,9 @@ namespace LMS.Enemy
             hitBox = transform.GetChild(0).GetComponent<RawImage>();
         }
 
-        public void Initialized(Transform trs, Color32 color, float w, float h, float executeTime, Action skill)
+        public void Initialized(Transform trs, Color32 color, float w, float h, float executeTime, Action skill = null)
         {
+            gameObject.SetActive(true);
             var _dir = trs.forward + new Vector3(90f, 0, 0);
 
             hitBox.color = new Color(color.r, color.g, color.b, colorA);
@@ -27,10 +28,10 @@ namespace LMS.Enemy
             transform.position = trs.position; // 오브젝트의 기준점으로 부터 바닥까지의 y 크기를 빼줘야함
             transform.rotation = Quaternion.Euler(_dir.x, _dir.y, _dir.z);
 
-            Manager.GameManager.Instance.ExecuteCoroutine(DrawBox(executeTime, () => skill()));
+            Manager.GameManager.Instance.ExecuteCoroutine(DrawBox(executeTime));
         }
 
-        private IEnumerator DrawBox(float executeTime, Action skill)
+        private IEnumerator DrawBox(float executeTime, Action skill = null)
         {
             float _elapsed = 0f;
 
@@ -40,10 +41,8 @@ namespace LMS.Enemy
                 transform.localScale = new Vector3(1f, _elapsed / executeTime, 1f);
                 yield return null;
             }
-            skill();
-            Destroy(gameObject); // 수정
+            gameObject.SetActive(false);
             yield break;
         }
     }
-
 }
