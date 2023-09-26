@@ -81,7 +81,11 @@ namespace LMS.UI
             Utility.UtilFunction.OffCoroutine(backCoroutine);
 
             if (getDamage) currentHp -= value;
-            else currentHp += value;
+            else
+            {
+                currentHp += value;
+                if(currentHp > maxHp) currentHp = maxHp;
+            }
 
             if(currentHp <= 0 && isWorld) { gameObject.SetActive(false); return; }
 

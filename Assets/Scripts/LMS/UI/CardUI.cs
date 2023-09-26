@@ -82,7 +82,7 @@ namespace LMS.UI
                 return;
             }
             text.text = string.Format(infoDefaultText, info.grade, info.spendMP, info.count, info.property, info.name);
-        }
+        } 
     }
 
     public class CardAction
@@ -95,7 +95,7 @@ namespace LMS.UI
         /// <param name="targetRot"></param>
         /// <param name="duration"></param>
         /// <returns></returns>
-        public static IEnumerator MoveToAction(GameObject obj, Vector3 targetPos, Quaternion targetRot, float duration)
+        public static IEnumerator MoveToAction(GameObject obj, Vector3 targetPos, Quaternion targetRot, float duration, bool isPos = true, bool isRot = true)
         {
             Vector3 _startPos = obj.transform.localPosition;
             Quaternion _startRot = obj.transform.localRotation;
@@ -105,15 +105,15 @@ namespace LMS.UI
             {
                 if (obj == null) yield break;
                 _elapsed += Time.smoothDeltaTime;
-                obj.transform.localPosition = Vector3.Lerp(_startPos, targetPos, _elapsed / duration);
-                obj.transform.localRotation = Quaternion.Slerp(_startRot, targetRot, _elapsed / duration);
+                if (isPos) obj.transform.localPosition = Vector3.Lerp(_startPos, targetPos, _elapsed / duration);
+                if (isRot) obj.transform.localRotation = Quaternion.Slerp(_startRot, targetRot, _elapsed / duration);
                 yield return null;
             }
 
             if(obj == null) yield break;
 
-            obj.transform.localPosition = targetPos;
-            obj.transform.localRotation = targetRot;
+            if (isPos) obj.transform.localPosition = targetPos;
+            if (isRot) obj.transform.localRotation = targetRot;
 
             yield break;
         }
@@ -158,22 +158,22 @@ namespace LMS.UI
                 while(_t < 0.2f)
                 {
                     if(card == null) yield break;
-                    card.cardImg.transform.localScale = new Vector3(1f + _t, 1f + _t, 1f);
+                    card.cardImg.transform.localScale = new Vector3(0.8f + _t, 0.8f + _t, 0.8f);
                     _t += Time.smoothDeltaTime;
                     yield return null;
                 }
-                _scale = new Vector3(1.2f, 1.2f, 1f);
+                _scale = new Vector3(1f, 1f, 0.8f);
             }
             else
             {
                 while (_t < 0.2f)
                 {
                     if (card == null) yield break;
-                    card.cardImg.transform.localScale = new Vector3(1.2f - _t, 1.2f - _t, 1f);
+                    card.cardImg.transform.localScale = new Vector3(1f - _t, 1f - _t, 0.8f);
                     _t += Time.smoothDeltaTime;
                     yield return null;
                 }
-                _scale = new Vector3(1f, 1f, 1f);
+                _scale = new Vector3(0.8f, 0.8f, 0.8f);
             }
 
             if (card == null) yield break;

@@ -203,11 +203,7 @@ namespace LMS.Cards
 
             del();
 
-            if (coroutine != null)
-            {
-                GameManager.Instance.StopCoroutine(coroutine);
-                coroutine = null;
-            }
+            UtilFunction.OffCoroutine(coroutine);
 
             if(comboCount < 3)
             {

@@ -116,6 +116,10 @@ public class Monster : MonoBehaviour, IDamageable
             reactVec += Vector3.up;
             rb.AddForce(reactVec * 5, ForceMode.Impulse);
 
+            var _item = LMS.Utility.ObjectPool.Instance.GetObject<LMS.Item.DropItem>("Item");
+            LMS.Utility.UtilFunction.TurnOnOff(LMS.Utility.ObjectPool.Instance.objectInfos[6], _item.gameObject, true);
+            _item.Initialized(transform.position);
+
             Destroy(gameObject, 4);
         }
     }

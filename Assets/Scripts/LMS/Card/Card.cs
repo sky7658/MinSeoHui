@@ -37,7 +37,7 @@ namespace LMS.Cards
             delayEnabled = false;
             isHighlight = false;
 
-            cardImg.transform.localScale = new Vector3(1f, 1f, 1f);
+            cardImg.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
             cardMask.transform.localScale = new Vector3(1f, 1f, 1f);
 
             transform.localPosition = CardBase.InitCardPos;

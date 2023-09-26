@@ -27,7 +27,7 @@ namespace LMS.Cards
             duration = 3.5f;
             this.takeCount = takeCount;
 
-            transform.position = pos - CardBase.characterSkillHeight;
+            transform.position = pos;
 
             var _targetPos = pos + new Vector3(0f, 3f, 0f);
 
@@ -46,13 +46,6 @@ namespace LMS.Cards
             _newEffect.transform.position = pos;
         }
 
-        RaycastHit[] hits;
-        private void Update()
-        {
-            hits = Physics.SphereCastAll(transform.position, colliderSize, Vector3.up, 0f, LayerMask.GetMask("Water"));
-            Debug.Log(hits.Length);
-        }
-
         private IEnumerator DealDamage(Vector3 pos)
         {
             int _count = 0;
@@ -60,7 +53,9 @@ namespace LMS.Cards
 
             while (_count < takeCount)
             {
-                var hits = Physics.SphereCastAll(pos, colliderSize, Vector3.up, 0f, LayerMask.GetMask("Water"));
+                var hits = Physics.OverlapSphere(pos, colliderSize, LayerMask.GetMask("Water"));
+                Debug.Log(hits.Length);
+
                 foreach (var hit in hits)
                 {
                     if (hit.transform.TryGetComponent(out IDamageable damageable)) damageable.TakeDamage(damage, Vector3.zero);
@@ -71,6 +66,11 @@ namespace LMS.Cards
             }
 
             yield break;
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.DrawWireSphere(transform.position, colliderSize);
         }
     }
 }

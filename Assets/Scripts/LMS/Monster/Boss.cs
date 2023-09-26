@@ -134,8 +134,6 @@ namespace LMS.Enemy
                 return;
             }
         }
-        // -86.55, 1.99, 96.81
-        // -86.55 -8.87, 96.81
 
         public void Attack()
         {
@@ -167,7 +165,7 @@ namespace LMS.Enemy
             skillCoolCoroutine = GameManager.Instance.ExecuteCoroutine(CoolDown(() => isRushable = false, skillCoolDown));
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerStay(Collider other)
         {
             if (other.CompareTag("Player"))
             {
@@ -178,6 +176,7 @@ namespace LMS.Enemy
 
                 if (other.TryGetComponent(out IDamageable damageable))
                 {
+                    if (_damage == 0f) return;
                     damageable.TakeDamage(_damage, Vector3.zero);
                     OffAttack();
                 }
@@ -203,7 +202,7 @@ namespace LMS.Enemy
         private IEnumerator CoolDown(Action action, float coolTime)
         {
             yield return new WaitForSeconds(coolTime);
-            action();
+            action?.Invoke();
             yield break;
         }
 

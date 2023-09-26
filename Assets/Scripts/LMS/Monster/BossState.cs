@@ -31,10 +31,11 @@ namespace SHY.Enemy
             boss.anim.SetBool("isMove", false);
             boss.nav.isStopped = true;
         }
-        public void Action(Boss boss){
+        public void Action(Boss boss)
+        {
             boss.DecideState();
         }
-        public void Exit(Boss boss){}
+        public void Exit(Boss boss) { }
     }
 
     public class Move : BossState
@@ -60,15 +61,14 @@ namespace SHY.Enemy
     public class Attack : BossState
     {
         public BossStateName stateName { get; } = BossStateName.Attack;
-        public void Enter(Boss boss){
+        public void Enter(Boss boss)
+        {
             boss.anim.SetBool("isMove", false);
             boss.anim.SetTrigger("doAttack");
             boss.nav.isStopped = true;
             boss.Attack();
         }
-        public void Action(Boss boss)
-        {
-        }
+        public void Action(Boss boss) { }
         public void Exit(Boss boss){
             boss.nav.isStopped = false;
         }
@@ -84,8 +84,9 @@ namespace SHY.Enemy
             boss.nav.isStopped = true;
             boss.ExecuteSkill();
         }
-        public void Action(Boss boss){}
-        public void Exit(Boss boss){
+        public void Action(Boss boss) { }
+        public void Exit(Boss boss)
+        {
             boss.nav.isStopped = false;
         }
     }
@@ -99,7 +100,7 @@ namespace SHY.Enemy
             boss.anim.SetTrigger("doDie");
             boss.nav.isStopped = true;
         }
-        public void Action(Boss boss){}
-        public void Exit(Boss boss){}
+        public void Action(Boss boss) { }
+        public void Exit(Boss boss) { }
     }
 }

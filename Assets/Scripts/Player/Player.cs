@@ -211,7 +211,7 @@ public class Player : MonoBehaviour, IDamageable
         _stateMachine.ChangeState(StateName.IDLE);
     }
 
-    Coroutine sex;
+    private Coroutine superArmorCoroutine;
     public void TakeDamage(float damage, Vector3 reactVec)
     {
         if(isHit) return;
@@ -223,13 +223,19 @@ public class Player : MonoBehaviour, IDamageable
         else
             _stateMachine.ChangeState(StateName.HIT);
 
-        if(sex != null)
+        if(superArmorCoroutine != null)
         {
-            StopCoroutine(sex);
-            sex = null;
+            StopCoroutine(superArmorCoroutine);
+            superArmorCoroutine = null;
         }
+        
+        superArmorCoroutine = StartCoroutine(SuperArmor());
+    }
 
-        sex = StartCoroutine(SuperArmor());
+    public void RecoveryHp(float value)
+    {
+        hp += value;
+        hpBarUI.UpdateHpBar(value, false);
     }
 
     IEnumerator SuperArmor()
@@ -237,6 +243,8 @@ public class Player : MonoBehaviour, IDamageable
         isHit = true;
         yield return new WaitForSeconds(superArmorTime);
         isHit = false;
+
+        yield break;
     }
     
     public float GetDamage()
