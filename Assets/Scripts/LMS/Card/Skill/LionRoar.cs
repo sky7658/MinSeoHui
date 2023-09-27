@@ -40,10 +40,6 @@ namespace LMS.Cards
                     // 보스의 경우
                     other.GetComponent<IDamageable>().TakeDamage(damage, Vector3.zero);
                 }
-
-                //var _mon = other.GetComponent<Monster>();
-                //_mon.TakeDamage((int)damage, Vector3.zero); // 데미지 주기
-                //Manager.GameManager.Instance.ExecuteCoroutine(SkillAction.BounceOut(_mon, _dir.normalized, _dis));
             }
 
         }

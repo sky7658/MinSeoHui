@@ -13,7 +13,7 @@ namespace LMS.Item
         private RawImage image;
         private Texture[] textures;
 
-        private ItemType type;
+        [SerializeField] private ItemType type;
         private Vector3 upPos, downPos;
         private bool arrow;
 
@@ -24,10 +24,6 @@ namespace LMS.Item
             image = transform.GetChild(0).GetComponent<RawImage>();
         }
 
-        private void Start()
-        {
-            Initialized(transform.position);
-        }
         public void Initialized(Vector3 pos)
         {
             textures = new Texture[] { GameManager.Instance.ResourceLoadImg("HP"), GameManager.Instance.ResourceLoadImg("CardBack") };
@@ -63,7 +59,7 @@ namespace LMS.Item
 
             if(_itemRand < itemRatio[0])
             {
-                return ItemType.LionRoar;
+                return ItemType.None;
             }
             else if (_itemRand < itemRatio[1])
             {
@@ -79,7 +75,7 @@ namespace LMS.Item
 
                 if (_cardRand < cardRatio[0] * 10)
                 {
-                    return ItemType.None;
+                    return ItemType.LionRoar;
                 }
                 else if (_cardRand < cardRatio[1] * 10)
                 {
@@ -106,6 +102,7 @@ namespace LMS.Item
                 {
                     if (_other.hp == _other.maxHp) return; // 체력이 100%라면 획득 X
                     _other.RecoveryHp(30f); // 임의 값 회복
+                    _other.PlayHealingEffect();
                 }
                 else
                 {

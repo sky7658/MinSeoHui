@@ -9,7 +9,8 @@ using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour, IDamageable
 {
-    [SerializeField] HpBarUI hpBarUI;
+    [SerializeField] private HpBarUI hpBarUI;
+    private ParticleSystem healingEffect;
     State _state;
     [SerializeField] Camera _camera;
     public StateMachine _stateMachine;
@@ -51,6 +52,7 @@ public class Player : MonoBehaviour, IDamageable
         rb = GetComponent<Rigidbody>();
         capsulCol = GetComponent<CapsuleCollider>();
         playerUIManger = new PlayerUIManger();
+        healingEffect = transform.GetChild(4).GetComponent<ParticleSystem>();
     }
     void Start()
     {
@@ -130,6 +132,11 @@ public class Player : MonoBehaviour, IDamageable
         }
     }
 
+    public void PlayHealingEffect()
+    {
+        healingEffect.gameObject.SetActive(true);
+        healingEffect.Play();
+    }
     private void CharacterRotation()
     {
         float _yRotation = Input.GetAxisRaw("Mouse X");

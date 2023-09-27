@@ -52,22 +52,6 @@ namespace LMS.UI
             Utility.UtilFunction.OffCoroutine(hpUICoroutine);
         }
 
-        
-
-        private void Update() // 임시 업데이트 사용 나중엔 없앰
-        {
-            if (Input.GetKeyDown(KeyCode.K))
-            {
-                var randX = Random.Range(10f, 50f);
-                UpdateHpBar(10f);
-            }
-            if (Input.GetKeyDown(KeyCode.L))
-            {
-                var randX = Random.Range(-50f, -10f);
-                UpdateHpBar(10f, false);
-            }
-        }
-
         /// <summary>
         /// HpBar를 업데이트 해줍니다.
         /// </summary>
