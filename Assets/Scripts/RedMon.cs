@@ -9,7 +9,7 @@ public class RedMon : Monster
     protected void FixedUpdate()
     {
         base.FixedUpdate();
-        if (base.Targerting())
+        if (base.Targerting()&&curHealth>0)
         {
             StartCoroutine("Attack");
         }

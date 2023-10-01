@@ -103,8 +103,7 @@ public class Monster : MonoBehaviour, IDamageable
         //mat.color = Color.red;
         yield return new WaitForSeconds(0.1f);
         if (curHealth > 0)
-        {
-        }
+        { }
         else
         {
         	var _item = LMS.Utility.ObjectPool.Instance.GetObject<LMS.Item.DropItem>("Item");
@@ -121,7 +120,7 @@ public class Monster : MonoBehaviour, IDamageable
         MonsterPool.ReturnObject(this);
     } 
 
-    public void TakeDamage(int damage, Vector3 reactVect)
+    public void TakeDamage(float damage, Vector3 reactVect)
     {
         curHealth -= damage;
         hpBarUI.UpdateHpBar(damage);
