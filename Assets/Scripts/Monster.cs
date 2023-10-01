@@ -103,22 +103,25 @@ public class Monster : MonoBehaviour, IDamageable
         //mat.color = Color.red;
         yield return new WaitForSeconds(0.1f);
         if (curHealth > 0)
-        { } //mat.color = Color.white;
-        else
         {
-            //mat.color = Color.gray;
-            //수정 : 레이어 변경 로직 추가
-            isChase = false;
-            nav.enabled = false;
-            anim.SetTrigger("Die");
-
+            print(curHealth);
             reactVec = reactVec.normalized;
             reactVec += Vector3.up;
             rb.AddForce(reactVec * 5, ForceMode.Impulse);
-
-            Destroy(gameObject, 4);
+        }
+        else
+        {
+            print("test");
+            anim.SetTrigger("Die");
+            isChase = false;
+            nav.enabled = false;
         }
     }
+
+    public void ReturnMon()
+    {
+        MonsterPool.ReturnObject(this);
+    } 
 
     public void TakeDamage(int damage, Vector3 reactVect)
     {

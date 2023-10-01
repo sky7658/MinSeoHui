@@ -142,6 +142,7 @@ public class Attack : State
 
     public void Action(Player player)
     {
+        //player.TryMove();
     }
 
     public void Exit(Player player)
@@ -224,7 +225,6 @@ public class Roll : State
     public void Enter(Player player)
     {
         player.anim.SetBool("isRoll", true);
-        Debug.Log(player.anim.GetBool("isRoll"));
         player.transform.Translate(Vector3.forward * 2f * Time.deltaTime);
     }
 

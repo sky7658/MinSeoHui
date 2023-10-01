@@ -8,6 +8,16 @@ public class MonSpawner : MonoBehaviour {
     public bool isSpawned;
     // 몬스터 타입
     public MonType monType;
+    
+    // 이펙트
+    public GameObject spawnEffect;
+
+    private void Start()
+    {
+        isSpawned = false;
+        //이펙트 할당
+        spawnEffect = Resources.Load<GameObject>("Effect/SpawnEffect");
+    }
 
     // 몬스터 스폰
     public void Spawn(Transform target)
@@ -17,6 +27,8 @@ public class MonSpawner : MonoBehaviour {
         monster.target = target;
         
         monster.transform.SetParent(transform);
+        //이펙트 생성
+        Instantiate(spawnEffect, transform.position, Quaternion.identity);
     }
     
     public void ReSpawn()

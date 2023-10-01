@@ -932,7 +932,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7113222713760168263
 Transform:
   m_ObjectHideFlags: 0
@@ -1031,7 +1031,7 @@ MonoBehaviour:
   isChase: 0
   isAttack: 0
   meleeArea: {fileID: 7113222713725466019}
-  monsterType: 0
+  monsterType: 2
   targetRadius: 10
 --- !u!195 &4671810774486041677
 NavMeshAgent:
@@ -1573,9 +1573,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98f7293808191d944bbf2cbd0e8559da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frontBarSpeed: 0
-  backBarSpeed: 0
-  isWorld: 1
 --- !u!1 &8482798837276330098
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,6 +13,9 @@ public class Player : MonoBehaviour, IDamageable
     State _state;
     [SerializeField] Camera _camera;
     public StateMachine _stateMachine;
+    public float distance = 11f;
+    private Vector3 velocity = Vector3.zero;
+    
     //스피드 조정 변수
     [SerializeField] public float walkSpeed = 5f;
     [SerializeField] public float runSpeed = 10f;
@@ -75,10 +78,19 @@ public class Player : MonoBehaviour, IDamageable
     {
         _stateMachine.UpdateState();
         CharacterRotation();
-        float scroollWheel = Input.GetAxis("Mouse ScrollWheel");
+        //SmoothDamp를 이용한 카메라 줌인아웃
+        distance -= Input.GetAxis("Mouse ScrollWheel") * scrollSpeed;
+        if (distance < 10f) distance = 10.0f;
+        if (distance > 30f) distance = 30.0f;
         
-        _camera.transform.position += Vector3.forward * Time.deltaTime * scroollWheel * scrollSpeed;
-        
+        Vector3 reverseDistance = new Vector3(0.0f, 0.0f, distance); // 카메라가 바라보는 앞방향은 Z 축입니다. 이동량에 따른 Z 축방향의 벡터를 구합니다.
+        _camera.transform.position = Vector3.SmoothDamp(
+            _camera.transform.transform.position,
+            this.transform.position - _camera.transform.rotation * reverseDistance,
+            ref velocity,
+            0.2f);
+
+
         //마우스 왼쪽 클릭시 콤보어택
         if (Input.GetMouseButtonDown(0))
         {
@@ -173,9 +185,12 @@ public class Player : MonoBehaviour, IDamageable
     public void TryJump()
     {
         //스페이스바가 눌리면 점프
-        if (Input.GetKeyDown(KeyCode.Space) && isGround)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            _stateMachine.ChangeState(StateName.JUMP);
+            isGround =
+                Physics.Raycast(transform.position, Vector3.down, capsulCol.bounds.extents.y / 2 + 0.1f);
+            if(isGround)
+                _stateMachine.ChangeState(StateName.JUMP);
         }
     }
 
@@ -206,7 +221,6 @@ public class Player : MonoBehaviour, IDamageable
     
     public void ToIdle()
     {
-        print("ToIdle");
         _stateMachine.ChangeState(StateName.IDLE);
     }
     

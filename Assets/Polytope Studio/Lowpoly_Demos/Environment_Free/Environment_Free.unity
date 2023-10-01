@@ -244,6 +244,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 0
+  spawnEffect: {fileID: 0}
 --- !u!135 &41869700
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -382,6 +383,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &67363767
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -442,6 +444,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &70066950
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -583,6 +586,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &133078826
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -643,6 +647,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &134543089
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -800,6 +805,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &196574062
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -895,6 +901,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 2
+  spawnEffect: {fileID: 0}
 --- !u!135 &231873697
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1005,6 +1012,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &271882488
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1065,6 +1073,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &302039153
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1125,6 +1134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &319269875
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1254,6 +1264,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 2
+  spawnEffect: {fileID: 0}
 --- !u!135 &358038963
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1314,6 +1325,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &375470945
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1374,6 +1386,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 2
+  spawnEffect: {fileID: 0}
 --- !u!135 &381701990
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1434,6 +1447,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &406991163
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1494,6 +1508,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &433509686
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1536,6 +1551,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hpBarUI: {fileID: 519112305}
   _camera: {fileID: 1536938356}
+  distance: 3
   walkSpeed: 5
   runSpeed: 10
   applySpeed: 0
@@ -1632,6 +1648,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &465758442
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1789,6 +1806,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &497670872
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1855,9 +1873,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98f7293808191d944bbf2cbd0e8559da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frontBarSpeed: 0
-  backBarSpeed: 0
-  isWorld: 0
 --- !u!114 &519112306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1988,6 +2003,7 @@ Transform:
   - {fileID: 319269873}
   - {fileID: 1743693327}
   - {fileID: 271882486}
+  - {fileID: 1110044745}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2038,6 +2054,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &570077096
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2129,6 +2146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 0
+  spawnEffect: {fileID: 0}
 --- !u!135 &593473333
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2222,6 +2240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &615817437
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2344,6 +2363,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 2
+  spawnEffect: {fileID: 0}
 --- !u!135 &661956627
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2404,6 +2424,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 2
+  spawnEffect: {fileID: 0}
 --- !u!135 &670841063
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2464,6 +2485,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &677414872
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2568,6 +2590,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &683587665
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2693,6 +2716,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &770961072
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2753,6 +2777,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &771067942
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2813,6 +2838,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 0
+  spawnEffect: {fileID: 0}
 --- !u!135 &795346387
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2878,6 +2904,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 0
+  spawnEffect: {fileID: 0}
 --- !u!135 &835224747
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2938,6 +2965,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &839063130
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2998,6 +3026,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &847161376
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3058,6 +3087,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &848904116
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3149,6 +3179,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &862770554
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3209,6 +3240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &875578951
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3326,6 +3358,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &878628602
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3386,6 +3419,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &889402370
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3446,6 +3480,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &896342745
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3511,6 +3546,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &927147163
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3571,6 +3607,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &935653967
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3631,6 +3668,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &949439052
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3819,6 +3857,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 2
+  spawnEffect: {fileID: 0}
 --- !u!135 &1002961932
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3993,6 +4032,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &1082682857
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4000,6 +4040,67 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1082682854}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1110044744
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1110044745}
+  - component: {fileID: 1110044747}
+  - component: {fileID: 1110044746}
+  m_Layer: 0
+  m_Name: Spawner1 (64)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1110044745
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1110044744}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -66.14, y: 3.92, z: 80.97}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 542549625}
+  m_RootOrder: 64
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1110044746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1110044744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f616f7ca4f011344bc23b6df6b36225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isSpawned: 0
+  monType: 2
+  spawnEffect: {fileID: 0}
+--- !u!135 &1110044747
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1110044744}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
@@ -4131,6 +4232,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &1147402266
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4289,6 +4391,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &1169723741
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4349,6 +4452,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 2
+  spawnEffect: {fileID: 0}
 --- !u!135 &1173673902
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4409,6 +4513,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &1183690355
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4792,6 +4897,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 0
+  spawnEffect: {fileID: 0}
 --- !u!135 &1269769754
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4852,6 +4958,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &1289544057
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4912,6 +5019,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 2
+  spawnEffect: {fileID: 0}
 --- !u!135 &1291220476
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4972,6 +5080,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 0
+  spawnEffect: {fileID: 0}
 --- !u!135 &1303950726
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5081,6 +5190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &1315333794
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5141,6 +5251,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 0
+  spawnEffect: {fileID: 0}
 --- !u!135 &1321234460
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5842,6 +5953,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &1580179630
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5959,6 +6071,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 2
+  spawnEffect: {fileID: 0}
 --- !u!135 &1591295266
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -6691,6 +6804,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &1639265352
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -6751,6 +6865,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &1649509067
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -6956,6 +7071,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &1743693329
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -7021,6 +7137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 0
+  spawnEffect: {fileID: 0}
 --- !u!135 &1776475549
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -7182,6 +7299,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 0
+  spawnEffect: {fileID: 0}
 --- !u!135 &1785844925
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -7242,6 +7360,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &1789556289
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -7302,6 +7421,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 0
+  spawnEffect: {fileID: 0}
 --- !u!135 &1864328895
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -7362,6 +7482,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &1872278677
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -7585,6 +7706,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 2
+  spawnEffect: {fileID: 0}
 --- !u!135 &1956263595
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -7650,6 +7772,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 1
+  spawnEffect: {fileID: 0}
 --- !u!135 &1958323853
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -7777,6 +7900,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpawned: 0
   monType: 0
+  spawnEffect: {fileID: 0}
 --- !u!135 &2010762911
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -7945,10 +8069,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GruntPolyart
       objectReference: {fileID: 0}
-    - target: {fileID: 8540508463795080122, guid: 67a42b1115d72444c9370648978cbdd5, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67a42b1115d72444c9370648978cbdd5, type: 3}
 --- !u!1001 &4508634993170753672
@@ -7961,10 +8081,6 @@ PrefabInstance:
     - target: {fileID: 5853068285720707166, guid: 9a7b52c1ac31eb944a6339a90ffe52fa, type: 3}
       propertyPath: m_Name
       value: Boximon Fiery
-      objectReference: {fileID: 0}
-    - target: {fileID: 5853068285720707166, guid: 9a7b52c1ac31eb944a6339a90ffe52fa, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5853068285720707167, guid: 9a7b52c1ac31eb944a6339a90ffe52fa, type: 3}
       propertyPath: m_RootOrder
@@ -8023,10 +8139,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boximon Cyclopes
       objectReference: {fileID: 0}
-    - target: {fileID: 7113222713760168260, guid: ea76ea0359f7f464a9935d662eb690fc, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
+    - target: {fileID: 7113222713760168262, guid: ea76ea0359f7f464a9935d662eb690fc, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 451815482}
     - target: {fileID: 7113222713760168263, guid: ea76ea0359f7f464a9935d662eb690fc, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -8070,10 +8186,6 @@ PrefabInstance:
     - target: {fileID: 7113222713760168263, guid: ea76ea0359f7f464a9935d662eb690fc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7455527679345241369, guid: ea76ea0359f7f464a9935d662eb690fc, type: 3}
-      propertyPath: m_Name
-      value: WorldHpCanvas
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea76ea0359f7f464a9935d662eb690fc, type: 3}

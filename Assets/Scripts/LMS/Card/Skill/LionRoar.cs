@@ -16,17 +16,17 @@ namespace LMS.Cards
         {
             transform.position = pos;
 
-            this.damage = damage; // ÀÓ½Ã ¼³Á¤
+            this.damage = damage; // ï¿½Ó½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
         private void OnTriggerEnter(Collider other)
         {
             if(other.tag == "Monster")
             {
-                var _dir = other.transform.position - transform.position; // Æ¨°Ü³¾ ¹æÇâ ¼³Á¤
-                var _dis = Vector3.Distance(transform.position + _dir.normalized * radius, other.transform.position); // ¸ñÇ¥ À§Ä¡±îÁö ¾ó¸¶³ª ´õ °¡¾ßÇÏ´ÂÁö °è»ê
+                var _dir = other.transform.position - transform.position; // Æ¨ï¿½Ü³ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                var _dis = Vector3.Distance(transform.position + _dir.normalized * radius, other.transform.position); // ï¿½ï¿½Ç¥ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ ï¿½ó¸¶³ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
                 var _mon = other.GetComponent<Monster>();
 
-                _mon.TakeDamage((int)damage, Vector3.zero); // µ¥¹ÌÁö ÁÖ±â
+                _mon.TakeDamage((int)damage, Vector3.up); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö±ï¿½
 
                 Manager.GameManager.Instance.ExecuteCoroutine(SkillAction.BounceOut(_mon, _dir.normalized, _dis));
             }
