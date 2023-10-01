@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using LMS.Cards;
+using LMS.Item;
 
 namespace LMS.Utility
 {
@@ -21,11 +23,13 @@ namespace LMS.Utility
 
         private void Start()
         {
-            pools.Add(objectInfos[0].name, new GenericObjectPool<Cards.Card>(objectInfos[0]));
-            pools.Add(objectInfos[1].name, new GenericObjectPool<Cards.LionRoar>(objectInfos[1]));
-            pools.Add(objectInfos[2].name, new GenericObjectPool<Cards.Meteors>(objectInfos[2]));
+            pools.Add(objectInfos[0].name, new GenericObjectPool<Card>(objectInfos[0]));
+            pools.Add(objectInfos[1].name, new GenericObjectPool<LionRoar>(objectInfos[1]));
+            pools.Add(objectInfos[2].name, new GenericObjectPool<Meteors>(objectInfos[2]));
             pools.Add(objectInfos[3].name, new GenericObjectPool<ParticleSystem>(objectInfos[3]));
-            pools.Add(objectInfos[4].name, new GenericObjectPool<Cards.NormalProjectile>(objectInfos[4]));
+            pools.Add(objectInfos[4].name, new GenericObjectPool<NormalProjectile>(objectInfos[4]));
+            pools.Add(objectInfos[5].name, new GenericObjectPool<Slash>(objectInfos[5]));
+            pools.Add(objectInfos[6].name, new GenericObjectPool<DropItem>(objectInfos[6]));
         }
 
         /// <summary>
@@ -80,12 +84,7 @@ namespace LMS.Utility
         private T CreateObject<T>()
         {
             var newObj = GameObject.Instantiate(Manager.GameManager.Instance.ResourceLoadObj(info.name));
-
             UtilFunction.TurnOnOff(info, newObj, false);
-
-            //newObj.SetActive(false);
-            //if(info.disableParent != null) newObj.transform.SetParent(info.disableParent);
-            //else newObj.transform.SetParent(null);
 
             return newObj.GetComponent<T>();
         }

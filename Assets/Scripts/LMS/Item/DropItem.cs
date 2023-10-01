@@ -1,41 +1,45 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using LMS.Manager;
+using LMS.Utility;
 
 namespace LMS.Item
 {
     enum ItemType { LionRoar, Meteor, Slash, Spray, Potion, None }
     public class DropItem : MonoBehaviour
     {
-        private ItemType type;
+        private RawImage image;
+        private Texture[] textures;
+
+        [SerializeField] private ItemType type;
         private Vector3 upPos, downPos;
         private bool arrow;
 
         private Coroutine bounceCoroutine;
 
-        private void Start()
+        private void Awake()
         {
-            Initialized(transform.position);
+            image = transform.GetChild(0).GetComponent<RawImage>();
         }
+
         public void Initialized(Vector3 pos)
         {
-            if(bounceCoroutine != null)
-            {
-                GameManager.Instance.QuitCoroutine(bounceCoroutine);
-                bounceCoroutine = null;
-            }
+            textures = new Texture[] { GameManager.Instance.ResourceLoadImg("HP"), GameManager.Instance.ResourceLoadImg("CardBack") };
+
+            UtilFunction.OffCoroutine(bounceCoroutine);
 
             type = CreateItemInfo();
 
             if(type == ItemType.None)
             {
-                //Utility.ObjectPool.Instance.ReturnObject(this, "Item");
-                Destroy(gameObject);
+                ObjectPool.Instance.ReturnObject(this, "Item");
+                UtilFunction.TurnOnOff(ObjectPool.Instance.objectInfos[6], gameObject);
                 return;
             }
 
-            transform.position = pos;
+            transform.position = pos + new Vector3(0f, 1f, 0f);
 
             upPos = pos + new Vector3(0f, 0.2f, 0f);
             downPos = pos + new Vector3(0f, -0.2f, 0f);
@@ -55,18 +59,18 @@ namespace LMS.Item
 
             if(_itemRand < itemRatio[0])
             {
-                //return ItemType.None;
-                return ItemType.LionRoar;
+                return ItemType.None;
             }
             else if (_itemRand < itemRatio[1])
             {
-                //return ItemType.Potion;
-                return ItemType.LionRoar;
+                image.texture = textures[0];
+                return ItemType.Potion;
             }
             else
             {
                 int _cardRand = Random.Range(0, ratio * 100);
 
+                image.texture = textures[1];
                 Debug.Log(_cardRand);
 
                 if (_cardRand < cardRatio[0] * 10)
@@ -90,13 +94,15 @@ namespace LMS.Item
 
         private void OnTriggerEnter(Collider other)
         {
-            if(other.tag == "Player")
+            if(other.CompareTag("Player"))
             {
-                var _other = other.GetComponent<Player>();
+                other.TryGetComponent(out Player _other);
 
                 if(type == ItemType.Potion)
                 {
                     if (_other.hp == _other.maxHp) return; // 체력이 100%라면 획득 X
+                    _other.RecoveryHp(30f); // 임의 값 회복
+                    _other.PlayHealingEffect();
                 }
                 else
                 {
@@ -104,10 +110,10 @@ namespace LMS.Item
                     _other.playerUIManger.PushCard((int)type);
                 }
 
-                GameManager.Instance.QuitCoroutine(bounceCoroutine);
-                bounceCoroutine = null;
+                UtilFunction.OffCoroutine(bounceCoroutine);
+                ObjectPool.Instance.ReturnObject(this, "Item");
+                UtilFunction.TurnOnOff(ObjectPool.Instance.objectInfos[6], gameObject);
 
-                //Utility.ObjectPool.Instance.ReturnObject(this, "Item");
                 Destroy(gameObject);
             }
         }
@@ -118,14 +124,32 @@ namespace LMS.Item
             {
                 if (arrow)
                 {
-                    GameManager.Instance.ExecuteCoroutine(UI.CardAction.MoveToAction(gameObject, upPos, transform.rotation, 1f));
-                    yield return new WaitForSeconds(1f);
+                    GameManager.Instance.ExecuteCoroutine(UI.CardAction.MoveToAction(gameObject, upPos, transform.rotation, 1f, true, false));
+
+                    var t = 0f;
+                    while(t < 1f)
+                    {
+                        var _cam = Camera.main.transform;
+                        transform.LookAt(transform.position + _cam.rotation * Vector3.forward, _cam.rotation * Vector3.up);
+                        t += Time.smoothDeltaTime;
+                        yield return null;
+                    }
+
                     arrow = false;
                 }
                 else
                 {
-                    GameManager.Instance.ExecuteCoroutine(UI.CardAction.MoveToAction(gameObject, downPos, transform.rotation, 1f));
-                    yield return new WaitForSeconds(1f);
+                    GameManager.Instance.ExecuteCoroutine(UI.CardAction.MoveToAction(gameObject, downPos, transform.rotation, 1f, true, false));
+
+                    var t = 0f;
+                    while (t < 1f)
+                    {
+                        var _cam = Camera.main.transform;
+                        transform.LookAt(transform.position + _cam.rotation * Vector3.forward, _cam.rotation * Vector3.up);
+                        t += Time.smoothDeltaTime;
+                        yield return null;
+                    }
+
                     arrow = true;
                 }
                 yield return null;

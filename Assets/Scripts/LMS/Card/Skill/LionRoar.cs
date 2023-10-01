@@ -1,34 +1,45 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using LMS.Utility;
 
 namespace LMS.Cards
 {
     public class LionRoar : MonoBehaviour
     {
+        private ParticleSystem ps;
         private float radius;
         private float damage;
         private void Awake()
         {
             radius = GetComponent<SphereCollider>().radius;
+            ps = GetComponent<ParticleSystem>();
         }
-        public void Initialized(Vector3 pos, float damage)
+        public void Initialized(Vector3 pos, float damage, string name)
         {
             transform.position = pos;
 
-            this.damage = damage; // ï¿½Ó½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            this.damage = damage;
+            Manager.GameManager.Instance.ExecuteCoroutine(ParticleUtil.ReturnParticle(ps, gameObject, ObjectPool.Instance.objectInfos[1], this, name)); // ÆÄÆ¼Å¬ ÀÚµ¿ ¸®ÅÏ
         }
         private void OnTriggerEnter(Collider other)
         {
-            if(other.tag == "Monster")
+            if(other.CompareTag("Monster"))
             {
-                var _dir = other.transform.position - transform.position; // Æ¨ï¿½Ü³ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-                var _dis = Vector3.Distance(transform.position + _dir.normalized * radius, other.transform.position); // ï¿½ï¿½Ç¥ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ ï¿½ó¸¶³ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
-                var _mon = other.GetComponent<Monster>();
+                var _dir = other.transform.position - transform.position; // Æ¨°Ü³¾ ¹æÇâ ¼³Á¤
+                var _dis = Vector3.Distance(transform.position + _dir.normalized * radius, other.transform.position); // ¸ñÇ¥ À§Ä¡±îÁö ¾ó¸¶³ª ´õ °¡¾ßÇÏ´ÂÁö °è»ê
 
-                _mon.TakeDamage((int)damage, Vector3.up); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö±ï¿½
-
-                Manager.GameManager.Instance.ExecuteCoroutine(SkillAction.BounceOut(_mon, _dir.normalized, _dis));
+                if(other.TryGetComponent(out Monster _monster))
+                {
+                    // ÀÏ¹Ý ¸ó½ºÅÍ
+                    _monster.TakeDamage(damage, Vector3.zero);
+                    Manager.GameManager.Instance.ExecuteCoroutine(SkillAction.BounceOut(_monster, _dir.normalized, _dis));
+                }
+                else
+                {
+                    // º¸½ºÀÇ °æ¿ì
+                    other.GetComponent<IDamageable>().TakeDamage(damage, Vector3.zero);
+                }
             }
 
         }

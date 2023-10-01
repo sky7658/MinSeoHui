@@ -18,17 +18,19 @@ namespace LMS.Cards
         public static float basicAtkDelay = 0.5f;       // 기본 공격 딜레이
         public static float comboTimeThreshold = 0.7f;  // 콤보 시 유지되는 시간
 
-        public static string cardPrefName = "RawImage"; // 카드 프리팹 이름
+        public static string cardPrefName = "Card"; // 카드 프리팹 이름
 
         public static string[] cardImgNames = new string[] { "LionRoar", "Meteors", "Slashes", "Spray", "Heal" };  // 카드 이미지 이름
         public static float[] cardLevelMaxExp = new float[] { 100f, 200f, 300f, 400f }; // Max Level 5 (수정 가능)
+        public static int[] meteorsCount = new int[] { 5, 8, 10, 15, 20 };
+        public static int[] slashesCount = new int[] { 4, 6, 8, 10, 12 };
 
 
         public static Dictionary<SkillType, float[]> cardLevelDamage = new Dictionary<SkillType, float[]>()
         {
             { SkillType.LIONROAR, new float[] { 50f, 10f, 15f, 20f, 25f } },
             { SkillType.METEORS, new float[] { 2f, 3f, 4f, 5f, 6f } },
-            { SkillType.SLASHES, new float[] { 5f, 10f, 15f, 20f, 25f } },
+            { SkillType.SLASHES, new float[] { 2f, 3f, 4f, 5f, 6f } },
             { SkillType.SPRAY, new float[] { 1f, 1.5f, 2f, 2.5f, 3f } }
         };
 
@@ -42,7 +44,7 @@ namespace LMS.Cards
         // Delay Time 관리
         public static Dictionary<SkillType, float> delayTimes = new Dictionary<SkillType, float>()
         {
-            {SkillType.LIONROAR, 0.2f}, {SkillType.METEORS, 0.2f}, {SkillType.SLASHES, 1f}, {SkillType.SPRAY, 1f},
+            {SkillType.LIONROAR, 3f}, {SkillType.METEORS, 7f}, {SkillType.SLASHES, 3f}, {SkillType.SPRAY, 3f},
             {SkillType.HEAL, 0.2f}
         };
 
@@ -60,20 +62,30 @@ namespace LMS.Cards
         public float delayTime { get; set; }
         public float spendMP { get; set; }
         public int count { get; set; }
+        public int cardLevel { get; set; }
+        public float currentExp { get; set; }
+        public float maxExp { get; set; }
+        public float damage { get; set; }
         public Grade grade { get; set; }
         public SkillType type { get; set; }
         public CardProperty property { get; set; }
 
         // Card의 기본 정보 셋팅
-        public CardInfo(float spendMP, int count, Grade grade, SkillType type, CardProperty property = CardProperty.NONE)
+        public CardInfo(float spendMP, int count, Grade grade, SkillType type, int cardLevel, float currentExp, CardProperty property = CardProperty.NONE)
         {
             name = CardBase.cardImgNames[(int)type];
             executeTime = CardBase.executeTimes[type];
             delayTime = CardBase.delayTimes[type];
+            maxExp = CardBase.cardLevelMaxExp[cardLevel];
+            damage = CardBase.cardLevelDamage[type][cardLevel];
             this.spendMP = spendMP;
             this.count = count;
             this.grade = grade;
             this.type = type;
+            this.cardLevel = cardLevel;
+            this.currentExp = currentExp;
+            this.maxExp = maxExp;
+            this.damage = damage;
             this.property = property;
         }
     }

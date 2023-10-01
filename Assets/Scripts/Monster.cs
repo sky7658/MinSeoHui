@@ -8,9 +8,9 @@ using UnityEngine.AI;
 
 public class Monster : MonoBehaviour, IDamageable
 {
-    public int maxHealth;
-    public int curHealth;
-    public int damage;
+    public float maxHealth;
+    public float curHealth;
+    public float damage;
     public Transform target;
     public bool isChase;
     public bool isAttack;
@@ -104,14 +104,12 @@ public class Monster : MonoBehaviour, IDamageable
         yield return new WaitForSeconds(0.1f);
         if (curHealth > 0)
         {
-            print(curHealth);
-            reactVec = reactVec.normalized;
-            reactVec += Vector3.up;
-            rb.AddForce(reactVec * 5, ForceMode.Impulse);
         }
         else
         {
-            print("test");
+        	var _item = LMS.Utility.ObjectPool.Instance.GetObject<LMS.Item.DropItem>("Item");
+            LMS.Utility.UtilFunction.TurnOnOff(LMS.Utility.ObjectPool.Instance.objectInfos[6], _item.gameObject, true);
+            _item.Initialized(transform.position);
             anim.SetTrigger("Die");
             isChase = false;
             nav.enabled = false;
@@ -130,7 +128,7 @@ public class Monster : MonoBehaviour, IDamageable
         StartCoroutine("OnDamage", reactVect);
     }
     
-    public int GetDamage()
+    public float GetDamage()
     {
         return damage;
     }

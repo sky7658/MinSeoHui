@@ -18,13 +18,13 @@ namespace LMS.UI
         }
         public void CreateInfoText()
         {
-            if(infoText == null)
-            {
-                var newText = GameObject.Instantiate(Manager.GameManager.Instance.ResourceLoadObj("Text")).GetComponent<Text>();
-                newText.transform.parent = Manager.DataManager.Instance.test;
-                newText.rectTransform.anchoredPosition = new Vector3(0, 0, 0);
-                infoText = newText;
-            }
+            //if(infoText == null)
+            //{
+            //    var newText = GameObject.Instantiate(Manager.GameManager.Instance.ResourceLoadObj("Text")).GetComponent<Text>();
+            //    newText.transform.parent = Manager.DataManager.Instance.test;
+            //    newText.rectTransform.anchoredPosition = new Vector3(0, 0, 0);
+            //    infoText = newText;
+            //}
         }
         public int GetCardCount() => cHandler.GetCardCount();
         /// <summary>

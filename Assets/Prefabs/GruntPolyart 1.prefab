@@ -486,7 +486,7 @@ GameObject:
   - component: {fileID: 8540508463795080125}
   - component: {fileID: 8540508463795080124}
   - component: {fileID: 7382253766002380853}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: GruntPolyart 1
   m_TagString: Monster
   m_Icon: {fileID: 0}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using LMS.UI;
+using LMS.Manager;
 
 namespace LMS.Cards
 {
@@ -11,20 +12,24 @@ namespace LMS.Cards
         public CardInfo cardInfo;
         public RawImage cardImg { get; set; }
         public Image cardMask { get; set; }
+        public Text levelText { get; set; }
+        public Text nameText { get; set; }
 
         // 카드 스킬
         public bool delayEnabled { get; set; }
         public bool isHighlight { get; set; }
-        public delegate IEnumerator ActionDelegate(GameObject obj, Vector3 direction, CardInfo info, float damage);
+        public delegate IEnumerator ActionDelegate(GameObject obj, Vector3 direction, CardInfo info);
         private ActionDelegate skill { get; set; }
 
-        private float damage;
+        private string textString = "{0}";
 
         private void Awake()
         {
             cardImg = GetComponent<RawImage>();
             cardMask = transform.GetChild(0).GetComponent<Image>();
             expBarUI = transform.GetChild(1).GetComponent<ExpBarUI>();
+            levelText = transform.GetChild(2).GetComponent<Text>();
+            nameText = transform.GetChild(3).GetComponent<Text>();
         }
 
         public void Initialized(string imgName, CardProperty property = CardProperty.NONE)
@@ -32,53 +37,49 @@ namespace LMS.Cards
             delayEnabled = false;
             isHighlight = false;
 
-            cardImg.transform.localScale = new Vector3(1f, 1f, 1f);
+            cardImg.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
             cardMask.transform.localScale = new Vector3(1f, 1f, 1f);
 
             transform.localPosition = CardBase.InitCardPos;
 
             SetCardImg(imgName);
-            cardInfo = new CardInfo(1f, -1, Grade.EPIC, CardBase.skillTypes[imgName], property);
+            cardInfo = new CardInfo(1f, -1, Grade.EPIC, CardBase.skillTypes[imgName], 0, 0f, property);
             SetCardSkill();
 
-            cardLevel = 0;
-            currentExp = 0f;
-            maxExp = CardBase.cardLevelMaxExp[cardLevel];
-            damage = CardBase.cardLevelDamage[cardInfo.type][cardLevel];
+            levelText.text = string.Format(textString, cardInfo.cardLevel + 1);
+            nameText.text = string.Format(textString, cardInfo.name);
 
             cardMask.gameObject.SetActive(false);
         }
 
         private ExpBarUI expBarUI;
-        private int cardLevel;
-        private float currentExp;
-        private float maxExp;
         /// <summary>
         /// Card의 경험치를 업데이트 해줍니다.
         /// </summary>
         /// <param name="value"></param>
         public void ExpUpdate(float value)
         {
-            if (cardLevel == 4) return;
+            if (cardInfo.cardLevel == 4) return;
 
-            currentExp += value;
-            if(currentExp >= maxExp)
+            cardInfo.currentExp += value;
+            if(cardInfo.currentExp >= cardInfo.maxExp)
             {
-                cardLevel++;
-                currentExp -= maxExp;
+                cardInfo.cardLevel++;
+                cardInfo.currentExp -= cardInfo.maxExp;
+                levelText.text = string.Format(textString, cardInfo.cardLevel + 1); // Level Text Update
 
-                if (cardLevel == 4) 
+                if (cardInfo.cardLevel == 4) 
                 {
-                    currentExp = maxExp;
+                    cardInfo.currentExp = cardInfo.maxExp;
                 }
                 else
                 {
-                    maxExp = CardBase.cardLevelMaxExp[cardLevel];
-                    damage = CardBase.cardLevelDamage[cardInfo.type][cardLevel];
+                    cardInfo.maxExp = CardBase.cardLevelMaxExp[cardInfo.cardLevel];
+                    cardInfo.damage = CardBase.cardLevelDamage[cardInfo.type][cardInfo.cardLevel];
                 }
             }
 
-            expBarUI.UpdateExpBar(currentExp / maxExp);
+            expBarUI.UpdateExpBar(cardInfo.currentExp / cardInfo.maxExp);
         }
 
         private void SetCardSkill()
@@ -105,7 +106,7 @@ namespace LMS.Cards
 
         private void SetCardImg(string name)
         {
-            cardImg.texture = Manager.GameManager.Instance.ResourceLoadImg(name);
+            cardImg.texture = GameManager.Instance.ResourceLoadImg(name);
             if(cardImg.texture == null)
             {
                 Debug.Log("이미지가 없습니다.");
@@ -115,7 +116,7 @@ namespace LMS.Cards
 
         public void HighlightTrigger()
         {
-            Manager.GameManager.Instance.ExecuteCoroutine(CardAction.SelectAction(this, isHighlight));
+            GameManager.Instance.ExecuteCoroutine(CardAction.SelectAction(this, isHighlight));
             if (isHighlight) isHighlight = false;
             else isHighlight = true;
         }
@@ -130,9 +131,9 @@ namespace LMS.Cards
             if(cardInfo.count - 1 != 0) // 카드를 사용했을 때 갯수가 남아있다면 실행
             {
                 cardMask.gameObject.SetActive(true);
-                Manager.GameManager.Instance.ExecuteCoroutine(CardAction.DelayAction(this));
+                GameManager.Instance.ExecuteCoroutine(CardAction.DelayAction(this));
             }
-            Manager.GameManager.Instance.ExecuteCoroutine(skill(obj, direction, cardInfo, damage));
+            GameManager.Instance.ExecuteCoroutine(skill(obj, direction, cardInfo));
         }
 
         /// <summary>
@@ -143,7 +144,7 @@ namespace LMS.Cards
         /// <param name="duration"> 실행 시간</param>
         public void MoveTo(Vector3 targetPos, Quaternion targetRot, float duration)
         {
-            Manager.GameManager.Instance.ExecuteCoroutine(CardAction.MoveToAction(gameObject, targetPos, targetRot, duration));
+            GameManager.Instance.ExecuteCoroutine(CardAction.MoveToAction(gameObject, targetPos, targetRot, duration));
         }
     }
 }

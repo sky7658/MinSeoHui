@@ -779,7 +779,7 @@ GameObject:
   - component: {fileID: 5853068285720707106}
   - component: {fileID: 5853068285720707104}
   - component: {fileID: 2958689529873346525}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Boximon Fiery 1
   m_TagString: Monster
   m_Icon: {fileID: 0}

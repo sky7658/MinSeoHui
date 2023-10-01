@@ -926,7 +926,7 @@ GameObject:
   - component: {fileID: 7113222713760168256}
   - component: {fileID: 7113222713760168262}
   - component: {fileID: 4671810774486041677}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Boximon Cyclopes 1
   m_TagString: Monster
   m_Icon: {fileID: 0}

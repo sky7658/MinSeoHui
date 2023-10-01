@@ -9,7 +9,8 @@ using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour, IDamageable
 {
-    [SerializeField] HpBarUI hpBarUI;
+    [SerializeField] private HpBarUI hpBarUI;
+    private ParticleSystem healingEffect;
     State _state;
     [SerializeField] Camera _camera;
     public StateMachine _stateMachine;
@@ -26,6 +27,7 @@ public class Player : MonoBehaviour, IDamageable
     
     //상태 변수
     public bool isGround = true;
+    public bool isHit = false;
     
     //땅 착지여부
     public CapsuleCollider capsulCol;
@@ -43,6 +45,7 @@ public class Player : MonoBehaviour, IDamageable
     
     public float hp = 100f;
     public float maxHp = 100f;
+    public float superArmorTime = 3f;
     
     public PlayerUIManger playerUIManger;
     
@@ -52,6 +55,7 @@ public class Player : MonoBehaviour, IDamageable
         rb = GetComponent<Rigidbody>();
         capsulCol = GetComponent<CapsuleCollider>();
         playerUIManger = new PlayerUIManger();
+        healingEffect = transform.GetChild(4).GetComponent<ParticleSystem>();
     }
     void Start()
     {
@@ -140,6 +144,11 @@ public class Player : MonoBehaviour, IDamageable
         }
     }
 
+    public void PlayHealingEffect()
+    {
+        healingEffect.gameObject.SetActive(true);
+        healingEffect.Play();
+    }
     private void CharacterRotation()
     {
         float _yRotation = Input.GetAxisRaw("Mouse X");
@@ -202,7 +211,6 @@ public class Player : MonoBehaviour, IDamageable
         // currentCameraRotationX = Mathf.Clamp(currentCameraRotationX, -cameraRotationLimit, cameraRotationLimit);
         //
         // playerCamera.transform.localEulerAngles = new Vector3(currentCameraRotationX, 0f, 0f);
-
     }
 
     private void OnTriggerEnter(Collider other)
@@ -223,18 +231,44 @@ public class Player : MonoBehaviour, IDamageable
     {
         _stateMachine.ChangeState(StateName.IDLE);
     }
-    
-    public void TakeDamage(int damage, Vector3 reactVec)
+
+    private Coroutine superArmorCoroutine;
+    public void TakeDamage(float damage, Vector3 reactVec)
     {
+        if(isHit) return;
+
         hp -= damage;
         hpBarUI.UpdateHpBar(damage);
         if (hp <= 0)
             _stateMachine.ChangeState(StateName.DEAD);
         else
             _stateMachine.ChangeState(StateName.HIT);
+
+        if(superArmorCoroutine != null)
+        {
+            StopCoroutine(superArmorCoroutine);
+            superArmorCoroutine = null;
+        }
+        
+        superArmorCoroutine = StartCoroutine(SuperArmor());
+    }
+
+    public void RecoveryHp(float value)
+    {
+        hp += value;
+        hpBarUI.UpdateHpBar(value, false);
+    }
+
+    IEnumerator SuperArmor()
+    {
+        isHit = true;
+        yield return new WaitForSeconds(superArmorTime);
+        isHit = false;
+
+        yield break;
     }
     
-    public int GetDamage()
+    public float GetDamage()
     {
         return 0;
     }
