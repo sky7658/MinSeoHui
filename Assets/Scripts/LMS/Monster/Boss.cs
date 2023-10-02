@@ -81,7 +81,7 @@ namespace LMS.Enemy
             attackDistance = 8f;
             attackCoolDown = 3f; // 임의
 
-            skillDamage = 1f; // 임의
+            skillDamage = 40f; // 임의
             rushDistance = 15f;
             skillCoolDown = 20f;  // 임의
 
@@ -137,11 +137,8 @@ namespace LMS.Enemy
 
         public void Attack()
         {
-            if (isAttackable)
-            {
-                Debug.Log("공격대기.");
-                return;
-            }
+            if (isAttackable) return;
+
             isAttackable = true;
 
             UtilFunction.OffCoroutine(attackCoroutine);
@@ -157,7 +154,8 @@ namespace LMS.Enemy
 
             isRushable = true;
 
-            hitBox.Initialized(transform, Color.red, 5f, 10f, 0.5f);
+            //hitBox.Initialized(transform, Color.red, 5f, 10f, 0.5f);
+
             UtilFunction.OffCoroutine(skillCoroutine);
             UtilFunction.OffCoroutine(skillCoolCoroutine);
 
@@ -208,8 +206,6 @@ namespace LMS.Enemy
 
         private IEnumerator Rush()
         {
-            yield return new WaitForSeconds(1f);
-
             float _elpased = 0f;
 
             while (_elpased < 1f)

@@ -53,6 +53,8 @@ namespace LMS.UI
         public void SetHand() => cHandler.SetHand();
 
         public void ComboAttacks(GameObject obj, Action del) => cHandler.ComboAttacks(obj, del);
+
+        public bool disableMovement => cHandler.disableMovement;
     }
 }
 

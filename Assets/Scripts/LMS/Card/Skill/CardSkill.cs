@@ -12,15 +12,15 @@ namespace LMS.Cards
             Debug.Log("HpHeal이 되었습니다.");
             yield break;
         }
-        public static IEnumerator SingleFire(GameObject obj, Vector3 direction) // 기본 공격
+        public static IEnumerator SingleFire(GameObject obj, Vector3 direction, float damage) // 기본 공격
         {
             var _spell = ObjectPool.Instance.GetObject<NormalProjectile>("Effect");
             UtilFunction.TurnOnOff(ObjectPool.Instance.objectInfos[4], _spell.gameObject, true);
 
-            _spell.Initialized(direction, obj.transform.position + CardBase.characterHeight, 30f, "Effect", 5f); // 데미지 수정
+            _spell.Initialized(direction, obj.transform.position + CardBase.characterHeight, 30f, "Effect", damage);
             yield break;
         }
-        public static IEnumerator MultipleFire(GameObject obj, Vector3 direction) // 기본 특별 공격
+        public static IEnumerator MultipleFire(GameObject obj, Vector3 direction, float damage) // 기본 특별 공격
         {
             float[] _deg = new float[3] { 0f, 22.5f, -22.5f };
             for (int i = 0; i < 3; i++)
@@ -34,7 +34,7 @@ namespace LMS.Cards
                 var _y = _curRot.y + _deg[i];
                 _spell.transform.rotation = Quaternion.Euler(_curRot.x, _y, _curRot.z);
 
-                _spell.Initialized(_spell.transform.forward, obj.transform.position + CardBase.characterHeight, 30f, "Effect", 5f); // 데미지 수정
+                _spell.Initialized(_spell.transform.forward, obj.transform.position + CardBase.characterHeight, 30f, "Effect", damage);
             }
             yield break;
         }
@@ -44,7 +44,7 @@ namespace LMS.Cards
     {
         public static IEnumerator SprayFire(GameObject obj, Vector3 direction, CardInfo info)
         {
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < CardBase.sprayCount[info.cardLevel]; i++)
             {
                 // 수정
                 var _spell = ObjectPool.Instance.GetObject<NormalProjectile>("Effect");
@@ -59,7 +59,7 @@ namespace LMS.Cards
 
                 //var _dir = obj.transform.forward + new Vector3(Random.Range(-0.1f, 0.1f), 0f, 0f);
                 _spell.Initialized(_spell.transform.forward, obj.transform.position + CardBase.characterHeight, 30f, "Effect", info.damage, info);
-                yield return new WaitForSeconds(info.executeTime / 5f);
+                yield return new WaitForSeconds(info.executeTime / CardBase.sprayCount[info.cardLevel]);
             }
             yield break;
         }

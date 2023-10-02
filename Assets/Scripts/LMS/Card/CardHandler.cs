@@ -29,8 +29,12 @@ namespace LMS.Cards
 
             handType = true;
 
+            attackLevel = 0;
             comboCount = 0;
             activeAtk = false;
+
+            IsSkill = false;
+            disableMovement = false;
         }
 
         public int GetCardCount() => cards.Count; // 현재 카드 갯수
@@ -100,6 +104,7 @@ namespace LMS.Cards
                 if(card.cardInfo.name == CardBase.cardImgNames[index])
                 {
                     card.ExpUpdate(20f);
+                    attackLevel = AttackLevelUpdate();
                     return;
                 }
             }
@@ -150,26 +155,34 @@ namespace LMS.Cards
             // 카드를 사용할 수 없는 상태일 경우
             // ex) if(player.state != PlayerState.IDLE) return;
 
-            // 카드 스킬의 쿨타임일 경우
-            if (cards[selectCardNum].delayEnabled)
+            // 카드 스킬의 쿨타임이거나 카드 스킬을 시전 중일 경우
+            if (cards[selectCardNum].delayEnabled || IsSkill)
             {
-                Debug.Log("카드 쿨타임 입니다.");
+                Debug.Log("카드를 사용 중 이거나 쿨타임 입니다.");
                 return;
             }
+
+            // 스킬 실행 시간 계산
+            int _multiply = 1;
+            var _cardInfo = cards[selectCardNum].cardInfo;
+            if (_cardInfo.type == SkillType.SLASHES) _multiply = CardBase.slashesCount[_cardInfo.cardLevel];
+
+            UtilFunction.OffCoroutine(skillCoroutine);
+            skillCoroutine = GameManager.Instance.ExecuteCoroutine(UsingSkill(CardBase.executeTimes[_cardInfo.type] * _multiply, _cardInfo.type));
 
             // 카드의 스킬을 실행
             cards[selectCardNum].ExecuteSkill(obj, direction);
 
             // 횟수 제한이 있는 카드만 횟수를 차감
-            if (cards[selectCardNum].cardInfo.count > 0)
+            if (_cardInfo.count > 0)
             {
                 // 모두 사용시 카드 삭제
-                if(--cards[selectCardNum].cardInfo.count == 0)
+                if(--_cardInfo.count == 0)
                 {
                     PopCard(text);
                     return;
                 }
-                cardUI.UpdateInfo(text, cards[selectCardNum].cardInfo);
+                cardUI.UpdateInfo(text, _cardInfo);
             }
         }
 
@@ -191,12 +204,15 @@ namespace LMS.Cards
             cardUI.CardAligment(cards, handType);
         }
 
+        private int attackLevel;
         private int comboCount;
         private Coroutine coroutine;
         private bool activeAtk;
         public void ComboAttacks(GameObject obj, Action del)
         {
             if (activeAtk == true) return; // 공격 딜레이 중이라면 return
+
+            float _attackDamage = CardBase.attackDamage[attackLevel];
 
             comboCount++;
             activeAtk = true;
@@ -207,16 +223,43 @@ namespace LMS.Cards
 
             if(comboCount < 3)
             {
-                GameManager.Instance.ExecuteCoroutine(CardSkill.SingleFire(obj, obj.transform.forward));
+                GameManager.Instance.ExecuteCoroutine(CardSkill.SingleFire(obj, obj.transform.forward, _attackDamage));
                 coroutine = GameManager.Instance.ExecuteCoroutine(SkillAction.RetentionTime(CardBase.comboTimeThreshold, () => comboCount = 0));
             }
             else
             {
-                GameManager.Instance.ExecuteCoroutine(CardSkill.MultipleFire(obj, obj.transform.forward));
+                GameManager.Instance.ExecuteCoroutine(CardSkill.MultipleFire(obj, obj.transform.forward, _attackDamage * 2));
                 comboCount = 0;
             }
 
             GameManager.Instance.ExecuteCoroutine(SkillAction.RetentionTime(CardBase.basicAtkDelay, () => activeAtk = false));
+        }
+
+        private int AttackLevelUpdate()
+        {
+            if (cards.Count != CardBase.maxCardCount) return attackLevel;
+
+            int _minValue = 5;
+            foreach(var card in cards)
+            {
+                if(card.cardInfo.cardLevel < _minValue) _minValue = card.cardInfo.cardLevel;
+            }
+
+            return _minValue;
+        }
+
+        private bool IsSkill;
+        public bool disableMovement { get; private set; }
+        private Coroutine skillCoroutine;
+        private IEnumerator UsingSkill(float duration, SkillType type)
+        {
+            IsSkill = true;
+            if (type == SkillType.METEORS || type == SkillType.SLASHES) disableMovement = true;
+
+            yield return new WaitForSeconds(duration);
+
+            IsSkill = false;
+            disableMovement = false;
         }
     }
 

@@ -41,11 +41,10 @@ namespace LMS.Item
 
             transform.position = pos + new Vector3(0f, 1f, 0f);
 
-            upPos = pos + new Vector3(0f, 0.2f, 0f);
-            downPos = pos + new Vector3(0f, -0.2f, 0f);
+            upPos = transform.position + new Vector3(0f, 0.2f, 0f);
+            downPos = transform.position + new Vector3(0f, -0.2f, 0f);
 
             bounceCoroutine = GameManager.Instance.ExecuteCoroutine(BounceObject());
-
         }
 
         private int ratio = 1;

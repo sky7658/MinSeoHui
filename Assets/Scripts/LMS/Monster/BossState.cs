@@ -25,15 +25,23 @@ namespace SHY.Enemy
     }
     public class Idle : BossState
     {
+        float elapsed;
         public BossStateName stateName { get; } = BossStateName.Idle;
         public void Enter(Boss boss)
         {
             boss.anim.SetBool("isMove", false);
             boss.nav.isStopped = true;
+            elapsed = 0f;
         }
         public void Action(Boss boss)
         {
             boss.DecideState();
+            elapsed += Time.smoothDeltaTime;
+
+            Vector3 _directionToTarget = boss.target.transform.position - boss.transform.position;
+            Quaternion _targetRoation = Quaternion.LookRotation(_directionToTarget);
+            
+            boss.transform.rotation = Quaternion.Slerp(boss.transform.rotation, _targetRoation, elapsed / 0.5f);
         }
         public void Exit(Boss boss) { }
     }
