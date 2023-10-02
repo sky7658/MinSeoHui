@@ -15,7 +15,6 @@ namespace LMS.Cards
         private List<Card> cards;
         // 카드 UI를 관리
         private CardUI cardUI;
-        public bool IsSkill { get; private set; }
 
         public CardHandler()
         {
@@ -33,6 +32,9 @@ namespace LMS.Cards
             attackLevel = 0;
             comboCount = 0;
             activeAtk = false;
+
+            IsSkill = false;
+            disableMovement = false;
         }
 
         public int GetCardCount() => cards.Count; // 현재 카드 갯수
@@ -153,33 +155,34 @@ namespace LMS.Cards
             // 카드를 사용할 수 없는 상태일 경우
             // ex) if(player.state != PlayerState.IDLE) return;
 
-            // 카드 스킬의 쿨타임일 경우
-            if (cards[selectCardNum].delayEnabled)
+            // 카드 스킬의 쿨타임이거나 카드 스킬을 시전 중일 경우
+            if (cards[selectCardNum].delayEnabled || IsSkill)
             {
-                Debug.Log("카드 쿨타임 입니다.");
+                Debug.Log("카드를 사용 중 이거나 쿨타임 입니다.");
                 return;
             }
 
             // 스킬 실행 시간 계산
             int _multiply = 1;
-            if (cards[selectCardNum].cardInfo.type == SkillType.SLASHES) _multiply = CardBase.slashesCount[cards[selectCardNum].cardInfo.cardLevel];
+            var _cardInfo = cards[selectCardNum].cardInfo;
+            if (_cardInfo.type == SkillType.SLASHES) _multiply = CardBase.slashesCount[_cardInfo.cardLevel];
 
             UtilFunction.OffCoroutine(skillCoroutine);
-            skillCoroutine = GameManager.Instance.ExecuteCoroutine(UsingSkill(CardBase.executeTimes[cards[selectCardNum].cardInfo.type] * _multiply));
+            skillCoroutine = GameManager.Instance.ExecuteCoroutine(UsingSkill(CardBase.executeTimes[_cardInfo.type] * _multiply, _cardInfo.type));
 
             // 카드의 스킬을 실행
             cards[selectCardNum].ExecuteSkill(obj, direction);
 
             // 횟수 제한이 있는 카드만 횟수를 차감
-            if (cards[selectCardNum].cardInfo.count > 0)
+            if (_cardInfo.count > 0)
             {
                 // 모두 사용시 카드 삭제
-                if(--cards[selectCardNum].cardInfo.count == 0)
+                if(--_cardInfo.count == 0)
                 {
                     PopCard(text);
                     return;
                 }
-                cardUI.UpdateInfo(text, cards[selectCardNum].cardInfo);
+                cardUI.UpdateInfo(text, _cardInfo);
             }
         }
 
@@ -245,14 +248,18 @@ namespace LMS.Cards
             return _minValue;
         }
 
+        private bool IsSkill;
+        public bool disableMovement { get; private set; }
         private Coroutine skillCoroutine;
-        private IEnumerator UsingSkill(float duration)
+        private IEnumerator UsingSkill(float duration, SkillType type)
         {
             IsSkill = true;
+            if (type == SkillType.METEORS || type == SkillType.SLASHES) disableMovement = true;
 
             yield return new WaitForSeconds(duration);
 
             IsSkill = false;
+            disableMovement = false;
         }
     }
 

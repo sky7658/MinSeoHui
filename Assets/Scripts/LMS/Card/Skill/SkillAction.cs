@@ -76,6 +76,7 @@ namespace LMS.Cards
             float _elapsed = 0f;
             Rigidbody _rb = obj.GetComponent<Rigidbody>();
             _rb.useGravity = rigd;
+            _rb.velocity = Vector3.zero;
 
             if(startEffect != null) startEffect(); // Effect¸¦ »ç¿ë
 

@@ -54,7 +54,7 @@ namespace LMS.UI
 
         public void ComboAttacks(GameObject obj, Action del) => cHandler.ComboAttacks(obj, del);
 
-        public bool isSkill => cHandler.IsSkill;
+        public bool disableMovement => cHandler.disableMovement;
     }
 }
 
