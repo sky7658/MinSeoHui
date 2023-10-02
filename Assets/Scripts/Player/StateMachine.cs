@@ -13,7 +13,8 @@ public enum StateName
     DEAD,
     FALL,
     ROLL,
-    ATTACK
+    ATTACK,
+    SKILL
 }
 
 public class StateMachine

@@ -151,6 +151,25 @@ public class Attack : State
     }
 }
 
+public class Skill : State
+{
+    public StateName stateName { get; } = StateName.SKILL;
+    public void Enter(Player player)
+    {
+        player.anim.SetBool("isAtk1",true);
+    }
+
+    public void Action(Player player)
+    {
+        //player.TryMove();
+    }
+
+    public void Exit(Player player)
+    {
+        player.anim.SetBool("isAtk1",false);
+    }
+}
+
 public class BackMove : State
 {
     public StateName stateName { get; } = StateName.BACK;

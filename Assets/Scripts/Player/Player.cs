@@ -60,6 +60,7 @@ public class Player : MonoBehaviour, IDamageable
     void Start()
     {
         applySpeed = walkSpeed;
+        FadeManager.Instance.OnFadeIn();
         
         _stateMachine = new StateMachine(StateName.IDLE, new Idle(), this);
         _stateMachine.AddState(StateName.MOVE, new Move());
@@ -71,6 +72,7 @@ public class Player : MonoBehaviour, IDamageable
         _stateMachine.AddState(StateName.FALL, new Fall());
         _stateMachine.AddState(StateName.ROLL, new Roll());
         _stateMachine.AddState(StateName.ATTACK, new Attack());
+        _stateMachine.AddState(StateName.SKILL, new Skill());
 
         hpBarUI.Initialized(maxHp, false);
 
@@ -141,6 +143,7 @@ public class Player : MonoBehaviour, IDamageable
         if(Input.GetMouseButtonDown(1))
         {
             playerUIManger.UseCard(gameObject, transform.forward);
+            _stateMachine.ChangeState(StateName.SKILL);
         }
     }
 
