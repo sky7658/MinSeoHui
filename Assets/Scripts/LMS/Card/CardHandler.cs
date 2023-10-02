@@ -15,6 +15,7 @@ namespace LMS.Cards
         private List<Card> cards;
         // 카드 UI를 관리
         private CardUI cardUI;
+        public bool IsSkill { get; private set; }
 
         public CardHandler()
         {
@@ -159,6 +160,13 @@ namespace LMS.Cards
                 return;
             }
 
+            // 스킬 실행 시간 계산
+            int _multiply = 1;
+            if (cards[selectCardNum].cardInfo.type == SkillType.SLASHES) _multiply = CardBase.slashesCount[cards[selectCardNum].cardInfo.cardLevel];
+
+            UtilFunction.OffCoroutine(skillCoroutine);
+            skillCoroutine = GameManager.Instance.ExecuteCoroutine(UsingSkill(CardBase.executeTimes[cards[selectCardNum].cardInfo.type] * _multiply));
+
             // 카드의 스킬을 실행
             cards[selectCardNum].ExecuteSkill(obj, direction);
 
@@ -235,6 +243,16 @@ namespace LMS.Cards
             }
 
             return _minValue;
+        }
+
+        private Coroutine skillCoroutine;
+        private IEnumerator UsingSkill(float duration)
+        {
+            IsSkill = true;
+
+            yield return new WaitForSeconds(duration);
+
+            IsSkill = false;
         }
     }
 

@@ -53,7 +53,7 @@ namespace LMS.Cards
         // Execute Time °ü¸®
         public static Dictionary<SkillType, float> executeTimes = new Dictionary<SkillType, float>()
         {
-            {SkillType.LIONROAR, 0.2f}, {SkillType.METEORS, 0.2f}, {SkillType.SLASHES, 1f}, {SkillType.SPRAY, 1f},
+            {SkillType.LIONROAR, 0.2f}, {SkillType.METEORS, 5f}, {SkillType.SLASHES, 0.1f}, {SkillType.SPRAY, 1f},
             {SkillType.HEAL, 0.2f}
         };
     }
