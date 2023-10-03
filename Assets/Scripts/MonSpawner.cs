@@ -16,17 +16,18 @@ public class MonSpawner : MonoBehaviour {
     {
         isSpawned = false;
         //이펙트 할당
-        spawnEffect = Resources.Load<GameObject>("Effect/SpawnEffect");
+        spawnEffect = LMS.Manager.GameManager.Instance.ResourceLoadObj("SpawnEffect");
     }
 
     // 몬스터 스폰
     public void Spawn(Transform target)
     {
-        Monster monster = MonsterPool.GetObject(monType);
-        monster.transform.position = transform.position;
-        monster.target = target;
-        
+        Monster monster = MonsterPool.GetObject(monType, transform.position);
         monster.transform.SetParent(transform);
+
+        monster.target = target;
+
+
         //이펙트 생성
         Instantiate(spawnEffect, transform.position, Quaternion.identity);
     }
