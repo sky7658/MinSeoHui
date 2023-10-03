@@ -22,7 +22,7 @@ namespace LMS.UI
         private Coroutine hpUICoroutine;
 
         private bool isWorld;
-        private void Awake() // Ã³À½ »ı¼º½Ã¿¡¸¸
+        private void Awake() // ì²˜ìŒ ìƒì„±ì‹œì—ë§Œ
         {
             frontHpBar = transform.GetChild(1).GetComponent<Image>();
             backHpBar = transform.GetChild(0).GetComponent<Image>();
@@ -43,7 +43,7 @@ namespace LMS.UI
         }
 
         /// <summary>
-        /// ÀÌ Å¬·¡½º¿¡ Á¸ÀçÇÏ´Â ÄÚ·çÆ¾À» ÀüºÎ Á¾·á½ÃÅµ´Ï´Ù.
+        /// ì´ í´ë˜ìŠ¤ì— ì¡´ì¬í•˜ëŠ” ì½”ë£¨í‹´ì„ ì „ë¶€ ì¢…ë£Œì‹œí‚µë‹ˆë‹¤.
         /// </summary>
         public void OffCoroutineAll()
         {
@@ -53,7 +53,7 @@ namespace LMS.UI
         }
 
         /// <summary>
-        /// HpBar¸¦ ¾÷µ¥ÀÌÆ® ÇØÁİ´Ï´Ù.
+        /// HpBarë¥¼ ì—…ë°ì´íŠ¸ í•´ì¤ë‹ˆë‹¤.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="getDamage"></param>
@@ -80,7 +80,7 @@ namespace LMS.UI
         }
 
         /// <summary>
-        /// HpBar¸¦ ÀÏÁ¤ ½Ã°£µ¿¾È¸¸ ³ëÃâµÇ°Ô ÇØÁİ´Ï´Ù.
+        /// HpBarë¥¼ ì¼ì • ì‹œê°„ë™ì•ˆë§Œ ë…¸ì¶œë˜ê²Œ í•´ì¤ë‹ˆë‹¤.
         /// </summary>
         private void DrawUI()
         {
@@ -94,7 +94,7 @@ namespace LMS.UI
             float _elapsed = 0f;
             while (_elapsed < 2f)
             {
-                // Ç×»ó Ä«¸Ş¶ó ¹æÇâÀ¸·Î ¹Ù¶óº¸±â
+                // í•­ìƒ ì¹´ë©”ë¼ ë°©í–¥ìœ¼ë¡œ ë°”ë¼ë³´ê¸°
                 var _cam = Camera.main.transform;
                 transform.LookAt(transform.position + _cam.rotation * Vector3.forward, _cam.rotation * Vector3.up);
 

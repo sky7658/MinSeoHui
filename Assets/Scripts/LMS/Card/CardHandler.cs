@@ -143,13 +143,13 @@ namespace LMS.Cards
         /// <summary>
         /// 선택 된 카드를 사용합니다.
         /// </summary>
-        public void UseCard(GameObject obj, Vector3 direction, Text text)
+        public bool UseCard(GameObject obj, Vector3 direction, Text text)
         {
             // 인덱스가 리스트 범위를 벗어나는 경우
             if (cards.Count < selectCardNum + 1 || selectCardNum == -1)
             {
                 Debug.Log("그런 카드는 존재하지 않음");
-                return;
+                return false;
             }
 
             // 카드를 사용할 수 없는 상태일 경우
@@ -159,7 +159,7 @@ namespace LMS.Cards
             if (cards[selectCardNum].delayEnabled || IsSkill)
             {
                 Debug.Log("카드를 사용 중 이거나 쿨타임 입니다.");
-                return;
+                return false;
             }
 
             // 스킬 실행 시간 계산
@@ -180,10 +180,12 @@ namespace LMS.Cards
                 if(--_cardInfo.count == 0)
                 {
                     PopCard(text);
-                    return;
+                    return true;
                 }
                 cardUI.UpdateInfo(text, _cardInfo);
             }
+
+            return true;
         }
 
         private bool handType;
@@ -210,8 +212,8 @@ namespace LMS.Cards
         private bool activeAtk;
         public void ComboAttacks(GameObject obj, Action del)
         {
-            if (activeAtk == true) return; // 공격 딜레이 중이라면 return
-
+            if (activeAtk == true || IsSkill) return; // 공격 딜레이 중이라면 return
+            
             float _attackDamage = CardBase.attackDamage[attackLevel];
 
             comboCount++;

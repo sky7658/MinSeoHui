@@ -15,7 +15,7 @@ public class BlueMon : Monster
         }
     }
 
-    public void Init()
+    public override void Init(Action OnDieCallBack = null)
     {
         maxHealth = 70;
         curHealth = maxHealth;
@@ -23,6 +23,7 @@ public class BlueMon : Monster
         isChase = false;
         isAttack = false;
         meleeArea.enabled = false;
+        base.Init(OnDieCallBack);
     }
     
     IEnumerator Attack()

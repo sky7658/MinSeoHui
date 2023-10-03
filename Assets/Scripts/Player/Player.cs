@@ -105,10 +105,10 @@ public class Player : MonoBehaviour, IDamageable
         
         if (Input.GetKeyDown(KeyCode.A))
         {
-            int rand = UnityEngine.Random.Range(0, 3);
+            int rand = UnityEngine.Random.Range(0, 4);
             //int rand2 = Random.Range(1, 4);
             //playerUI.PushCard(rand, (LMS.Cards.CardProperty)rand2);
-            playerUIManger.PushCard(rand, (LMS.Cards.CardProperty)3);
+            playerUIManger.PushCard(rand, (LMS.Cards.CardProperty)0);
         }
         
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -142,8 +142,8 @@ public class Player : MonoBehaviour, IDamageable
         
         if(Input.GetMouseButtonDown(1))
         {
-            playerUIManger.UseCard(gameObject, transform.forward);
-            _stateMachine.ChangeState(StateName.SKILL);
+            if (playerUIManger.UseCard(gameObject, transform.forward))
+                _stateMachine.ChangeState(StateName.SKILL);
         }
     }
 
@@ -172,6 +172,8 @@ public class Player : MonoBehaviour, IDamageable
 
     public void TryMove()
     {
+        if (playerUIManger.disableMovement) return;
+        
         //w를 눌렀을때
         if (Input.GetKey(KeyCode.W))
         {

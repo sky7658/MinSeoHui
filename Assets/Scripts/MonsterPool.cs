@@ -46,14 +46,15 @@ public class MonsterPool : MonoBehaviour
         newObj.monsterType = (MonType)index;
         return newObj;
     }
-
-    public static Monster GetObject(MonType type)
+    
+    public static Monster GetObject(MonType type, Vector3 pos)
     {
         foreach (var obj in Instance._poolingObjectList)
         {
             if (obj.monsterType == type)
             {
                 obj.transform.SetParent(null);
+                obj.transform.position = pos;
                 obj.gameObject.SetActive(true);
                 obj.Init();
                 Instance._poolingObjectList.Remove(obj);
@@ -63,7 +64,6 @@ public class MonsterPool : MonoBehaviour
         var newObj = Instance.CreateNewObject((int)type);
         newObj.gameObject.SetActive(true);
         newObj.transform.SetParent(null);
-        newObj.Init();
         return newObj;
     }
 

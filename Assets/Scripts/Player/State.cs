@@ -157,11 +157,15 @@ public class Skill : State
     public void Enter(Player player)
     {
         player.anim.SetBool("isAtk1",true);
+        player.anim.SetTrigger("doSkill");
     }
 
     public void Action(Player player)
     {
-        //player.TryMove();
+        if (!player.playerUIManger.disableMovement)
+        {
+            player._stateMachine.ChangeState(StateName.IDLE);
+        }
     }
 
     public void Exit(Player player)

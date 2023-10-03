@@ -41,7 +41,7 @@ namespace LMS.UI
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="direction"></param>
-        public void UseCard(GameObject obj, Vector3 direction) => cHandler.UseCard(obj, direction, infoText);
+        public bool UseCard(GameObject obj, Vector3 direction) => cHandler.UseCard(obj, direction, infoText);
         /// <summary>
         /// Card List에 있는 특정 카드를 선택합니다.
         /// </summary>

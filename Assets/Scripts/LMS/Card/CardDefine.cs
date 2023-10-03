@@ -7,21 +7,21 @@ namespace LMS.Cards
 {
     public class CardBase
     {
-        // Ä«µå ÃÖ´ëÄ¡
+        // Ä«ï¿½ï¿½ ï¿½Ö´ï¿½Ä¡
         public static int maxCardCount = 5;
 
-        public static readonly Vector3 handDistance = new Vector3(0f, 100f, 0f);     // ÇÚµå ¼û°ÜÁö´Â °Å¸®
-        public static readonly Vector3 InitCardPos = new Vector3(-577f, -210f, 0f);  // Ä«µå »ý¼º À§Ä¡
-        public static readonly Vector3 characterHeight = new Vector3(0f, 1.5f, 0f);  // Ä³¸¯ÅÍ ³ôÀÌ
+        public static readonly Vector3 handDistance = new Vector3(0f, 100f, 0f);     // ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½
+        public static readonly Vector3 InitCardPos = new Vector3(-577f, -210f, 0f);  // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
+        public static readonly Vector3 characterHeight = new Vector3(0f, 1.5f, 0f);  // Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         public static readonly Vector3 characterSkillHeight = new Vector3(0f, -0.416365f, 0f);
 
-        public static readonly string cardPrefName = "Card"; // Ä«µå ÇÁ¸®ÆÕ ÀÌ¸§
-        public static readonly string[] cardImgNames = new string[] { "LionRoar", "Meteors", "Slashes", "Spray", "Heal" };  // Ä«µå ÀÌ¹ÌÁö ÀÌ¸§
+        public static readonly string cardPrefName = "Card"; // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½
+        public static readonly string[] cardImgNames = new string[] { "LionRoar", "Meteors", "Slashes", "Spray", "Heal" };  // Ä«ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½
 
-        public static readonly float basicAtkDelay = 0.5f;       // ±âº» °ø°Ý µô·¹ÀÌ
-        public static readonly float comboTimeThreshold = 0.7f;  // ÄÞº¸ ½Ã À¯ÁöµÇ´Â ½Ã°£
+        public static readonly float basicAtkDelay = 0.5f;       // ï¿½âº» ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        public static readonly float comboTimeThreshold = 0.7f;  // ï¿½Þºï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ ï¿½Ã°ï¿½
         public static readonly float[] attackDamage = new float[] { 5f, 7f, 10f, 12f, 15f };
-        public static readonly float[] cardLevelMaxExp = new float[] { 100f, 200f, 300f, 400f }; // Max Level 5 (¼öÁ¤ °¡´É)
+        public static readonly float[] cardLevelMaxExp = new float[] { 100f, 200f, 300f, 400f }; // Max Level 5 (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
 
         public static readonly int[] meteorsCount = new int[] { 5, 8, 10, 15, 20 };
         public static readonly int[] slashesCount = new int[] { 4, 6, 8, 10, 12 };
@@ -36,24 +36,24 @@ namespace LMS.Cards
             { SkillType.SPRAY, new float[] { 5f, 6f, 6f, 7f, 8f } }
         };
 
-        // Ä«µå Img¿¡ µû¸¥ Type °áÁ¤
+        // Ä«ï¿½ï¿½ Imgï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Type ï¿½ï¿½ï¿½ï¿½
         public static Dictionary<string, SkillType> skillTypes = new Dictionary<string, SkillType>()
         {
             {cardImgNames[0], SkillType.LIONROAR}, {cardImgNames[1], SkillType.METEORS}, {cardImgNames[2], SkillType.SLASHES}, {cardImgNames[3], SkillType.SPRAY},
             {cardImgNames[4], SkillType.HEAL}
         };
 
-        // Delay Time °ü¸®
+        // Delay Time ï¿½ï¿½ï¿½ï¿½
         public static Dictionary<SkillType, float> delayTimes = new Dictionary<SkillType, float>()
         {
             {SkillType.LIONROAR, 3f}, {SkillType.METEORS, 7f}, {SkillType.SLASHES, 3f}, {SkillType.SPRAY, 3f},
             {SkillType.HEAL, 0.2f}
         };
 
-        // Execute Time °ü¸®
+        // Execute Time ï¿½ï¿½ï¿½ï¿½
         public static Dictionary<SkillType, float> executeTimes = new Dictionary<SkillType, float>()
         {
-            {SkillType.LIONROAR, 0.2f}, {SkillType.METEORS, 5f}, {SkillType.SLASHES, 0.1f}, {SkillType.SPRAY, 1f},
+            {SkillType.LIONROAR, 0.2f}, {SkillType.METEORS, 3.5f}, {SkillType.SLASHES, 0.1f}, {SkillType.SPRAY, 1f},
             {SkillType.HEAL, 0.2f}
         };
     }
@@ -72,7 +72,7 @@ namespace LMS.Cards
         public SkillType type { get; set; }
         public CardProperty property { get; set; }
 
-        // CardÀÇ ±âº» Á¤º¸ ¼ÂÆÃ
+        // Cardï¿½ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         public CardInfo(float spendMP, int count, Grade grade, SkillType type, int cardLevel, float currentExp, CardProperty property = CardProperty.NONE)
         {
             name = CardBase.cardImgNames[(int)type];
@@ -92,10 +92,10 @@ namespace LMS.Cards
         }
     }
 
-    // ·¹¾îµµ ¹× ¾ÆÀÌÅÛ °³¼ö
+    // ï¿½ï¿½ï¿½îµµ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public enum Grade { NORMAL = 3, RARE = 2, EPIC = 1 }
-    // Ä«µå ½ºÅ³ Å¸ÀÔ
-    public enum SkillType { LIONROAR, METEORS, SLASHES, SPRAY, HEAL} // ÀÌ°Ô ÂðÀÓ
-    // Ä«µå ¼Ó¼º
-    public enum CardProperty { NONE, FIRE, ICE, POISON } // ºÒ ¾óÀ½ µ¶
+    // Ä«ï¿½ï¿½ ï¿½ï¿½Å³ Å¸ï¿½ï¿½
+    public enum SkillType { LIONROAR, METEORS, SLASHES, SPRAY, HEAL} // ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½
+    // Ä«ï¿½ï¿½ ï¿½Ó¼ï¿½
+    public enum CardProperty { NONE, FIRE, ICE, POISON } // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 }

@@ -20,24 +20,29 @@ public class Monster : MonoBehaviour, IDamageable
     HpBarUI hpBarUI;
 
     private Rigidbody rb;
-    private BoxCollider boxCollider;
+    private Collider boxCollider;
     private Material mat;
     private NavMeshAgent nav;
     protected Animator anim;
+    
+    Action OnDieCallBack;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        boxCollider = GetComponent<BoxCollider>();
+        boxCollider = GetComponent<Collider>();
         //mat = transform.GetChild(0).GetComponent<MeshRenderer>().material;
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         hpBarUI = transform.GetChild(0).GetChild(0).GetComponent<HpBarUI>();
     }
 
-    public void Init()
+    public virtual void Init(Action OnDieCallBack = null)
     {
+        this.OnDieCallBack = OnDieCallBack;
         hpBarUI.Initialized(maxHealth, true);
+        boxCollider.enabled = true;
+        rb.useGravity = true;
     }
 
     private void OnEnable()
@@ -66,8 +71,6 @@ public class Monster : MonoBehaviour, IDamageable
 
     protected void FixedUpdate()
     {
-        if (!isChase)
-            FreezeVelocity();
     }
 
     protected bool Targerting()
@@ -90,6 +93,8 @@ public class Monster : MonoBehaviour, IDamageable
 
     private void Update()
     {
+        if (!isChase)
+            FreezeVelocity();
         if (nav.enabled)
         {
             nav.SetDestination(target.position);
@@ -106,10 +111,12 @@ public class Monster : MonoBehaviour, IDamageable
         { }
         else
         {
-        	var _item = LMS.Utility.ObjectPool.Instance.GetObject<LMS.Item.DropItem>("Item");
+            var _item = LMS.Utility.ObjectPool.Instance.GetObject<LMS.Item.DropItem>("Item");
             LMS.Utility.UtilFunction.TurnOnOff(LMS.Utility.ObjectPool.Instance.objectInfos[6], _item.gameObject, true);
             _item.Initialized(transform.position);
             anim.SetTrigger("Die");
+            boxCollider.enabled = false;
+            rb.useGravity = false;
             isChase = false;
             nav.enabled = false;
         }
@@ -118,6 +125,7 @@ public class Monster : MonoBehaviour, IDamageable
     public void ReturnMon()
     {
         MonsterPool.ReturnObject(this);
+        OnDieCallBack?.Invoke();
     } 
 
     public void TakeDamage(float damage, Vector3 reactVect)
