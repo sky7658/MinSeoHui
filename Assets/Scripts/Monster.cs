@@ -43,6 +43,8 @@ public class Monster : MonoBehaviour, IDamageable
         hpBarUI.Initialized(maxHealth, true);
         boxCollider.enabled = true;
         rb.useGravity = true;
+
+        deadCnt = 0;
     }
 
     private void OnEnable()
@@ -102,7 +104,7 @@ public class Monster : MonoBehaviour, IDamageable
         }
         
     }
-
+    private int deadCnt = 0;
     IEnumerator OnDamage(Vector3 reactVec)
     {
         //mat.color = Color.red;
@@ -111,6 +113,8 @@ public class Monster : MonoBehaviour, IDamageable
         { }
         else
         {
+            if (deadCnt > 0) yield break;
+            deadCnt++;
             var _item = LMS.Utility.ObjectPool.Instance.GetObject<LMS.Item.DropItem>("Item");
             LMS.Utility.UtilFunction.TurnOnOff(LMS.Utility.ObjectPool.Instance.objectInfos[6], _item.gameObject, true);
             _item.Initialized(transform.position);
