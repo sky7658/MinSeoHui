@@ -211,6 +211,7 @@ public class Dead : State
 
     public void Exit(Player player)
     {
+        FadeManager.Instance.LoadScene(0);
     }
 }
 

@@ -43,7 +43,7 @@ public class Monster : MonoBehaviour, IDamageable
         hpBarUI.Initialized(maxHealth, true);
         boxCollider.enabled = true;
         rb.useGravity = true;
-
+        nav.enabled = true;
         deadCnt = 0;
     }
 

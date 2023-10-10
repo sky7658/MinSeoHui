@@ -98,21 +98,19 @@ namespace LMS.Item
 
                 if(type == ItemType.Potion)
                 {
-                    if (_other.hp == _other.maxHp) return; // Ã¼·ÂÀÌ 100%¶ó¸é È¹µæ X
-                    _other.RecoveryHp(30f); // ÀÓÀÇ °ª È¸º¹
+                    if (_other.hp == _other.maxHp) return; // ì²´ë ¥ì´ 100%ë¼ë©´ íšë“ X
+                    _other.RecoveryHp(30f); // ì„ì˜ ê°’ íšŒë³µ
                     _other.PlayHealingEffect();
                 }
                 else
                 {
-                    if (_other.playerUIManger.GetCardCount() == Cards.CardBase.maxCardCount) return; // Ä«µå °¹¼ö°¡ ²ËÃ¡´Ù¸é È¹µæ X
+                    if (_other.playerUIManger.GetCardCount() == Cards.CardBase.maxCardCount) return; // ì¹´ë“œ ê°¯ìˆ˜ê°€ ê½‰ì°¼ë‹¤ë©´ íšë“ X
                     _other.playerUIManger.PushCard((int)type);
                 }
 
                 UtilFunction.OffCoroutine(bounceCoroutine);
                 ObjectPool.Instance.ReturnObject(this, "Item");
                 UtilFunction.TurnOnOff(ObjectPool.Instance.objectInfos[6], gameObject);
-
-                Destroy(gameObject);
             }
         }
 

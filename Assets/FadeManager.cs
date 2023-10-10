@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class FadeManager : MonoBehaviour
 {
     [SerializeField] Image fadeImage;
+    [SerializeField] Button btn;
     GameObject fadeObj;
 
     private static FadeManager instance = null;
@@ -39,8 +40,14 @@ public class FadeManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        StartCoroutine(FadeIn());
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
     // Start is called before the first frame update
-    void Start()
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         StartCoroutine(FadeIn());
     }
@@ -48,6 +55,8 @@ public class FadeManager : MonoBehaviour
     public void LoadScene(int sceneIndex)
     {
         StartCoroutine(FadeOut(() => SceneManager.LoadScene(sceneIndex)));
+        if(sceneIndex == 0)
+            btn.gameObject.SetActive(true);
     }
 
     public void OnFadeIn()
@@ -72,7 +81,7 @@ public class FadeManager : MonoBehaviour
     //페이드 아웃
     public IEnumerator FadeOut(Action action = null)
     {
-        Color color = Color.white;
+        Color color = Color.black;
         color.a = 0f;
         while (color.a < 1f)
         {
