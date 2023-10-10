@@ -54,7 +54,7 @@ namespace LMS.Item
         {
             int _itemRand = Random.Range(0, ratio * 10);
 
-            Debug.Log(_itemRand);
+            Debug.Log("Create Item");
 
             if(_itemRand < itemRatio[0])
             {
@@ -70,7 +70,6 @@ namespace LMS.Item
                 int _cardRand = Random.Range(0, ratio * 100);
 
                 image.texture = textures[1];
-                Debug.Log(_cardRand);
 
                 if (_cardRand < cardRatio[0] * 10)
                 {
