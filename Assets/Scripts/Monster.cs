@@ -79,9 +79,7 @@ public class Monster : MonoBehaviour, IDamageable
     {
         RaycastHit[] rayHits =
             Physics.SphereCastAll(transform.position, targetRadius, Vector3.up, 0f, LayerMask.GetMask("Player"));
-        //디버그 레이
-        Debug.DrawRay(transform.position, Vector3.up, Color.red, targetRadius);
-
+        
         Vector3 targetDirection = (target.position - transform.position).normalized;
         Quaternion targetRotation = Quaternion.LookRotation(new Vector3(targetDirection.x, 0f, targetDirection.z));
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
