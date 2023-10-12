@@ -48,6 +48,10 @@ namespace LMS.UI
         /// <param name="index"></param>
         public void SelectCard(int index) => cHandler.SelectCard(infoText, index);
         /// <summary>
+        /// 선택된 카드의 레벨을 1업 해줍니다.
+        /// </summary>
+        public void SelectCardLevelUp() => cHandler.SelectCardLevelUp();
+        /// <summary>
         /// Hand에 있는 Card List를 보이게 하거나 숨기게 해줍니다.
         /// </summary>
         public void SetHand() => cHandler.SetHand();

@@ -22,7 +22,7 @@ public class Monster : MonoBehaviour, IDamageable
     private Rigidbody rb;
     private Collider boxCollider;
     private Material mat;
-    private NavMeshAgent nav;
+    public NavMeshAgent nav;
     protected Animator anim;
     
     Action OnDieCallBack;
@@ -64,7 +64,7 @@ public class Monster : MonoBehaviour, IDamageable
         isChase = true;
         anim.SetBool("Walk Forward", true);
     }
-    
+
     void FreezeVelocity()
     {
         rb.velocity = Vector3.zero;
@@ -102,7 +102,6 @@ public class Monster : MonoBehaviour, IDamageable
             nav.SetDestination(target.position);
             nav.isStopped = !isChase;
         }
-        
     }
     private int deadCnt = 0;
     IEnumerator OnDamage(Vector3 reactVec)

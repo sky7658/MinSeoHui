@@ -29,7 +29,8 @@ namespace LMS.Cards
                 var _dir = other.transform.position - transform.position; // 튕겨낼 방향 설정
                 var _dis = Vector3.Distance(transform.position + _dir.normalized * radius, other.transform.position); // 목표 위치까지 얼마나 더 가야하는지 계산
 
-                if(other.TryGetComponent(out Monster _monster))
+
+                if (other.TryGetComponent(out Monster _monster))
                 {
                     // 일반 몬스터
                     _monster.TakeDamage(damage, Vector3.zero);
@@ -38,7 +39,7 @@ namespace LMS.Cards
                 else
                 {
                     // 보스의 경우
-                    other.GetComponent<IDamageable>().TakeDamage(damage, Vector3.zero);
+                    other?.GetComponent<IDamageable>().TakeDamage(damage, Vector3.zero);
                 }
             }
 

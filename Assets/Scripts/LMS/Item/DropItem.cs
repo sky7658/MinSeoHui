@@ -54,8 +54,6 @@ namespace LMS.Item
         {
             int _itemRand = Random.Range(0, ratio * 10);
 
-            Debug.Log("Create Item");
-
             if(_itemRand < itemRatio[0])
             {
                 return ItemType.None;
@@ -100,7 +98,6 @@ namespace LMS.Item
                 {
                     if (_other.hp == _other.maxHp) return; // 체력이 100%라면 획득 X
                     _other.RecoveryHp(30f); // 임의 값 회복
-                    _other.PlayHealingEffect();
                 }
                 else
                 {

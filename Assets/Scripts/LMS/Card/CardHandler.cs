@@ -49,7 +49,6 @@ namespace LMS.Cards
         {
             if(cards.Count < selectNum + 1)
             {
-                Debug.Log("그런 카드는 존재하지 않음");
                 return;
             }
             if(selectCardNum == -1) // 현재 선택된 카드가 없을 때
@@ -61,7 +60,6 @@ namespace LMS.Cards
                 if (selectCardNum == selectNum) // 같은 카드 번호를 두번 선택하면 비 활성화
                 {
                     cards[selectCardNum].HighlightTrigger();
-                    Debug.Log(selectCardNum + "번 카드 비활성화");
                     selectCardNum = -1;
                     cardUI.UpdateInfo(text);
                     return;
@@ -69,14 +67,23 @@ namespace LMS.Cards
                 else // 다른 카드 번호를 선택 시 이전 카드는 비활성화 하고 현재 카드 번호를 활성화
                 {
                     cards[selectCardNum].HighlightTrigger();
-                    Debug.Log(selectCardNum + "번 카드 비활성화");
                     selectCardNum = selectNum;
                 }
             }
 
             cardUI.UpdateInfo(text, cards[selectCardNum].cardInfo);
             cards[selectCardNum].HighlightTrigger();
-            Debug.Log(selectCardNum + "번 카드 활성화");
+        }
+
+        /// <summary>
+        /// 선택된 카드의 레벨을 1업 해줍니다.
+        /// </summary>
+        public void SelectCardLevelUp()
+        {
+            if (selectCardNum == -1) return;
+            if (cards[selectCardNum].cardInfo.cardLevel == 4) return;
+            attackLevel = AttackLevelUpdate();
+            cards[selectCardNum].ExpUpdate(CardBase.cardLevelMaxExp[cards[selectCardNum].cardInfo.cardLevel]);
         }
 
         /// <summary>
@@ -86,7 +93,6 @@ namespace LMS.Cards
         {
             if(cards.Count >= CardBase.maxCardCount)
             {
-                Debug.Log("최대 카드 갯수 초과");
                 return;
             }
 
@@ -126,7 +132,6 @@ namespace LMS.Cards
             // 인덱스가 리스트 범위를 벗어나는 경우
             if (cards.Count < selectCardNum + 1 || selectCardNum == -1)
             {
-                Debug.Log("그런 카드는 존재하지 않음");
                 return;
             }
 
@@ -148,7 +153,6 @@ namespace LMS.Cards
             // 인덱스가 리스트 범위를 벗어나는 경우
             if (cards.Count < selectCardNum + 1 || selectCardNum == -1)
             {
-                Debug.Log("그런 카드는 존재하지 않음");
                 return false;
             }
 
@@ -158,7 +162,6 @@ namespace LMS.Cards
             // 카드 스킬의 쿨타임이거나 카드 스킬을 시전 중일 경우
             if (cards[selectCardNum].delayEnabled || IsSkill)
             {
-                Debug.Log("카드를 사용 중 이거나 쿨타임 입니다.");
                 return false;
             }
 
@@ -239,7 +242,7 @@ namespace LMS.Cards
 
         private int AttackLevelUpdate()
         {
-            if (cards.Count != CardBase.maxCardCount) return attackLevel;
+            if (cards.Count != CardBase.maxCardCount - 1) return attackLevel;
 
             int _minValue = 5;
             foreach(var card in cards)

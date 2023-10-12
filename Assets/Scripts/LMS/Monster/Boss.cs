@@ -107,6 +107,7 @@ namespace LMS.Enemy
         public void RecoveryHp(float value)
         {
             currentHp += value;
+            if(currentHp > maxHp) currentHp = maxHp;
             hpBarUI.UpdateHpBar(value, false);
         }
 

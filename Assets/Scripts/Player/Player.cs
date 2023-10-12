@@ -104,15 +104,12 @@ public class Player : MonoBehaviour, IDamageable
         {
             playerUIManger.ComboAttacks(gameObject, () => _stateMachine.ChangeState(StateName.ATTACK));
         }
-        
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetMouseButtonDown(1))  // Use Card
         {
-            int rand = UnityEngine.Random.Range(0, 4);
-            //int rand2 = Random.Range(1, 4);
-            //playerUI.PushCard(rand, (LMS.Cards.CardProperty)rand2);
-            playerUIManger.PushCard(rand, (LMS.Cards.CardProperty)0);
+            if (playerUIManger.UseCard(gameObject, transform.forward))
+                _stateMachine.ChangeState(StateName.SKILL);
         }
-        
+        // Select Card
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             playerUIManger.SelectCard(0);
@@ -129,24 +126,26 @@ public class Player : MonoBehaviour, IDamageable
         {
             playerUIManger.SelectCard(3);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            playerUIManger.SelectCard(4);
-        }
         if(Input.GetKeyDown(KeyCode.V))
         {
             playerUIManger.SetHand();
         }
-        if(Input.GetKeyDown(KeyCode.Q))
+        // cheat key
+        if (Input.GetKeyDown(KeyCode.J))
         {
-            playerUIManger.PopCard();
+            int rand = UnityEngine.Random.Range(0, 4);
+            playerUIManger.PushCard(rand, (LMS.Cards.CardProperty)0);
         }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            RecoveryHp(30f);
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            playerUIManger.SelectCardLevelUp();
+        }
+
         
-        if(Input.GetMouseButtonDown(1))
-        {
-            if (playerUIManger.UseCard(gameObject, transform.forward))
-                _stateMachine.ChangeState(StateName.SKILL);
-        }
     }
 
     public void PlayHealingEffect()
@@ -262,6 +261,8 @@ public class Player : MonoBehaviour, IDamageable
 
     public void RecoveryHp(float value)
     {
+        if (hp == maxHp) return; // 체력이 100%라면 회복 x
+        PlayHealingEffect();
         hp += value;
         if (hp > maxHp) hp = maxHp;
         hpBarUI.UpdateHpBar(value, false);

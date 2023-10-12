@@ -73,7 +73,6 @@ namespace LMS.UI
         {
             if (text == null)
             {
-                Debug.Log("Text가 없습니다.");
                 return;
             }
             if(info == null)

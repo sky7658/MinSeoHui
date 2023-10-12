@@ -64,19 +64,18 @@ namespace LMS.Cards
             cardInfo.currentExp += value;
             if(cardInfo.currentExp >= cardInfo.maxExp)
             {
-                cardInfo.cardLevel++;
-                cardInfo.currentExp -= cardInfo.maxExp;
+                while(cardInfo.currentExp >= cardInfo.maxExp)
+                {
+                    cardInfo.cardLevel++;
+                    cardInfo.currentExp -= cardInfo.maxExp;
+                    if(cardInfo.cardLevel < 4) cardInfo.maxExp = CardBase.cardLevelMaxExp[cardInfo.cardLevel];
+                }
+
                 levelText.text = string.Format(textString, cardInfo.cardLevel + 1); // Level Text Update
 
-                if (cardInfo.cardLevel == 4) 
-                {
-                    cardInfo.currentExp = cardInfo.maxExp;
-                }
-                else
-                {
-                    cardInfo.maxExp = CardBase.cardLevelMaxExp[cardInfo.cardLevel];
-                    cardInfo.damage = CardBase.cardLevelDamage[cardInfo.type][cardInfo.cardLevel];
-                }
+                if (cardInfo.cardLevel == 4) cardInfo.currentExp = cardInfo.maxExp;
+
+                cardInfo.damage = CardBase.cardLevelDamage[cardInfo.type][cardInfo.cardLevel];
             }
 
             expBarUI.UpdateExpBar(cardInfo.currentExp / cardInfo.maxExp);
