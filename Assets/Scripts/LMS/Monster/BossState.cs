@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using LMS.Enemy;
 
-// »óÅÂ ÀÎÅÍÆäÀÌ½º Å¬·¡½º
+// ìƒíƒœ ì¸í„°í˜ì´ìŠ¤ í´ë˜ìŠ¤
 
 namespace SHY.Enemy 
 {
@@ -29,7 +29,6 @@ namespace SHY.Enemy
         public BossStateName stateName { get; } = BossStateName.Idle;
         public void Enter(Boss boss)
         {
-            boss.anim.SetBool("isMove", false);
             boss.nav.isStopped = true;
             elapsed = 0f;
         }
@@ -107,6 +106,7 @@ namespace SHY.Enemy
             boss.anim.SetBool("isMove", false);
             boss.anim.SetTrigger("doDie");
             boss.nav.isStopped = true;
+            FadeManager.Instance.LoadScene(0);
         }
         public void Action(Boss boss) { }
         public void Exit(Boss boss) { }
