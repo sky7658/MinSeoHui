@@ -91,14 +91,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 1
-        functionName: ToIdle
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: f6a8192d1e4a3e341b0ad1ab0ce8e2e3, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

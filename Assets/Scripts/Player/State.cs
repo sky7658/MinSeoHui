@@ -203,6 +203,7 @@ public class Dead : State
     public void Enter(Player player)
     {
         player.anim.SetTrigger("doDead");
+        FadeManager.Instance.LoadScene(0);
     }
 
     public void Action(Player player)
@@ -211,7 +212,6 @@ public class Dead : State
 
     public void Exit(Player player)
     {
-        FadeManager.Instance.LoadScene(0);
     }
 }
 

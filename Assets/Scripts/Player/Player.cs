@@ -82,6 +82,8 @@ public class Player : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
+        if (stateName == StateName.DEAD) return;
+
         _stateMachine.UpdateState();
         CharacterRotation();
         //SmoothDamp를 이용한 카메라 줌인아웃
@@ -261,6 +263,7 @@ public class Player : MonoBehaviour, IDamageable
     public void RecoveryHp(float value)
     {
         hp += value;
+        if (hp > maxHp) hp = maxHp;
         hpBarUI.UpdateHpBar(value, false);
     }
 
